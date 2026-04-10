@@ -1,18 +1,33 @@
 ---
-import BaseFooter from "@components/BaseFooter.astro";
 import BaseHead from "@components/BaseHead.astro";
-import BaseHeader from "@components/BaseHeader.astro";
-import PageSupportingDarkmode from "./PageSupportingDarkmode.astro";
 import "../styles/global.css";
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const {
+  title = "Coral — Jellyfin Ecosystem",
+  description = "A reef of independent Docker modules that extend Jellyfin with modern UX. Each one alive on its own, thriving together.",
+} = Astro.props;
 ---
 
-<PageSupportingDarkmode>
-	<BaseHead title="Elian's Astro Starter" />
-	<body>
-		<BaseHeader />
-		<main>
-			<slot />
-		</main>
-		<BaseFooter />
-	</body>
-</PageSupportingDarkmode>
+<html lang="en">
+  <BaseHead title={title} description={description} />
+  <body>
+    <slot />
+    <script is:inline>
+      // Scroll reveal
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(e => {
+          if (e.isIntersecting) {
+            e.target.classList.add('visible');
+            observer.unobserve(e.target);
+          }
+        });
+      }, { threshold: 0.12 });
+      document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+    </script>
+  </body>
+</html>

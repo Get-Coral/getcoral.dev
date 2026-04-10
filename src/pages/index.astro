@@ -1,9 +1,260 @@
 ---
-import Counter from "@components/Counter";
 import Layout from "@layouts/Default.astro";
+
+const modules = [
+  {
+    name: "Aurora",
+    emoji: "🎬",
+    tagline: "High-end cinematic Jellyfin frontend",
+    description: "The Netflix-quality client Jellyfin deserves. Full-bleed backdrops, smooth transitions, TanStack Start architecture. Built the way streaming should feel.",
+    status: "active",
+    statusLabel: "In Progress",
+    repo: "https://github.com/ElianCodes/aurora",
+    accent: "teal",
+  },
+  {
+    name: "KAPOW!",
+    emoji: "🎤",
+    tagline: "Karaoke queue manager for bars & events",
+    description: "Guests scan a QR code, search your karaoke library, submit songs and vote. Host manages from their phone. Display view for the projector. Born at Comic Sans bar in Ghent.",
+    status: "mvp",
+    statusLabel: "MVP Built",
+    repo: "https://github.com/ElianCodes/kapow",
+    accent: "coral",
+  },
+  {
+    name: "Fathom",
+    emoji: "📖",
+    tagline: "Modern reading app from your NAS",
+    description: "Ebooks, comics, manga, PDFs — beautifully presented in the browser or on mobile. Your entire reading library, self-hosted. No Kindle required.",
+    status: "idea",
+    statusLabel: "Planned",
+    repo: null,
+    accent: "teal",
+  },
+  {
+    name: "Marquee",
+    emoji: "📺",
+    tagline: "Ambient now-playing display",
+    description: "A beautiful passive screen for any TV or monitor. Shows what's playing across all Jellyfin sessions, up next, recently added. No interaction — just presence.",
+    status: "idea",
+    statusLabel: "Planned",
+    repo: null,
+    accent: "coral",
+  },
+  {
+    name: "Encore",
+    emoji: "🎶",
+    tagline: "Guest media request system",
+    description: "Share a link with party guests — they browse your Jellyfin library and request what plays next. Host approves or rejects. House party DJ mode for your media server.",
+    status: "idea",
+    statusLabel: "Planned",
+    repo: null,
+    accent: "teal",
+  },
+  {
+    name: "Librarian",
+    emoji: "🗂️",
+    tagline: "Smart media management layer",
+    description: "Auto-tag, organize, and enrich your Jellyfin library. Integrates yt-dlp for downloading karaoke tracks and YouTube content. NFO generation, poster scraping, duplicate detection.",
+    status: "idea",
+    statusLabel: "Planned",
+    repo: null,
+    accent: "coral",
+  },
+  {
+    name: "Reel",
+    emoji: "🎞️",
+    tagline: "Synchronized watch parties",
+    description: "Host starts playback, guests join via link, everyone stays in sync. Built on Jellyfin's session API with a lightweight sync layer on top.",
+    status: "idea",
+    statusLabel: "Planned",
+    repo: null,
+    accent: "teal",
+  },
+];
 ---
 
 <Layout>
-	<h1 class="text-7xl text-green-800">Hello!</h1>
-	<Counter client:idle />
+  <!-- NAV -->
+  <nav style="position: fixed; top: 0; left: 0; right: 0; z-index: 50; padding: 1.25rem 2rem; display: flex; align-items: center; justify-content: space-between; backdrop-filter: blur(12px); background: rgba(6,13,18,0.7); border-bottom: 1px solid var(--border);">
+    <a href="/" style="display: flex; align-items: center; gap: 10px; text-decoration: none;">
+      <span style="font-size: 1.5rem;">🪸</span>
+      <span style="font-family: 'Fraunces', serif; font-size: 1.15rem; font-weight: 600; color: var(--ink);">Coral</span>
+    </a>
+    <div style="display: flex; gap: 0.5rem; align-items: center;">
+      <a href="#modules" class="nav-pill">Modules</a>
+      <a href="#principles" class="nav-pill">Philosophy</a>
+      <a href="https://github.com/ElianCodes" target="_blank" class="nav-pill" style="display:flex;align-items:center;gap:6px;">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0 1 12 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/></svg>
+        GitHub
+      </a>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section style="position: relative; min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 8rem 2rem 6rem; overflow: hidden;">
+    <div class="glow-coral" style="top: -150px; left: -150px;"></div>
+    <div class="glow-teal" style="bottom: -100px; right: -100px;"></div>
+
+    <div style="position: relative; z-index: 1; max-width: 760px;">
+      <div class="animate-fade-up delay-1" style="display: inline-flex; align-items: center; gap: 8px; background: var(--teal-dim); border: 1px solid rgba(45,212,191,0.2); border-radius: 999px; padding: 6px 14px; font-size: 0.8rem; color: var(--teal); letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 2rem;">
+        <span>🪸</span> Open Source Jellyfin Ecosystem
+      </div>
+
+      <h1 class="animate-fade-up delay-2" style="font-size: clamp(3.5rem, 8vw, 6.5rem); font-weight: 700; letter-spacing: -0.03em; margin-bottom: 1.5rem; line-height: 1.0;">
+        Your media server.<br/>
+        <em style="font-style: italic; color: var(--coral);">Reimagined.</em>
+      </h1>
+
+      <p class="animate-fade-up delay-3" style="font-size: clamp(1rem, 2vw, 1.2rem); color: var(--ink-muted); max-width: 560px; margin: 0 auto 2.5rem; line-height: 1.75;">
+        A reef of independent Docker modules that extend Jellyfin with modern UX.
+        Each one alive on its own — thriving together.
+      </p>
+
+      <div class="animate-fade-up delay-4" style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+        <a href="#modules" class="btn-primary">Explore modules</a>
+        <a href="https://github.com/ElianCodes" target="_blank" class="btn-ghost">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0 1 12 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/></svg>
+          View on GitHub
+        </a>
+      </div>
+
+      <!-- Stats row -->
+      <div class="animate-fade-up delay-5" style="display: flex; gap: 2.5rem; justify-content: center; margin-top: 4rem; padding-top: 3rem; border-top: 1px solid var(--border); flex-wrap: wrap;">
+        <div style="text-align: center;">
+          <div style="font-family: 'Fraunces', serif; font-size: 2rem; font-weight: 700; color: var(--coral);">7</div>
+          <div style="font-size: 0.8rem; color: var(--ink-faint); text-transform: uppercase; letter-spacing: 0.08em; margin-top: 4px;">Modules</div>
+        </div>
+        <div style="width: 1px; background: var(--border);"></div>
+        <div style="text-align: center;">
+          <div style="font-family: 'Fraunces', serif; font-size: 2rem; font-weight: 700; color: var(--teal);">MIT</div>
+          <div style="font-size: 0.8rem; color: var(--ink-faint); text-transform: uppercase; letter-spacing: 0.08em; margin-top: 4px;">Licensed</div>
+        </div>
+        <div style="width: 1px; background: var(--border);"></div>
+        <div style="text-align: center;">
+          <div style="font-family: 'Fraunces', serif; font-size: 2rem; font-weight: 700; color: var(--ink);">∞</div>
+          <div style="font-size: 0.8rem; color: var(--ink-faint); text-transform: uppercase; letter-spacing: 0.08em; margin-top: 4px;">No quotas</div>
+        </div>
+        <div style="width: 1px; background: var(--border);"></div>
+        <div style="text-align: center;">
+          <div style="font-family: 'Fraunces', serif; font-size: 2rem; font-weight: 700; color: var(--ink);">🐳</div>
+          <div style="font-size: 0.8rem; color: var(--ink-faint); text-transform: uppercase; letter-spacing: 0.08em; margin-top: 4px;">Docker native</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MODULES -->
+  <section id="modules" style="position: relative; padding: 6rem 2rem; max-width: 1100px; margin: 0 auto;">
+    <div class="reveal" style="text-align: center; margin-bottom: 4rem;">
+      <p style="font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--teal); margin-bottom: 1rem;">The Reef</p>
+      <h2 style="font-size: clamp(2rem, 5vw, 3.5rem); margin-bottom: 1rem;">Every module is independent.<br/><span style="color: var(--ink-muted); font-weight: 300; font-style: italic;">Together they're an ecosystem.</span></h2>
+      <p style="color: var(--ink-muted); max-width: 500px; margin: 0 auto;">Each one runs as a Docker container, talks to your Jellyfin server, and does one thing brilliantly.</p>
+    </div>
+
+    <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1.25rem;">
+      {modules.map((mod, i) => (
+        <div class={`module-card ${mod.accent}-accent reveal`} style={`animation-delay: ${i * 0.07}s`}>
+          <div style="display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 1rem;">
+            <span style="font-size: 2rem; line-height: 1;">{mod.emoji}</span>
+            <span class={`badge badge-${mod.status}`}>
+              <span style={`width: 5px; height: 5px; border-radius: 50%; background: currentColor; display: inline-block;`}></span>
+              {mod.statusLabel}
+            </span>
+          </div>
+          <h3 style="font-size: 1.35rem; margin-bottom: 0.35rem;">{mod.name}</h3>
+          <p style="font-size: 0.82rem; color: var(--teal); margin-bottom: 0.85rem; font-weight: 400;">{mod.tagline}</p>
+          <p style="font-size: 0.9rem; color: var(--ink-muted); line-height: 1.65; margin-bottom: 1.25rem;">{mod.description}</p>
+          {mod.repo ? (
+            <a href={mod.repo} target="_blank" style="display: inline-flex; align-items: center; gap: 6px; font-size: 0.82rem; color: var(--ink-muted); text-decoration: none; border: 1px solid var(--border); border-radius: 999px; padding: 5px 12px; transition: color 0.2s, border-color 0.2s;">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0 1 12 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/></svg>
+              View repo
+            </a>
+          ) : (
+            <span style="font-size: 0.82rem; color: var(--ink-faint);">Coming soon</span>
+          )}
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- PHILOSOPHY -->
+  <section id="principles" style="padding: 6rem 2rem; border-top: 1px solid var(--border);">
+    <div style="max-width: 900px; margin: 0 auto;">
+      <div class="reveal" style="text-align: center; margin-bottom: 4rem;">
+        <p style="font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--coral); margin-bottom: 1rem;">Philosophy</p>
+        <h2 style="font-size: clamp(2rem, 5vw, 3.5rem);">Built on three rules.</h2>
+      </div>
+
+      <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 1.5rem;">
+        {[
+          { icon: "🐳", title: "Docker native", body: "Every module ships as a Docker image. One Compose file, one command, running on your NAS. No cloud dependency, no internet required at the bar." },
+          { icon: "🪸", title: "Jellyfin as source of truth", body: "Modules never share a database. If two need to talk, they do it through the Jellyfin API. Clean boundaries, no tight coupling." },
+          { icon: "🔓", title: "MIT forever", body: "Open source, no paid tier, no SaaS. GitHub Sponsors if you get value from it. The code belongs to everyone." },
+        ].map((p) => (
+          <div class="reveal" style="padding: 2rem; border: 1px solid var(--border); border-radius: 16px; background: var(--surface);">
+            <div style="font-size: 2rem; margin-bottom: 1rem;">{p.icon}</div>
+            <h3 style="font-size: 1.1rem; margin-bottom: 0.6rem;">{p.title}</h3>
+            <p style="font-size: 0.9rem; color: var(--ink-muted); line-height: 1.65;">{p.body}</p>
+          </div>
+        ))}
+      </div>
+
+      <!-- Docker snippet -->
+      <div class="reveal" style="margin-top: 3rem; background: var(--deep); border: 1px solid var(--border); border-radius: 16px; padding: 2rem; font-family: 'SF Mono', 'Fira Code', monospace; font-size: 0.85rem; overflow-x: auto;">
+        <p style="color: var(--ink-faint); margin-bottom: 1rem; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.08em;">docker-compose.yml</p>
+        <pre style="color: var(--ink-muted); line-height: 1.8; white-space: pre;"><span style="color: var(--teal);">services:</span>
+  <span style="color: var(--coral);">kapow:</span>
+    <span style="color: var(--ink-muted);">image: ghcr.io/eliancodes/kapow:latest</span>
+    <span style="color: var(--ink-muted);">ports: ["3000:3000"]</span>
+    <span style="color: var(--ink-muted);">environment:</span>
+    <span style="color: var(--ink-faint);">  JELLYFIN_URL: http://your-nas:8096</span>
+    <span style="color: var(--ink-faint);">  JELLYFIN_API_KEY: your_key</span>
+  <span style="color: var(--teal);">db:</span>
+    <span style="color: var(--ink-muted);">image: postgres:alpine</span></pre>
+      </div>
+    </div>
+  </section>
+
+  <!-- ORIGIN STORY -->
+  <section style="padding: 5rem 2rem; border-top: 1px solid var(--border);">
+    <div class="reveal" style="max-width: 680px; margin: 0 auto; text-align: center;">
+      <p style="font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--ink-faint); margin-bottom: 1.5rem;">How it started</p>
+      <blockquote style="font-family: 'Fraunces', serif; font-size: clamp(1.2rem, 3vw, 1.7rem); font-weight: 300; font-style: italic; line-height: 1.6; color: var(--ink-muted);">
+        "Built because a superhero-themed bar in Ghent was still using coasters to manage their karaoke queue."
+      </blockquote>
+      <p style="margin-top: 1.5rem; font-size: 0.9rem; color: var(--ink-faint);">KAPOW! was the first module — made for Comic Sans bar. Coral grew from there.</p>
+    </div>
+  </section>
+
+  <!-- SPONSOR CTA -->
+  <section style="padding: 6rem 2rem; border-top: 1px solid var(--border);">
+    <div class="reveal" style="max-width: 600px; margin: 0 auto; text-align: center;">
+      <div style="font-size: 3rem; margin-bottom: 1.5rem;">🪸</div>
+      <h2 style="font-size: clamp(1.8rem, 4vw, 2.8rem); margin-bottom: 1rem;">Support the reef.</h2>
+      <p style="color: var(--ink-muted); margin-bottom: 2rem; line-height: 1.7;">Coral is free, open source, and built solo. If it runs on your NAS and makes your life better — consider sponsoring. Every bit keeps the modules maintained and growing.</p>
+      <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+        <a href="https://github.com/sponsors/ElianCodes" target="_blank" class="btn-primary">
+          ❤️ Sponsor on GitHub
+        </a>
+        <a href="https://github.com/ElianCodes" target="_blank" class="btn-ghost">
+          Star a repo
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer style="padding: 2rem; border-top: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; flex-wrap: gap; max-width: 1100px; margin: 0 auto;">
+    <div style="display: flex; align-items: center; gap: 8px;">
+      <span>🪸</span>
+      <span style="font-size: 0.85rem; color: var(--ink-faint);">Coral — MIT Licensed</span>
+    </div>
+    <div style="display: flex; gap: 1.5rem;">
+      <a href="https://github.com/ElianCodes" target="_blank" style="font-size: 0.85rem; color: var(--ink-faint); text-decoration: none;">GitHub</a>
+      <a href="https://elian.codes" target="_blank" style="font-size: 0.85rem; color: var(--ink-faint); text-decoration: none;">elian.codes</a>
+    </div>
+  </footer>
+
 </Layout>
