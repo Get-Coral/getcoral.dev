@@ -1,8 +1,4 @@
 {
-	"recommendations": [
-		"astro-build.astro-vscode",
-		"biomejs.biome",
-		"antfu.unocss"
-	],
+	"recommendations": ["astro-build.astro-vscode", "biomejs.biome"],
 	"unwantedRecommendations": []
 }
