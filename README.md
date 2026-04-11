@@ -1,23 +1,12 @@
-# Elian's Astro Startkit
+# getcoral.dev
 
-An opinionated Astro starter with SolidJS islands, Tailwind CSS v4, Biome, TypeScript strict mode, and a minimal layout already wired up.
+The official website for [Coral](https://getcoral.dev), an open-source ecosystem of independent Jellyfin modules.
 
-## Create a project
+## What this repo is
 
-```sh
-pnpm create astro@latest --template eliancodes/elians-astro-startkit
-```
-
-## What's included
-
-- Astro 6
-- SolidJS via `@astrojs/solid-js`
-- Tailwind CSS v4 through the Vite plugin
-- Sitemap generation via `@astrojs/sitemap`
-- Biome for linting and formatting
-- TypeScript strict config
-- Import aliases for `@components/*` and `@layouts/*`
-- A basic layout with header, footer, global styles, and system dark mode support
+- Marketing site for the Coral ecosystem
+- Home for the ecosystem story, module index, and philosophy
+- Built with Astro, Solid islands, Tailwind CSS v4, and Biome
 
 ## Getting started
 
@@ -27,6 +16,15 @@ pnpm dev
 ```
 
 The dev server runs at [http://localhost:4321](http://localhost:4321).
+
+## Stack
+
+- Astro 6
+- SolidJS via `@astrojs/solid-js`
+- Tailwind CSS v4 through the Vite plugin
+- Sitemap generation via `@astrojs/sitemap`
+- Biome for linting and formatting
+- TypeScript strict config
 
 ## Available scripts
 
@@ -69,17 +67,21 @@ The dev server runs at [http://localhost:4321](http://localhost:4321).
 
 ## Notes
 
-- `src/pages/index.astro` shows the default layout plus a small Solid counter island.
-- `src/layouts/PageSupportingDarkmode.astro` toggles the `dark` class based on the user's system preference.
-- `src/styles/global.css` imports Tailwind and sets the base light/dark body colors.
+- `src/pages/index.astro` contains the Coral homepage content and module list.
+- `src/layouts/Default.astro` sets the site-wide metadata defaults.
+- `src/styles/global.css` contains the full visual system for the landing page.
 - `astro.config.ts` includes the site URL, Solid integration, sitemap integration, and Tailwind's Vite plugin.
 
 ## TypeScript paths
 
-This starter includes a couple of path aliases:
+This site includes a couple of path aliases:
 
 - `@components/*` -> `src/components/*`
 - `@layouts/*` -> `src/layouts/*`
+
+## Part of Coral
+
+Coral is a reef of independent modules that extend Jellyfin with focused, self-hosted experiences. This repo is the public front door for that ecosystem and should stay aligned with the product and module branding used across the other Coral repositories.
 
 ## License
 

@@ -1,21 +1,21 @@
 {
-	"name": "elians-astro-starter",
+	"name": "getcoral.dev",
 	"type": "module",
 	"version": "0.0.1",
-	"description": "An opinionated Astro starter kit by Elian",
+	"description": "The official website for the Coral ecosystem",
 	"packageManager": "pnpm@10.7.1",
 	"engines": {
 		"node": "22"
 	},
-	"homepage": "https://github.com/ElianCodes/elians-astro-startkit",
+	"homepage": "https://getcoral.dev",
 	"repository": {
-		"url": "git+https://github.com/ElianCodes/elians-astro-startkit",
+		"url": "git+https://github.com/Get-Coral/getcoral.dev.git",
 		"type": "git"
 	},
 	"author": {
-		"name": "ElianCodes",
+		"name": "Coral",
 		"email": "hello@elian.codes",
-		"url": "https://www.elian.codes"
+		"url": "https://getcoral.dev"
 	},
 	"license": "MIT",
 	"scripts": {
