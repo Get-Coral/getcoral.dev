@@ -320,6 +320,7 @@ body::before {
   opacity: 0;
   transition: opacity 0.3s ease;
   border-radius: 16px;
+  pointer-events: none;
 }
 .module-card.coral-accent::before {
   background: radial-gradient(circle at top left, rgba(255,107,107,0.08), transparent 60%);
