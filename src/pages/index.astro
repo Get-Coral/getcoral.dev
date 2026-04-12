@@ -1,73 +1,73 @@
 ---
-import Layout from "@layouts/Default.astro";
+import Layout from '@layouts/Default.astro';
 
 const modules = [
-	{
-		name: "Aurora",
-		emoji: "🎬",
-		tagline: "High-end cinematic Jellyfin frontend",
-		description:
-			"The Netflix-quality client Jellyfin deserves. Full-bleed backdrops, smooth transitions, TanStack Start architecture. Built the way streaming should feel.",
-		status: "active",
-		statusLabel: "In Progress",
-		repo: "https://github.com/Get-Coral/aurora",
-		accent: "teal",
-	},
-	{
-		name: "KAPOW!",
-		emoji: "🎤",
-		tagline: "Karaoke queue manager for bars & events",
-		description:
-			"Guests scan a QR code, search your karaoke library, submit songs and vote. Host manages from their phone. Display view for the projector. Born at Comic Sans bar in Ghent.",
-		status: "mvp",
-		statusLabel: "MVP Built",
-		repo: "https://github.com/Get-Coral/KAPOW",
-		accent: "coral",
-	},
-	{
-		name: "Fathom",
-		emoji: "📖",
-		tagline: "Modern reading app from your NAS",
-		description:
-			"Ebooks, comics, manga, PDFs — beautifully presented in the browser or on mobile. Your entire reading library, self-hosted. No Kindle required.",
-		status: "idea",
-		statusLabel: "Planned",
-		repo: "https://github.com/Get-Coral/fathom",
-		accent: "teal",
-	},
-	{
-		name: "Marquee",
-		emoji: "📺",
-		tagline: "Ambient now-playing display",
-		description:
-			"A beautiful passive screen for any TV or monitor. Shows what's playing across all Jellyfin sessions, up next, recently added. No interaction — just presence.",
-		status: "idea",
-		statusLabel: "Planned",
-		repo: "https://github.com/Get-Coral/marquee",
-		accent: "coral",
-	},
-	{
-		name: "Encore",
-		emoji: "🎶",
-		tagline: "Guest media request system",
-		description:
-			"Share a link with party guests — they browse your Jellyfin library and request what plays next. Host approves or rejects. House party DJ mode for your media server.",
-		status: "idea",
-		statusLabel: "Planned",
-		repo: "https://github.com/Get-Coral/encore",
-		accent: "teal",
-	},
-	{
-		name: "Librarian",
-		emoji: "🗂️",
-		tagline: "Smart media management layer",
-		description:
-			"Auto-tag, organize, and enrich your Jellyfin library. Integrates yt-dlp for downloading karaoke tracks and YouTube content. NFO generation, poster scraping, duplicate detection.",
-		status: "idea",
-		statusLabel: "Planned",
-		repo: "https://github.com/Get-Coral/librarian",
-		accent: "coral",
-	},
+  {
+    name: 'Aurora',
+    emoji: '🎬',
+    tagline: 'High-end cinematic Jellyfin frontend',
+    description:
+      'The Netflix-quality client Jellyfin deserves. Full-bleed backdrops, smooth transitions, TanStack Start architecture. Built the way streaming should feel.',
+    status: 'active',
+    statusLabel: 'In Progress',
+    repo: 'https://github.com/Get-Coral/aurora',
+    accent: 'teal',
+  },
+  {
+    name: 'KAPOW!',
+    emoji: '🎤',
+    tagline: 'Karaoke queue manager for bars & events',
+    description:
+      'Guests scan a QR code, search your karaoke library, submit songs and vote. Host manages from their phone. Display view for the projector. Born at Comic Sans bar in Ghent.',
+    status: 'mvp',
+    statusLabel: 'MVP Built',
+    repo: 'https://github.com/Get-Coral/KAPOW',
+    accent: 'coral',
+  },
+  {
+    name: 'Fathom',
+    emoji: '📖',
+    tagline: 'Modern reading app from your NAS',
+    description:
+      'Ebooks, comics, manga, PDFs — beautifully presented in the browser or on mobile. Your entire reading library, self-hosted. No Kindle required.',
+    status: 'idea',
+    statusLabel: 'Planned',
+    repo: 'https://github.com/Get-Coral/fathom',
+    accent: 'teal',
+  },
+  {
+    name: 'Marquee',
+    emoji: '📺',
+    tagline: 'Ambient now-playing display',
+    description:
+      "A beautiful passive screen for any TV or monitor. Shows what's playing across all Jellyfin sessions, up next, recently added. No interaction — just presence.",
+    status: 'idea',
+    statusLabel: 'Planned',
+    repo: 'https://github.com/Get-Coral/marquee',
+    accent: 'coral',
+  },
+  {
+    name: 'Encore',
+    emoji: '🎶',
+    tagline: 'Guest media request system',
+    description:
+      'Share a link with party guests — they browse your Jellyfin library and request what plays next. Host approves or rejects. House party DJ mode for your media server.',
+    status: 'idea',
+    statusLabel: 'Planned',
+    repo: 'https://github.com/Get-Coral/encore',
+    accent: 'teal',
+  },
+  {
+    name: 'Librarian',
+    emoji: '🗂️',
+    tagline: 'Smart media management layer',
+    description:
+      'Auto-tag, organize, and enrich your Jellyfin library. Integrates yt-dlp for downloading karaoke tracks and YouTube content. NFO generation, poster scraping, duplicate detection.',
+    status: 'idea',
+    statusLabel: 'Planned',
+    repo: 'https://github.com/Get-Coral/librarian',
+    accent: 'coral',
+  },
 ];
 
 const GH_SVG = `<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0 1 12 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/></svg>`;
@@ -130,19 +130,6 @@ const GH_SVG = `<svg width="14" height="14" viewBox="0 0 24 24" fill="currentCol
           <Fragment set:html={GH_SVG} />
           View on GitHub
         </a>
-      </div>
-
-      <p class='animate-fade-up delay-5 hero-sub'>
-        The official scaffolder ships the Coral module template, release
-        automation, Biome, and TypeScript defaults out of the box.
-      </p>
-
-      <div class='animate-fade-up delay-5 code-block'>
-        <p class='code-label'>create-coral</p>
-        <pre
-          class='code-pre'><span style="color: var(--teal);">pnpm</span> create coral@latest
-<span style="color: var(--coral);">npm</span> create coral@latest
-<span style="color: var(--teal);">bun</span> create coral@latest</pre>
       </div>
 
       <div class='animate-fade-up delay-5 stats-row'>
