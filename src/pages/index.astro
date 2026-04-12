@@ -32,7 +32,7 @@ const modules = [
 			"Ebooks, comics, manga, PDFs — beautifully presented in the browser or on mobile. Your entire reading library, self-hosted. No Kindle required.",
 		status: "idea",
 		statusLabel: "Planned",
-		repo: null,
+		repo: "https://github.com/Get-Coral/fathom",
 		accent: "teal",
 	},
 	{
@@ -43,7 +43,7 @@ const modules = [
 			"A beautiful passive screen for any TV or monitor. Shows what's playing across all Jellyfin sessions, up next, recently added. No interaction — just presence.",
 		status: "idea",
 		statusLabel: "Planned",
-		repo: null,
+		repo: "https://github.com/Get-Coral/marquee",
 		accent: "coral",
 	},
 	{
@@ -54,7 +54,7 @@ const modules = [
 			"Share a link with party guests — they browse your Jellyfin library and request what plays next. Host approves or rejects. House party DJ mode for your media server.",
 		status: "idea",
 		statusLabel: "Planned",
-		repo: null,
+		repo: "https://github.com/Get-Coral/encore",
 		accent: "teal",
 	},
 	{
@@ -65,7 +65,7 @@ const modules = [
 			"Auto-tag, organize, and enrich your Jellyfin library. Integrates yt-dlp for downloading karaoke tracks and YouTube content. NFO generation, poster scraping, duplicate detection.",
 		status: "idea",
 		statusLabel: "Planned",
-		repo: null,
+		repo: "https://github.com/Get-Coral/librarian",
 		accent: "coral",
 	},
 ];
@@ -75,132 +75,167 @@ const GH_SVG = `<svg width="14" height="14" viewBox="0 0 24 24" fill="currentCol
 
 <Layout>
   <!-- NAV -->
-  <nav class="site-nav">
-    <a href="/" class="nav-logo">
+  <nav class='site-nav'>
+    <a href='/' class='nav-logo'>
       <span>🪸</span>
-      <span class="nav-logo-text">Coral</span>
+      <span class='nav-logo-text'>Coral</span>
     </a>
-    <div class="nav-links">
-      <a href="#modules" class="nav-pill">Modules</a>
-      <a href="#principles" class="nav-pill">Philosophy</a>
-      <a href="https://github.com/Get-Coral" target="_blank" class="nav-pill nav-pill-icon">
+    <div class='nav-links'>
+      <a href='#modules' class='nav-pill'>Modules</a>
+      <a href='#principles' class='nav-pill'>Philosophy</a>
+      <a
+        href='https://github.com/Get-Coral'
+        target='_blank'
+        class='nav-pill nav-pill-icon'
+      >
         <Fragment set:html={GH_SVG} />
-        <span class="nav-gh-text">GitHub</span>
+        <span class='nav-gh-text'>GitHub</span>
       </a>
     </div>
   </nav>
 
   <!-- HERO -->
-  <section class="hero">
-    <div class="glow-coral" style="top: -150px; left: -150px;"></div>
-    <div class="glow-teal" style="bottom: -100px; right: -100px;"></div>
+  <section class='hero'>
+    <div class='glow-coral' style='top: -150px; left: -150px;'></div>
+    <div class='glow-teal' style='bottom: -100px; right: -100px;'></div>
 
-    <div class="hero-inner">
-      <div class="animate-fade-up delay-1 hero-badge">
+    <div class='hero-inner'>
+      <div class='animate-fade-up delay-1 hero-badge'>
         <span>🪸</span> Open Source Jellyfin Ecosystem
       </div>
 
-      <h1 class="animate-fade-up delay-2 hero-title">
-        Your media server.<br/>
+      <h1 class='animate-fade-up delay-2 hero-title'>
+        Your media server.<br />
         <em>Reimagined.</em>
       </h1>
 
-      <p class="animate-fade-up delay-3 hero-sub">
-        A reef of independent Docker modules that extend Jellyfin with modern UX.
-        Each one alive on its own — thriving together.
+      <p class='animate-fade-up delay-3 hero-sub'>
+        A reef of independent Docker modules that extend Jellyfin with modern
+        UX. Each one alive on its own — thriving together.
       </p>
 
-      <div class="animate-fade-up delay-4 hero-ctas">
-        <a href="#modules" class="btn-primary">Explore modules</a>
-        <a href="https://github.com/Get-Coral" target="_blank" class="btn-ghost">
+      <div class='animate-fade-up delay-4 hero-ctas'>
+        <a href='#modules' class='btn-primary'>Explore modules</a>
+        <a
+          href='https://github.com/Get-Coral'
+          target='_blank'
+          class='btn-ghost'
+        >
           <Fragment set:html={GH_SVG} />
           View on GitHub
         </a>
       </div>
 
-      <div class="animate-fade-up delay-5 stats-row">
-        <div class="stat">
-          <div class="stat-value" style="color: var(--coral);">6</div>
-          <div class="stat-label">Modules</div>
+      <div class='animate-fade-up delay-5 stats-row'>
+        <div class='stat'>
+          <div class='stat-value' style='color: var(--coral);'>6</div>
+          <div class='stat-label'>Modules</div>
         </div>
-        <div class="stat-divider"></div>
-        <div class="stat">
-          <div class="stat-value" style="color: var(--teal);">MIT</div>
-          <div class="stat-label">Licensed</div>
+        <div class='stat-divider'></div>
+        <div class='stat'>
+          <div class='stat-value' style='color: var(--teal);'>MIT</div>
+          <div class='stat-label'>Licensed</div>
         </div>
-        <div class="stat-divider"></div>
-        <div class="stat">
-          <div class="stat-value">∞</div>
-          <div class="stat-label">No quotas</div>
+        <div class='stat-divider'></div>
+        <div class='stat'>
+          <div class='stat-value'>∞</div>
+          <div class='stat-label'>No quotas</div>
         </div>
-        <div class="stat-divider"></div>
-        <div class="stat">
-          <div class="stat-value">🐳</div>
-          <div class="stat-label">Docker native</div>
+        <div class='stat-divider'></div>
+        <div class='stat'>
+          <div class='stat-value'>🐳</div>
+          <div class='stat-label'>Docker native</div>
         </div>
       </div>
     </div>
   </section>
 
   <!-- MODULES -->
-  <section id="modules" class="section-modules">
-    <div class="reveal section-header">
-      <p class="section-eyebrow" style="color: var(--teal);">The Reef</p>
-      <h2 class="section-title">Every module is independent.<br/><span class="section-title-muted">Together they're an ecosystem.</span></h2>
-      <p class="section-sub">Each one runs as a Docker container, talks to your Jellyfin server, and does one thing brilliantly.</p>
+  <section id='modules' class='section-modules'>
+    <div class='reveal section-header'>
+      <p class='section-eyebrow' style='color: var(--teal);'>The Reef</p>
+      <h2 class='section-title'>
+        Every module is independent.<br /><span class='section-title-muted'
+          >Together they're an ecosystem.</span
+        >
+      </h2>
+      <p class='section-sub'>
+        Each one runs as a Docker container, talks to your Jellyfin server, and
+        does one thing brilliantly.
+      </p>
     </div>
 
-    <div class="modules-grid">
-      {modules.map((mod, i) => (
-        <div class={`module-card ${mod.accent}-accent reveal`} style={`animation-delay: ${i * 0.07}s`}>
-          <div class="card-header">
-            <span class="card-emoji">{mod.emoji}</span>
-            <span class={`badge badge-${mod.status}`}>
-              <span class="badge-dot"></span>
-              {mod.statusLabel}
-            </span>
+    <div class='modules-grid'>
+      {
+        modules.map((mod, i) => (
+          <div
+            class={`module-card ${mod.accent}-accent reveal`}
+            style={`animation-delay: ${i * 0.07}s`}
+          >
+            <div class='card-header'>
+              <span class='card-emoji'>{mod.emoji}</span>
+              <span class={`badge badge-${mod.status}`}>
+                <span class='badge-dot' />
+                {mod.statusLabel}
+              </span>
+            </div>
+            <h3 class='card-title'>{mod.name}</h3>
+            <p class='card-tagline'>{mod.tagline}</p>
+            <p class='card-desc'>{mod.description}</p>
+            {mod.repo ? (
+              <a href={mod.repo} target='_blank' class='card-link'>
+                <Fragment set:html={GH_SVG} />
+                View repo
+              </a>
+            ) : (
+              <span class='card-soon'>Coming soon</span>
+            )}
           </div>
-          <h3 class="card-title">{mod.name}</h3>
-          <p class="card-tagline">{mod.tagline}</p>
-          <p class="card-desc">{mod.description}</p>
-          {mod.repo ? (
-            <a href={mod.repo} target="_blank" class="card-link">
-              <Fragment set:html={GH_SVG} />
-              View repo
-            </a>
-          ) : (
-            <span class="card-soon">Coming soon</span>
-          )}
-        </div>
-      ))}
+        ))
+      }
     </div>
   </section>
 
   <!-- PHILOSOPHY -->
-  <section id="principles" class="section-philosophy">
-    <div class="section-inner">
-      <div class="reveal section-header">
-        <p class="section-eyebrow" style="color: var(--coral);">Philosophy</p>
-        <h2 class="section-title">Built on three rules.</h2>
+  <section id='principles' class='section-philosophy'>
+    <div class='section-inner'>
+      <div class='reveal section-header'>
+        <p class='section-eyebrow' style='color: var(--coral);'>Philosophy</p>
+        <h2 class='section-title'>Built on three rules.</h2>
       </div>
 
-      <div class="principles-grid">
-        {[
-          { icon: "🐳", title: "Docker native", body: "Every module ships as a Docker image. One Compose file, one command, running on your NAS. No cloud dependency, no internet required at the bar." },
-          { icon: "🪸", title: "Jellyfin as source of truth", body: "Modules never share a database. If two need to talk, they do it through the Jellyfin API. Clean boundaries, no tight coupling." },
-          { icon: "🔓", title: "MIT forever", body: "Open source, no paid tier, no SaaS. GitHub Sponsors if you get value from it. The code belongs to everyone." },
-        ].map((p) => (
-          <div class="reveal principle-card">
-            <div class="principle-icon">{p.icon}</div>
-            <h3 class="principle-title">{p.title}</h3>
-            <p class="principle-body">{p.body}</p>
-          </div>
-        ))}
+      <div class='principles-grid'>
+        {
+          [
+            {
+              icon: '🐳',
+              title: 'Docker native',
+              body: 'Every module ships as a Docker image. One Compose file, one command, running on your NAS. No cloud dependency, no internet required at the bar.',
+            },
+            {
+              icon: '🪸',
+              title: 'Jellyfin as source of truth',
+              body: 'Modules never share a database. If two need to talk, they do it through the Jellyfin API. Clean boundaries, no tight coupling.',
+            },
+            {
+              icon: '🔓',
+              title: 'MIT forever',
+              body: 'Open source, no paid tier, no SaaS. GitHub Sponsors if you get value from it. The code belongs to everyone.',
+            },
+          ].map((p) => (
+            <div class='reveal principle-card'>
+              <div class='principle-icon'>{p.icon}</div>
+              <h3 class='principle-title'>{p.title}</h3>
+              <p class='principle-body'>{p.body}</p>
+            </div>
+          ))
+        }
       </div>
 
-      <div class="reveal code-block">
-        <p class="code-label">docker-compose.yml</p>
-        <pre class="code-pre"><span style="color: var(--teal);">services:</span>
+      <div class='reveal code-block'>
+        <p class='code-label'>docker-compose.yml</p>
+        <pre
+          class='code-pre'><span style="color: var(--teal);">services:</span>
   <span style="color: var(--coral);">kapow:</span>
     <span style="color: var(--ink-muted);">image: ghcr.io/get-coral/kapow:latest</span>
     <span style="color: var(--ink-muted);">ports: ["3000:3000"]</span>
@@ -214,38 +249,58 @@ const GH_SVG = `<svg width="14" height="14" viewBox="0 0 24 24" fill="currentCol
   </section>
 
   <!-- ORIGIN STORY -->
-  <section class="section-origin">
-    <div class="reveal origin-inner">
-      <p class="section-eyebrow" style="color: var(--ink-faint);">How it started</p>
-      <blockquote class="origin-quote">
-        "Built because a superhero-themed bar in Ghent was still using coasters to manage their karaoke queue."
+  <section class='section-origin'>
+    <div class='reveal origin-inner'>
+      <p class='section-eyebrow' style='color: var(--ink-faint);'>
+        How it started
+      </p>
+      <blockquote class='origin-quote'>
+        "Built because a superhero-themed bar in Ghent was still using coasters
+        to manage their karaoke queue."
       </blockquote>
-      <p class="origin-sub">KAPOW! was the first module — made for Comic Sans bar. Coral grew from there.</p>
+      <p class='origin-sub'>
+        KAPOW! was the first module — made for Comic Sans bar. Coral grew from
+        there.
+      </p>
     </div>
   </section>
 
   <!-- SPONSOR CTA -->
-  <section class="section-sponsor">
-    <div class="reveal sponsor-inner">
-      <div class="sponsor-icon">🪸</div>
-      <h2 class="sponsor-title">Support the reef.</h2>
-      <p class="sponsor-body">Coral is free, open source, and built solo. If it runs on your NAS and makes your life better — consider sponsoring. Every bit keeps the modules maintained and growing.</p>
-      <div class="sponsor-ctas">
-        <a href="https://github.com/sponsors/ElianCodes" target="_blank" class="btn-primary">❤️ Sponsor on GitHub</a>
-        <a href="https://github.com/Get-Coral" target="_blank" class="btn-ghost">Star a repo</a>
+  <section class='section-sponsor'>
+    <div class='reveal sponsor-inner'>
+      <div class='sponsor-icon'>🪸</div>
+      <h2 class='sponsor-title'>Support the reef.</h2>
+      <p class='sponsor-body'>
+        Coral is free, open source, and built solo. If it runs on your NAS and
+        makes your life better — consider sponsoring. Every bit keeps the
+        modules maintained and growing.
+      </p>
+      <div class='sponsor-ctas'>
+        <a
+          href='https://github.com/sponsors/ElianCodes'
+          target='_blank'
+          class='btn-primary'>❤️ Sponsor on GitHub</a
+        >
+        <a href='https://github.com/Get-Coral' target='_blank' class='btn-ghost'
+          >Star a repo</a
+        >
       </div>
     </div>
   </section>
 
   <!-- FOOTER -->
-  <footer class="site-footer">
-    <div class="footer-left">
+  <footer class='site-footer'>
+    <div class='footer-left'>
       <span>🪸</span>
-      <span class="footer-copy">Coral — MIT Licensed</span>
+      <span class='footer-copy'>Coral — MIT Licensed</span>
     </div>
-    <div class="footer-links">
-      <a href="https://github.com/Get-Coral" target="_blank" class="footer-link">GitHub</a>
-      <a href="https://elian.codes" target="_blank" class="footer-link">elian.codes</a>
+    <div class='footer-links'>
+      <a href='https://github.com/Get-Coral' target='_blank' class='footer-link'
+        >GitHub</a
+      >
+      <a href='https://elian.codes' target='_blank' class='footer-link'
+        >elian.codes</a
+      >
     </div>
   </footer>
 </Layout>
