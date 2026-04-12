@@ -7,6 +7,11 @@ const npmPackages = [
 		npm: "@get-coral/jellyfin",
 		repo: "https://github.com/Get-Coral/Jellyfin",
 	},
+	{
+		name: "create-coral",
+		npm: "create-coral",
+		repo: "https://github.com/Get-Coral/create-coral",
+	},
 ];
 
 const dockerNamespace = "getcoral";
@@ -63,7 +68,7 @@ const GH_SVG = `<svg width="14" height="14" viewBox="0 0 24 24" fill="currentCol
       <article class='stats-card reveal visible'>
         <h2>NPM Downloads</h2>
         <p class='card-sub'>
-          Weekly download badges per published Coral package.
+			Weekly download badges for published Coral packages and tooling.
         </p>
         <ul class='metric-list'>
           {
