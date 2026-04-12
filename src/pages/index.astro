@@ -118,7 +118,10 @@ const GH_SVG = `<svg width="14" height="14" viewBox="0 0 24 24" fill="currentCol
 
       <div class='animate-fade-up delay-4 hero-ctas'>
         <a href='#modules' class='btn-primary'>Explore modules</a>
-        <a href='https://docs.getcoral.dev/contributing/project-templates/' class='btn-ghost'>Scaffold with the CLI</a>
+        <a
+          href='https://docs.getcoral.dev/getting-started/create-coral/'
+          class='btn-ghost'>Scaffold with the CLI</a
+        >
         <a
           href='https://github.com/Get-Coral'
           target='_blank'
@@ -130,9 +133,17 @@ const GH_SVG = `<svg width="14" height="14" viewBox="0 0 24 24" fill="currentCol
       </div>
 
       <p class='animate-fade-up delay-5 hero-sub'>
-        The official scaffolder ships the Coral module template, release automation,
-        Biome, and TypeScript defaults out of the box.
+        The official scaffolder ships the Coral module template, release
+        automation, Biome, and TypeScript defaults out of the box.
       </p>
+
+      <div class='animate-fade-up delay-5 code-block'>
+        <p class='code-label'>create-coral</p>
+        <pre
+          class='code-pre'><span style="color: var(--teal);">pnpm</span> create coral@latest
+<span style="color: var(--coral);">npm</span> create coral@latest
+<span style="color: var(--teal);">bun</span> create coral@latest</pre>
+      </div>
 
       <div class='animate-fade-up delay-5 stats-row'>
         <div class='stat'>
