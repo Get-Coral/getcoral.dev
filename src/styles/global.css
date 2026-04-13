@@ -627,6 +627,11 @@ body::before {
 }
 .app-panel {
   padding: 1.35rem;
+  display: flex;
+  flex-direction: column;
+}
+.app-panel .app-chip-grid {
+  margin-top: auto;
 }
 .app-panel-subheading {
   margin: 1.5rem 0 0.8rem;
