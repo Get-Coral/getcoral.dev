@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-labelledby="title desc">
+  <title id="title">Coral - Open Source Jellyfin Ecosystem</title>
+  <desc id="desc">Coral is a reef of independent Docker modules that extend Jellyfin with modern UX.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#071018" />
+      <stop offset="100%" stop-color="#112937" />
+    </linearGradient>
+    <radialGradient id="glowCoral" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(210 120) rotate(90) scale(280)">
+      <stop offset="0%" stop-color="#ff6b6b" stop-opacity="0.5" />
+      <stop offset="100%" stop-color="#ff6b6b" stop-opacity="0" />
+    </radialGradient>
+    <radialGradient id="glowTeal" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(980 540) rotate(90) scale(300)">
+      <stop offset="0%" stop-color="#2dd4bf" stop-opacity="0.4" />
+      <stop offset="100%" stop-color="#2dd4bf" stop-opacity="0" />
+    </radialGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#bg)" />
+  <rect width="1200" height="630" fill="url(#glowCoral)" />
+  <rect width="1200" height="630" fill="url(#glowTeal)" />
+
+  <g transform="translate(86 94)">
+    <rect x="0" y="0" width="240" height="66" rx="33" fill="rgba(255,255,255,0.08)" stroke="rgba(255,255,255,0.2)" />
+    <text x="28" y="42" fill="#d8f6ff" font-family="Avenir Next, Segoe UI, Arial, sans-serif" font-size="30" font-weight="700">Coral</text>
+    <circle cx="205" cy="33" r="12" fill="#2dd4bf" />
+  </g>
+
+  <g transform="translate(86 210)">
+    <text x="0" y="0" fill="#e8f3fb" font-family="Avenir Next, Segoe UI, Arial, sans-serif" font-size="72" font-weight="800">Open Source Jellyfin</text>
+    <text x="0" y="88" fill="#e8f3fb" font-family="Avenir Next, Segoe UI, Arial, sans-serif" font-size="72" font-weight="800">Ecosystem Modules</text>
+  </g>
+
+  <g transform="translate(86 396)">
+    <text x="0" y="0" fill="#b7cad8" font-family="Avenir Next, Segoe UI, Arial, sans-serif" font-size="34" font-weight="500">Docker-native apps that extend Jellyfin with modern UX.</text>
+    <text x="0" y="56" fill="#9db4c4" font-family="Avenir Next, Segoe UI, Arial, sans-serif" font-size="30" font-weight="500">Aurora, KAPOW, Fathom, Marquee, Encore, Librarian</text>
+  </g>
+
+  <g transform="translate(86 516)">
+    <rect x="0" y="0" width="390" height="64" rx="32" fill="rgba(45,212,191,0.15)" stroke="rgba(45,212,191,0.6)" />
+    <text x="28" y="42" fill="#2dd4bf" font-family="Avenir Next, Segoe UI, Arial, sans-serif" font-size="30" font-weight="700">getcoral.dev</text>
+  </g>
+</svg>

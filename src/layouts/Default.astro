@@ -5,16 +5,31 @@ import "../styles/global.css";
 interface Props {
 	title?: string;
 	description?: string;
+  image?: string;
+  type?: "website" | "article";
+  noindex?: boolean;
+  canonicalURL?: string;
 }
 
 const {
-	title = "Coral — Jellyfin Ecosystem",
+  title = "Coral | Jellyfin Ecosystem",
 	description = "A reef of independent Docker modules that extend Jellyfin with modern UX. Each one alive on its own, thriving together.",
+  image,
+  type,
+  noindex,
+  canonicalURL,
 } = Astro.props;
 ---
 
 <html lang="en">
-  <BaseHead title={title} description={description} />
+  <BaseHead
+    title={title}
+    description={description}
+    image={image}
+    type={type}
+    noindex={noindex}
+    canonicalURL={canonicalURL}
+  />
   <body>
     <slot />
     <script is:inline>
