@@ -125,8 +125,8 @@ export const modules: CoralModule[] = [
 			"A calm, cover-first interface for books, manga, comics, PDFs, and grouped collections pulled from your Jellyfin reading libraries.",
 		longDescription:
 			"Fathom is Coral's reading room. It turns Jellyfin libraries into a quieter browsing experience with featured shelves, recent additions, collection views, detailed title metadata, and local SQLite-backed connection storage.",
-		status: "idea",
-		statusLabel: "Planned",
+		status: "mvp",
+		statusLabel: "MVP Built",
 		repo: "https://github.com/Get-Coral/fathom",
 		docs: "https://docs.getcoral.dev/modules/fathom/",
 		containerUrl: "https://hub.docker.com/r/getcoral/fathom",
@@ -159,8 +159,8 @@ export const modules: CoralModule[] = [
 			"A passive, always-on screen for TVs and monitors that surfaces what is playing, what is next, and what was recently added without demanding interaction.",
 		longDescription:
 			"Marquee is the Coral module for presence instead of control. It is meant to turn a spare display into a beautiful ambient layer for your media setup, whether that is a living room TV, hallway panel, or wall-mounted dashboard.",
-		status: "idea",
-		statusLabel: "Planned",
+		status: "mvp",
+		statusLabel: "MVP Built",
 		repo: "https://github.com/Get-Coral/marquee",
 		docs: "https://docs.getcoral.dev/modules/marquee/",
 		containerUrl: "https://hub.docker.com/r/getcoral/marquee",
@@ -193,8 +193,8 @@ export const modules: CoralModule[] = [
 			"Guests browse Jellyfin music and send queue requests while the host approves, rejects, and controls what actually plays next.",
 		longDescription:
 			"Encore is Coral's guest request layer for music playback. It is meant for parties and shared spaces where you want collaborative input from guests without giving up host control over the queue.",
-		status: "idea",
-		statusLabel: "Planned",
+		status: "mvp",
+		statusLabel: "MVP Built",
 		repo: "https://github.com/Get-Coral/encore",
 		docs: "https://docs.getcoral.dev/modules/encore/",
 		containerUrl: "https://hub.docker.com/r/getcoral/encore",
@@ -221,8 +221,8 @@ export const modules: CoralModule[] = [
 			"Scan, organize, enrich, and maintain your Jellyfin library with a management layer focused on metadata quality and long-term cleanliness.",
 		longDescription:
 			"Librarian is Coral's module for media hygiene. It is aimed at people who want stronger organization, metadata enrichment, duplicate detection, and bulk library operations while keeping Jellyfin as the source of truth.",
-		status: "idea",
-		statusLabel: "Planned",
+		status: "mvp",
+		statusLabel: "MVP Built",
 		repo: "https://github.com/Get-Coral/librarian",
 		docs: "https://docs.getcoral.dev/modules/librarian/",
 		containerUrl: "https://hub.docker.com/r/getcoral/librarian",
