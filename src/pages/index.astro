@@ -114,9 +114,10 @@ const GH_SVG = `<svg width="14" height="14" viewBox="0 0 24 24" fill="currentCol
       </h1>
 
       <p class='animate-fade-up delay-3 hero-sub'>
-        A reef of independent Docker modules that extend Jellyfin with modern
-        UX. Each one alive on its own — thriving together. Build your own with
-        <code>pnpm create coral@latest</code>.
+        A reef of independent modules and shared packages that extend Jellyfin
+        with modern UX. Build your own with
+        <code>pnpm create coral@latest</code> and reuse components with
+        <code>@get-coral/ui</code>.
       </p>
 
       <div class='animate-fade-up delay-4 hero-ctas'>
@@ -124,6 +125,9 @@ const GH_SVG = `<svg width="14" height="14" viewBox="0 0 24 24" fill="currentCol
         <a
           href='https://docs.getcoral.dev/getting-started/create-coral/'
           class='btn-ghost'>Scaffold with the CLI</a
+        >
+        <a href='https://docs.getcoral.dev/libraries/coral-ui/' class='btn-ghost'
+          >Explore Coral UI</a
         >
         <a
           href='https://github.com/Get-Coral'
@@ -154,6 +158,11 @@ const GH_SVG = `<svg width="14" height="14" viewBox="0 0 24 24" fill="currentCol
         <div class='stat'>
           <div class='stat-value' style='color: var(--teal);'>CLI</div>
           <div class='stat-label'>create-coral</div>
+        </div>
+        <div class='stat-divider'></div>
+        <div class='stat'>
+          <div class='stat-value' style='color: var(--coral);'>4</div>
+          <div class='stat-label'>NPM packages</div>
         </div>
         <div class='stat-divider'></div>
         <div class='stat'>
@@ -207,6 +216,56 @@ const GH_SVG = `<svg width="14" height="14" viewBox="0 0 24 24" fill="currentCol
           </div>
         ))
       }
+    </div>
+  </section>
+
+  <!-- PACKAGES -->
+  <section class='section-philosophy'>
+    <div class='section-inner'>
+      <div class='reveal section-header'>
+        <p class='section-eyebrow' style='color: var(--teal);'>Shared Packages</p>
+        <h2 class='section-title'>Build once, reuse everywhere.</h2>
+        <p class='section-sub'>
+          Coral also ships reusable NPM packages so modules can share UI,
+          typed APIs, and tooling standards.
+        </p>
+      </div>
+
+      <div class='principles-grid'>
+        <div class='reveal principle-card'>
+          <div class='principle-icon'>🧩</div>
+          <h3 class='principle-title'>@get-coral/ui</h3>
+          <p class='principle-body'>
+            Shared React component library and design tokens for consistent Coral
+            interfaces.
+          </p>
+          <a href='https://docs.getcoral.dev/libraries/coral-ui/' class='card-link'>
+            Read docs
+          </a>
+        </div>
+
+        <div class='reveal principle-card'>
+          <div class='principle-icon'>🔌</div>
+          <h3 class='principle-title'>@get-coral/jellyfin</h3>
+          <p class='principle-body'>
+            Typed Jellyfin API client used across Coral modules and custom apps.
+          </p>
+          <a href='https://docs.getcoral.dev/libraries/jellyfin/' class='card-link'>
+            Read docs
+          </a>
+        </div>
+
+        <div class='reveal principle-card'>
+          <div class='principle-icon'>🛠️</div>
+          <h3 class='principle-title'>Developer Standards</h3>
+          <p class='principle-body'>
+            Shared TypeScript and Biome presets keep all Coral repos aligned.
+          </p>
+          <a href='https://docs.getcoral.dev/libraries/npm-packages/' class='card-link'>
+            View package catalog
+          </a>
+        </div>
+      </div>
     </div>
   </section>
 
