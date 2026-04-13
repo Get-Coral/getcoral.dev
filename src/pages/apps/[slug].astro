@@ -76,8 +76,8 @@ const breadcrumbSchema = {
 	canonicalURL={canonicalURL}
 >
 	<meta slot="head" name="keywords" content={keywords} />
-	<script slot="head" type="application/ld+json" set:html={JSON.stringify(softwareAppSchema)} />
-	<script slot="head" type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
+	<script is:inline slot="head" type="application/ld+json" set:html={JSON.stringify(softwareAppSchema)} />
+	<script is:inline slot="head" type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
 	<nav class="site-nav">
 		<a href="/" class="nav-logo">
 			<span>🪸</span>

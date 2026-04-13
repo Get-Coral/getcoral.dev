@@ -1,42 +1,52 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-labelledby="title desc">
-  <title id="title">Coral - Open Source Jellyfin Ecosystem</title>
-  <desc id="desc">Coral is a reef of independent Docker modules that extend Jellyfin with modern UX.</desc>
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-label="Coral — Open Source Jellyfin Ecosystem">
   <defs>
-    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0%" stop-color="#071018" />
-      <stop offset="100%" stop-color="#112937" />
-    </linearGradient>
-    <radialGradient id="glowCoral" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(210 120) rotate(90) scale(280)">
-      <stop offset="0%" stop-color="#ff6b6b" stop-opacity="0.5" />
-      <stop offset="100%" stop-color="#ff6b6b" stop-opacity="0" />
+    <pattern id="dots" width="28" height="28" patternUnits="userSpaceOnUse">
+      <circle cx="1" cy="1" r="1" fill="rgba(255,255,255,0.025)"/>
+    </pattern>
+    <radialGradient id="gCoral" gradientUnits="userSpaceOnUse" cx="-80" cy="-60" r="700">
+      <stop offset="0%" stop-color="#ff6b6b" stop-opacity="0.11"/>
+      <stop offset="100%" stop-color="#ff6b6b" stop-opacity="0"/>
     </radialGradient>
-    <radialGradient id="glowTeal" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(980 540) rotate(90) scale(300)">
-      <stop offset="0%" stop-color="#2dd4bf" stop-opacity="0.4" />
-      <stop offset="100%" stop-color="#2dd4bf" stop-opacity="0" />
+    <radialGradient id="gTeal" gradientUnits="userSpaceOnUse" cx="1340" cy="740" r="680">
+      <stop offset="0%" stop-color="#2dd4bf" stop-opacity="0.1"/>
+      <stop offset="100%" stop-color="#2dd4bf" stop-opacity="0"/>
     </radialGradient>
   </defs>
-  <rect width="1200" height="630" fill="url(#bg)" />
-  <rect width="1200" height="630" fill="url(#glowCoral)" />
-  <rect width="1200" height="630" fill="url(#glowTeal)" />
 
-  <g transform="translate(86 94)">
-    <rect x="0" y="0" width="240" height="66" rx="33" fill="rgba(255,255,255,0.08)" stroke="rgba(255,255,255,0.2)" />
-    <text x="28" y="42" fill="#d8f6ff" font-family="Avenir Next, Segoe UI, Arial, sans-serif" font-size="30" font-weight="700">Coral</text>
-    <circle cx="205" cy="33" r="12" fill="#2dd4bf" />
-  </g>
+  <!-- Base background -->
+  <rect width="1200" height="630" fill="#060d12"/>
 
-  <g transform="translate(86 210)">
-    <text x="0" y="0" fill="#e8f3fb" font-family="Avenir Next, Segoe UI, Arial, sans-serif" font-size="72" font-weight="800">Open Source Jellyfin</text>
-    <text x="0" y="88" fill="#e8f3fb" font-family="Avenir Next, Segoe UI, Arial, sans-serif" font-size="72" font-weight="800">Ecosystem Modules</text>
-  </g>
+  <!-- Dot grid -->
+  <rect width="1200" height="630" fill="url(#dots)"/>
 
-  <g transform="translate(86 396)">
-    <text x="0" y="0" fill="#b7cad8" font-family="Avenir Next, Segoe UI, Arial, sans-serif" font-size="34" font-weight="500">Docker-native apps that extend Jellyfin with modern UX.</text>
-    <text x="0" y="56" fill="#9db4c4" font-family="Avenir Next, Segoe UI, Arial, sans-serif" font-size="30" font-weight="500">Aurora, KAPOW, Fathom, Marquee, Encore, Librarian</text>
-  </g>
+  <!-- Glow blobs -->
+  <rect width="1200" height="630" fill="url(#gCoral)"/>
+  <rect width="1200" height="630" fill="url(#gTeal)"/>
 
-  <g transform="translate(86 516)">
-    <rect x="0" y="0" width="390" height="64" rx="32" fill="rgba(45,212,191,0.15)" stroke="rgba(45,212,191,0.6)" />
-    <text x="28" y="42" fill="#2dd4bf" font-family="Avenir Next, Segoe UI, Arial, sans-serif" font-size="30" font-weight="700">getcoral.dev</text>
-  </g>
+  <!-- Badge -->
+  <rect x="80" y="68" width="148" height="40" rx="20" fill="rgba(45,212,191,0.1)" stroke="rgba(45,212,191,0.22)" stroke-width="1"/>
+  <text x="106" y="93" fill="#2dd4bf" font-family="Arial, Helvetica, sans-serif" font-size="15" letter-spacing="2" font-weight="500">&#x1FAB8; CORAL</text>
+
+  <!-- Headline line 1 -->
+  <text x="80" y="234" fill="#f0ede8" font-family="Georgia, 'Times New Roman', serif" font-size="86" font-weight="700" letter-spacing="-2">Your media server.</text>
+
+  <!-- Headline line 2 — italic coral -->
+  <text x="80" y="340" fill="#ff6b6b" font-family="Georgia, 'Times New Roman', serif" font-size="86" font-weight="700" font-style="italic" letter-spacing="-2">Reimagined.</text>
+
+  <!-- Tagline -->
+  <text x="80" y="406" fill="rgba(240,237,232,0.45)" font-family="Arial, Helvetica, sans-serif" font-size="25" font-weight="300">A reef of independent Docker modules that extend Jellyfin.</text>
+
+  <!-- Module names row -->
+  <text x="80" y="468" fill="rgba(240,237,232,0.22)" font-family="Arial, Helvetica, sans-serif" font-size="19" font-weight="400">Aurora · KAPOW! · Tide · Fathom · Marquee · Encore · Librarian</text>
+
+  <!-- Bottom divider line -->
+  <line x1="80" y1="504" x2="1120" y2="504" stroke="rgba(255,255,255,0.07)" stroke-width="1"/>
+
+  <!-- Domain pill -->
+  <rect x="80" y="530" width="224" height="48" rx="24" fill="rgba(45,212,191,0.08)" stroke="rgba(45,212,191,0.4)" stroke-width="1.5"/>
+  <text x="117" y="561" fill="#2dd4bf" font-family="Arial, Helvetica, sans-serif" font-size="22" font-weight="600">getcoral.dev</text>
+
+  <!-- MIT badge -->
+  <rect x="330" y="530" width="100" height="48" rx="24" fill="rgba(255,255,255,0.04)" stroke="rgba(255,255,255,0.08)" stroke-width="1"/>
+  <text x="362" y="561" fill="rgba(240,237,232,0.35)" font-family="Arial, Helvetica, sans-serif" font-size="19" font-weight="400">MIT</text>
 </svg>
