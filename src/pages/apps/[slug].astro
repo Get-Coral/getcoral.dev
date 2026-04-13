@@ -1,0 +1,168 @@
+---
+import Layout from "@layouts/Default.astro";
+import { modules } from "../../data/modules";
+
+export function getStaticPaths() {
+	return modules.map((module) => ({
+		params: { slug: module.slug },
+		props: { module },
+	}));
+}
+
+const { module } = Astro.props;
+
+if (!module) {
+	return Astro.redirect("/");
+}
+---
+
+<Layout
+	title={`${module.name} | Coral`}
+	description={module.description}
+	type="article"
+	canonicalURL={`https://getcoral.dev/apps/${module.slug}`}
+>
+	<nav class="site-nav">
+		<a href="/" class="nav-logo">
+			<span>🪸</span>
+			<span class="nav-logo-text">Coral</span>
+		</a>
+		<div class="nav-links">
+			<a href="/" class="nav-pill">Home</a>
+			<a href={module.docs} class="nav-pill">Docs</a>
+			<a href={module.repo} target="_blank" class="nav-pill">Repo</a>
+		</div>
+	</nav>
+
+	<section class={`app-hero ${module.accent}-accent`}>
+		<div class="glow-coral" style="top: -180px; left: -140px;"></div>
+		<div class="glow-teal" style="bottom: -140px; right: -120px;"></div>
+
+		<div class="app-shell">
+			<div class="app-hero-copy reveal visible">
+				<div class="app-badge-row">
+					<p class="hero-badge">
+						<span>{module.emoji}</span>
+						{module.name}
+					</p>
+					<span class={`badge badge-${module.status}`}>
+						<span class="badge-dot" />
+						{module.statusLabel}
+					</span>
+				</div>
+
+				<h1 class="app-title">
+					{module.name}
+					<span class="app-title-muted">{module.tagline}</span>
+				</h1>
+
+				<p class="app-sub">{module.longDescription}</p>
+
+				<div class="hero-ctas">
+					<a href={module.docs} class="btn-primary">Read documentation</a>
+					<a href={module.repo} target="_blank" class="btn-ghost">View repository</a>
+					{module.containerUrl ? (
+						<a href={module.containerUrl} target="_blank" class="btn-ghost">Docker Hub</a>
+					) : null}
+				</div>
+			</div>
+
+			<div class="app-summary-card reveal visible">
+				<p class="section-eyebrow" style={`color: var(--${module.accent});`}>At a glance</p>
+				<div class="app-stat-grid">
+					<div class="app-stat">
+						<p class="app-stat-label">Status</p>
+						<p class="app-stat-value">{module.statusLabel}</p>
+					</div>
+					<div class="app-stat">
+						<p class="app-stat-label">Best for</p>
+						<p class="app-stat-value">{module.bestFor[0]}</p>
+					</div>
+					<div class="app-stat">
+						<p class="app-stat-label">Stack</p>
+						<p class="app-stat-value">{module.stack[0]}</p>
+					</div>
+				</div>
+				<p class="app-summary-text">{module.description}</p>
+			</div>
+		</div>
+	</section>
+
+	<section class="app-section">
+		<div class="app-shell app-grid">
+			<div class="app-panel reveal">
+				<p class="section-eyebrow" style={`color: var(--${module.accent});`}>Highlights</p>
+				<h2 class="section-title">What {module.name} is built to do.</h2>
+				<div class="app-list">
+					{module.highlights.map((item) => (
+						<div class="app-list-item">
+							<div class="app-list-dot"></div>
+							<p>{item}</p>
+						</div>
+					))}
+				</div>
+			</div>
+
+			<div class="app-panel reveal">
+				<p class="section-eyebrow" style={`color: var(--${module.accent});`}>Best for</p>
+				<h2 class="section-title">Who this module serves.</h2>
+				<div class="app-chip-grid">
+					{module.bestFor.map((item) => (
+						<span class="app-chip">{item}</span>
+					))}
+				</div>
+
+				<p class="section-eyebrow app-panel-subheading" style={`color: var(--${module.accent});`}>Core stack</p>
+				<div class="app-chip-grid">
+					{module.stack.map((item) => (
+						<span class="app-chip app-chip-muted">{item}</span>
+					))}
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<section class="app-section app-section-border">
+		<div class="app-shell">
+			<div class="section-header reveal">
+				<p class="section-eyebrow" style={`color: var(--${module.accent});`}>Explore the module</p>
+				<h2 class="section-title">Take the next step.</h2>
+				<p class="section-sub">
+					Jump into the docs for setup and product detail, or head straight to the repository if you want to build, run, or contribute.
+				</p>
+			</div>
+
+			<div class="app-link-grid">
+				<a href={module.docs} class="app-link-card reveal">
+					<p class="app-link-eyebrow">Documentation</p>
+					<h3>Read the module guide</h3>
+					<p>Setup notes, features, environment variables, and deployment details.</p>
+				</a>
+				<a href={module.repo} target="_blank" class="app-link-card reveal">
+					<p class="app-link-eyebrow">Repository</p>
+					<h3>Browse the source</h3>
+					<p>Open the repo, inspect the codebase, and track current progress on GitHub.</p>
+				</a>
+				{module.containerUrl ? (
+					<a href={module.containerUrl} target="_blank" class="app-link-card reveal">
+						<p class="app-link-eyebrow">Container</p>
+						<h3>Pull the image</h3>
+						<p>Use the published Docker Hub images for a faster self-hosted setup.</p>
+					</a>
+				) : null}
+			</div>
+		</div>
+	</section>
+
+	<footer class="site-footer">
+		<div class="footer-left">
+			<span>{module.emoji}</span>
+			<span class="footer-copy">{module.name} is part of Coral</span>
+		</div>
+		<div class="footer-links">
+			<a href="/" class="footer-link">Back to home</a>
+			<a href={module.docs} class="footer-link">Docs</a>
+			<a href={module.repo} target="_blank" class="footer-link">GitHub</a>
+		</div>
+	</footer>
+</Layout>
