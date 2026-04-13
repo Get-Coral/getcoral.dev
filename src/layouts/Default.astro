@@ -1,23 +1,23 @@
 ---
-import BaseHead from '@components/BaseHead.astro';
-import '../styles/global.css';
+import BaseHead from "@components/BaseHead.astro";
+import "../styles/global.css";
 
 interface Props {
-  title?: string;
-  description?: string;
-  image?: string;
-  type?: 'website' | 'article';
-  noindex?: boolean;
-  canonicalURL?: string;
+	title?: string;
+	description?: string;
+	image?: string;
+	type?: "website" | "article";
+	noindex?: boolean;
+	canonicalURL?: string;
 }
 
 const {
-  title = 'Coral | Jellyfin Ecosystem',
-  description = 'A reef of independent Docker modules that extend Jellyfin with modern UX. Each one alive on its own, thriving together.',
-  image,
-  type,
-  noindex,
-  canonicalURL,
+	title = "Coral | Jellyfin Ecosystem",
+	description = "A reef of independent Docker modules that extend Jellyfin with modern UX. Each one alive on its own, thriving together.",
+	image,
+	type,
+	noindex,
+	canonicalURL,
 } = Astro.props;
 ---
 
