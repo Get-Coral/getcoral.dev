@@ -1,19 +1,19 @@
 ---
-import BaseHead from "@components/BaseHead.astro";
-import "../styles/global.css";
+import BaseHead from '@components/BaseHead.astro';
+import '../styles/global.css';
 
 interface Props {
-	title?: string;
-	description?: string;
+  title?: string;
+  description?: string;
   image?: string;
-  type?: "website" | "article";
+  type?: 'website' | 'article';
   noindex?: boolean;
   canonicalURL?: string;
 }
 
 const {
-  title = "Coral | Jellyfin Ecosystem",
-	description = "A reef of independent Docker modules that extend Jellyfin with modern UX. Each one alive on its own, thriving together.",
+  title = 'Coral | Jellyfin Ecosystem',
+  description = 'A reef of independent Docker modules that extend Jellyfin with modern UX. Each one alive on its own, thriving together.',
   image,
   type,
   noindex,
@@ -21,7 +21,7 @@ const {
 } = Astro.props;
 ---
 
-<html lang="en">
+<html lang='en'>
   <BaseHead
     title={title}
     description={description}
@@ -34,15 +34,20 @@ const {
     <slot />
     <script is:inline>
       // Scroll reveal
-      const observer = new IntersectionObserver((entries) => {
-        entries.forEach(e => {
-          if (e.isIntersecting) {
-            e.target.classList.add('visible');
-            observer.unobserve(e.target);
-          }
-        });
-      }, { threshold: 0.12 });
-      document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((e) => {
+            if (e.isIntersecting) {
+              e.target.classList.add('visible');
+              observer.unobserve(e.target);
+            }
+          });
+        },
+        { threshold: 0.12 },
+      );
+      document
+        .querySelectorAll('.reveal')
+        .forEach((el) => observer.observe(el));
     </script>
   </body>
 </html>
