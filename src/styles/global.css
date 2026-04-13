@@ -308,6 +308,8 @@ body::before {
   position: relative;
   overflow: hidden;
   cursor: pointer;
+  display: flex;
+  flex-direction: column;
 }
 .module-card-overlay {
   position: absolute;
@@ -364,6 +366,7 @@ body::before {
   display: flex;
   gap: 0.55rem;
   flex-wrap: wrap;
+  margin-top: auto;
 }
 .card-link {
   display: inline-flex;
@@ -418,10 +421,15 @@ body::before {
   border: 1px solid var(--border);
   border-radius: 16px;
   background: var(--surface);
+  display: flex;
+  flex-direction: column;
+}
+.principle-card > .card-link {
+  align-self: flex-start;
 }
 .principle-icon { font-size: 1.75rem; margin-bottom: 0.85rem; }
 .principle-title { font-size: 1.05rem; margin-bottom: 0.5rem; }
-.principle-body { font-size: 0.88rem; color: var(--ink-muted); line-height: 1.65; }
+.principle-body { font-size: 0.88rem; color: var(--ink-muted); line-height: 1.65; flex-grow: 1; margin-bottom: 1rem; }
 
 .code-block {
   margin-top: 2.5rem;

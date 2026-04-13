@@ -14,14 +14,70 @@ const { module } = Astro.props;
 if (!module) {
 	return Astro.redirect("/");
 }
+
+const canonicalURL = `https://getcoral.dev/apps/${module.slug}`;
+const keywords = [
+	module.name,
+	module.tagline,
+	"Jellyfin",
+	"self-hosted",
+	"open source",
+	"Docker",
+	...module.stack,
+	...module.bestFor,
+	"Coral",
+].join(", ");
+
+const softwareAppSchema = {
+	"@context": "https://schema.org",
+	"@type": "SoftwareApplication",
+	name: module.name,
+	description: module.longDescription,
+	url: canonicalURL,
+	applicationCategory: "MultimediaApplication",
+	operatingSystem: "Docker",
+	offers: {
+		"@type": "Offer",
+		price: "0",
+		priceCurrency: "USD",
+	},
+	isPartOf: {
+		"@type": "WebSite",
+		name: "Coral",
+		url: "https://getcoral.dev",
+	},
+};
+
+const breadcrumbSchema = {
+	"@context": "https://schema.org",
+	"@type": "BreadcrumbList",
+	itemListElement: [
+		{
+			"@type": "ListItem",
+			position: 1,
+			name: "Home",
+			item: "https://getcoral.dev",
+		},
+		{
+			"@type": "ListItem",
+			position: 2,
+			name: "Modules",
+			item: "https://getcoral.dev/#modules",
+		},
+		{ "@type": "ListItem", position: 3, name: module.name, item: canonicalURL },
+	],
+};
 ---
 
 <Layout
-	title={`${module.name} | Coral`}
+	title={`${module.name} — ${module.tagline} | Coral`}
 	description={module.description}
 	type="article"
-	canonicalURL={`https://getcoral.dev/apps/${module.slug}`}
+	canonicalURL={canonicalURL}
 >
+	<meta slot="head" name="keywords" content={keywords} />
+	<script slot="head" type="application/ld+json" set:html={JSON.stringify(softwareAppSchema)} />
+	<script slot="head" type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
 	<nav class="site-nav">
 		<a href="/" class="nav-logo">
 			<span>🪸</span>
@@ -66,25 +122,6 @@ if (!module) {
 					) : null}
 				</div>
 			</div>
-
-			<div class="app-summary-card reveal visible">
-				<p class="section-eyebrow" style={`color: var(--${module.accent});`}>At a glance</p>
-				<div class="app-stat-grid">
-					<div class="app-stat">
-						<p class="app-stat-label">Status</p>
-						<p class="app-stat-value">{module.statusLabel}</p>
-					</div>
-					<div class="app-stat">
-						<p class="app-stat-label">Best for</p>
-						<p class="app-stat-value">{module.bestFor[0]}</p>
-					</div>
-					<div class="app-stat">
-						<p class="app-stat-label">Stack</p>
-						<p class="app-stat-value">{module.stack[0]}</p>
-					</div>
-				</div>
-				<p class="app-summary-text">{module.description}</p>
-			</div>
 		</div>
 	</section>
 
@@ -112,12 +149,6 @@ if (!module) {
 					))}
 				</div>
 
-				<p class="section-eyebrow app-panel-subheading" style={`color: var(--${module.accent});`}>Core stack</p>
-				<div class="app-chip-grid">
-					{module.stack.map((item) => (
-						<span class="app-chip app-chip-muted">{item}</span>
-					))}
-				</div>
 			</div>
 		</div>
 	</section>

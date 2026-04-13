@@ -29,7 +29,9 @@ const {
     type={type}
     noindex={noindex}
     canonicalURL={canonicalURL}
-  />
+  >
+    <slot name="head" />
+  </BaseHead>
   <body>
     <slot />
     <script is:inline>
