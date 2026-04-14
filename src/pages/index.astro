@@ -1,79 +1,14 @@
 ---
 import Layout from "@layouts/Default.astro";
-
-const modules = [
-	{
-		name: "Aurora",
-		emoji: "🎬",
-		tagline: "High-end cinematic Jellyfin frontend",
-		description:
-			"The Netflix-quality client Jellyfin deserves. Full-bleed backdrops, smooth transitions, TanStack Start architecture. Built the way streaming should feel.",
-		status: "active",
-		statusLabel: "In Progress",
-		repo: "https://github.com/Get-Coral/aurora",
-		accent: "teal",
-	},
-	{
-		name: "KAPOW!",
-		emoji: "🎤",
-		tagline: "Karaoke queue manager for bars & events",
-		description:
-			"Guests scan a QR code, search your karaoke library, submit songs and vote. Host manages from their phone. Display view for the projector. Born at Comic Sans bar in Ghent.",
-		status: "mvp",
-		statusLabel: "MVP Built",
-		repo: "https://github.com/Get-Coral/KAPOW",
-		accent: "coral",
-	},
-	{
-		name: "Fathom",
-		emoji: "📖",
-		tagline: "Modern reading app from your NAS",
-		description:
-			"Ebooks, comics, manga, PDFs — beautifully presented in the browser or on mobile. Your entire reading library, self-hosted. No Kindle required.",
-		status: "idea",
-		statusLabel: "Planned",
-		repo: "https://github.com/Get-Coral/fathom",
-		accent: "teal",
-	},
-	{
-		name: "Marquee",
-		emoji: "📺",
-		tagline: "Ambient now-playing display",
-		description:
-			"A beautiful passive screen for any TV or monitor. Shows what's playing across all Jellyfin sessions, up next, recently added. No interaction — just presence.",
-		status: "idea",
-		statusLabel: "Planned",
-		repo: "https://github.com/Get-Coral/marquee",
-		accent: "coral",
-	},
-	{
-		name: "Encore",
-		emoji: "🎶",
-		tagline: "Guest media request system",
-		description:
-			"Share a link with party guests — they browse your Jellyfin library and request what plays next. Host approves or rejects. House party DJ mode for your media server.",
-		status: "idea",
-		statusLabel: "Planned",
-		repo: "https://github.com/Get-Coral/encore",
-		accent: "teal",
-	},
-	{
-		name: "Librarian",
-		emoji: "🗂️",
-		tagline: "Smart media management layer",
-		description:
-			"Auto-tag, organize, and enrich your Jellyfin library. Integrates yt-dlp for downloading karaoke tracks and YouTube content. NFO generation, poster scraping, duplicate detection.",
-		status: "idea",
-		statusLabel: "Planned",
-		repo: "https://github.com/Get-Coral/librarian",
-		accent: "coral",
-	},
-];
+import { modules } from "../data/modules";
 
 const GH_SVG = `<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0 1 12 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/></svg>`;
 ---
 
-<Layout>
+<Layout
+  title='Coral | Open Source Jellyfin Ecosystem Modules'
+  description='Coral is an open source Jellyfin ecosystem: independent Docker-native modules like Aurora, KAPOW, Fathom, Marquee, Encore, and Librarian.'
+>
   <!-- NAV -->
   <nav class='site-nav'>
     <a href='/' class='nav-logo'>
@@ -111,12 +46,21 @@ const GH_SVG = `<svg width="14" height="14" viewBox="0 0 24 24" fill="currentCol
       </h1>
 
       <p class='animate-fade-up delay-3 hero-sub'>
-        A reef of independent Docker modules that extend Jellyfin with modern
-        UX. Each one alive on its own — thriving together.
+        A reef of independent modules and shared packages that extend Jellyfin
+        with modern UX. Build your own with
+        <code>pnpm create coral@latest</code> and reuse components with
+        <code>@get-coral/ui</code>.
       </p>
 
       <div class='animate-fade-up delay-4 hero-ctas'>
         <a href='#modules' class='btn-primary'>Explore modules</a>
+        <a
+          href='https://docs.getcoral.dev/getting-started/create-coral/'
+          class='btn-ghost'>Scaffold with the CLI</a
+        >
+        <a href='https://docs.getcoral.dev/libraries/coral-ui/' class='btn-ghost'
+          >Explore Coral UI</a
+        >
         <a
           href='https://github.com/Get-Coral'
           target='_blank'
@@ -129,7 +73,7 @@ const GH_SVG = `<svg width="14" height="14" viewBox="0 0 24 24" fill="currentCol
 
       <div class='animate-fade-up delay-5 stats-row'>
         <div class='stat'>
-          <div class='stat-value' style='color: var(--coral);'>6</div>
+          <div class='stat-value' style='color: var(--coral);'>7</div>
           <div class='stat-label'>Modules</div>
         </div>
         <div class='stat-divider'></div>
@@ -141,6 +85,16 @@ const GH_SVG = `<svg width="14" height="14" viewBox="0 0 24 24" fill="currentCol
         <div class='stat'>
           <div class='stat-value'>∞</div>
           <div class='stat-label'>No quotas</div>
+        </div>
+        <div class='stat-divider'></div>
+        <div class='stat'>
+          <div class='stat-value' style='color: var(--teal);'>CLI</div>
+          <div class='stat-label'>create-coral</div>
+        </div>
+        <div class='stat-divider'></div>
+        <div class='stat'>
+          <div class='stat-value' style='color: var(--coral);'>5</div>
+          <div class='stat-label'>NPM packages</div>
         </div>
         <div class='stat-divider'></div>
         <div class='stat'>
@@ -167,33 +121,85 @@ const GH_SVG = `<svg width="14" height="14" viewBox="0 0 24 24" fill="currentCol
     </div>
 
     <div class='modules-grid'>
-      {
-        modules.map((mod, i) => (
-          <div
-            class={`module-card ${mod.accent}-accent reveal`}
-            style={`animation-delay: ${i * 0.07}s`}
-          >
-            <div class='card-header'>
-              <span class='card-emoji'>{mod.emoji}</span>
-              <span class={`badge badge-${mod.status}`}>
-                <span class='badge-dot' />
-                {mod.statusLabel}
-              </span>
-            </div>
-            <h3 class='card-title'>{mod.name}</h3>
+	      {
+	        modules.map((mod, i) => (
+	          <div
+	            class={`module-card ${mod.accent}-accent reveal`}
+	            style={`animation-delay: ${i * 0.07}s`}
+	          >
+	            <a
+	              href={`/apps/${mod.slug}`}
+	              class='module-card-overlay'
+	              aria-label={`Open ${mod.name} page`}
+	            ></a>
+	            <div class='card-header'>
+	              <span class='card-emoji'>{mod.emoji}</span>
+	            </div>
+	            <h3 class='card-title'>{mod.name}</h3>
             <p class='card-tagline'>{mod.tagline}</p>
             <p class='card-desc'>{mod.description}</p>
-            {mod.repo ? (
+            <div class='card-actions'>
+              <a href={mod.docs} class='card-link'>
+                Read docs
+              </a>
               <a href={mod.repo} target='_blank' class='card-link'>
                 <Fragment set:html={GH_SVG} />
                 View repo
               </a>
-            ) : (
-              <span class='card-soon'>Coming soon</span>
-            )}
+            </div>
           </div>
         ))
       }
+    </div>
+  </section>
+
+  <!-- PACKAGES -->
+  <section class='section-philosophy'>
+    <div class='section-inner'>
+      <div class='reveal section-header'>
+        <p class='section-eyebrow' style='color: var(--teal);'>Shared Packages</p>
+        <h2 class='section-title'>Build once, reuse everywhere.</h2>
+        <p class='section-sub'>
+          Coral also ships reusable NPM packages so modules can share UI,
+          typed APIs, and tooling standards.
+        </p>
+      </div>
+
+      <div class='principles-grid'>
+        <div class='reveal principle-card'>
+          <div class='principle-icon'>🧩</div>
+          <h3 class='principle-title'>@get-coral/ui</h3>
+          <p class='principle-body'>
+            Shared React component library and design tokens for consistent Coral
+            interfaces.
+          </p>
+          <a href='https://docs.getcoral.dev/libraries/coral-ui/' class='card-link'>
+            Read docs
+          </a>
+        </div>
+
+        <div class='reveal principle-card'>
+          <div class='principle-icon'>🔌</div>
+          <h3 class='principle-title'>@get-coral/jellyfin</h3>
+          <p class='principle-body'>
+            Typed Jellyfin API client used across Coral modules and custom apps.
+          </p>
+          <a href='https://docs.getcoral.dev/libraries/jellyfin/' class='card-link'>
+            Read docs
+          </a>
+        </div>
+
+        <div class='reveal principle-card'>
+          <div class='principle-icon'>🛠️</div>
+          <h3 class='principle-title'>Developer Standards</h3>
+          <p class='principle-body'>
+            Shared TypeScript and Biome presets keep all Coral repos aligned.
+          </p>
+          <a href='https://docs.getcoral.dev/libraries/npm-packages/' class='card-link'>
+            View package catalog
+          </a>
+        </div>
+      </div>
     </div>
   </section>
 

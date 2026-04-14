@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-label="Coral — Open Source Jellyfin Ecosystem">
+  <defs>
+    <pattern id="dots" width="28" height="28" patternUnits="userSpaceOnUse">
+      <circle cx="1" cy="1" r="1" fill="rgba(255,255,255,0.025)"/>
+    </pattern>
+    <radialGradient id="gCoral" gradientUnits="userSpaceOnUse" cx="-80" cy="-60" r="700">
+      <stop offset="0%" stop-color="#ff6b6b" stop-opacity="0.11"/>
+      <stop offset="100%" stop-color="#ff6b6b" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="gTeal" gradientUnits="userSpaceOnUse" cx="1340" cy="740" r="680">
+      <stop offset="0%" stop-color="#2dd4bf" stop-opacity="0.1"/>
+      <stop offset="100%" stop-color="#2dd4bf" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <!-- Base background -->
+  <rect width="1200" height="630" fill="#060d12"/>
+
+  <!-- Dot grid -->
+  <rect width="1200" height="630" fill="url(#dots)"/>
+
+  <!-- Glow blobs -->
+  <rect width="1200" height="630" fill="url(#gCoral)"/>
+  <rect width="1200" height="630" fill="url(#gTeal)"/>
+
+  <!-- Badge -->
+  <rect x="80" y="68" width="148" height="40" rx="20" fill="rgba(45,212,191,0.1)" stroke="rgba(45,212,191,0.22)" stroke-width="1"/>
+  <text x="106" y="93" fill="#2dd4bf" font-family="Arial, Helvetica, sans-serif" font-size="15" letter-spacing="2" font-weight="500">&#x1FAB8; CORAL</text>
+
+  <!-- Headline line 1 -->
+  <text x="80" y="234" fill="#f0ede8" font-family="Georgia, 'Times New Roman', serif" font-size="86" font-weight="700" letter-spacing="-2">Your media server.</text>
+
+  <!-- Headline line 2 — italic coral -->
+  <text x="80" y="340" fill="#ff6b6b" font-family="Georgia, 'Times New Roman', serif" font-size="86" font-weight="700" font-style="italic" letter-spacing="-2">Reimagined.</text>
+
+  <!-- Tagline -->
+  <text x="80" y="406" fill="rgba(240,237,232,0.45)" font-family="Arial, Helvetica, sans-serif" font-size="25" font-weight="300">A reef of independent Docker modules that extend Jellyfin.</text>
+
+  <!-- Module names row -->
+  <text x="80" y="468" fill="rgba(240,237,232,0.22)" font-family="Arial, Helvetica, sans-serif" font-size="19" font-weight="400">Aurora · KAPOW! · Tide · Fathom · Marquee · Encore · Librarian</text>
+
+  <!-- Bottom divider line -->
+  <line x1="80" y1="504" x2="1120" y2="504" stroke="rgba(255,255,255,0.07)" stroke-width="1"/>
+
+  <!-- Domain pill -->
+  <rect x="80" y="530" width="224" height="48" rx="24" fill="rgba(45,212,191,0.08)" stroke="rgba(45,212,191,0.4)" stroke-width="1.5"/>
+  <text x="117" y="561" fill="#2dd4bf" font-family="Arial, Helvetica, sans-serif" font-size="22" font-weight="600">getcoral.dev</text>
+
+  <!-- MIT badge -->
+  <rect x="330" y="530" width="100" height="48" rx="24" fill="rgba(255,255,255,0.04)" stroke="rgba(255,255,255,0.08)" stroke-width="1"/>
+  <text x="362" y="561" fill="rgba(240,237,232,0.35)" font-family="Arial, Helvetica, sans-serif" font-size="19" font-weight="400">MIT</text>
+</svg>

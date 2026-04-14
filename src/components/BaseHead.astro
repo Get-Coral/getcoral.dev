@@ -2,21 +2,85 @@
 interface Props {
 	title: string;
 	description?: string;
+	image?: string;
+	type?: "website" | "article";
+	noindex?: boolean;
+	canonicalURL?: string;
 }
 
-const { title, description = "Coral — Jellyfin Ecosystem Modules" } =
-	Astro.props;
+const {
+	title,
+	description = "Coral - Jellyfin Ecosystem Modules",
+	image = "/og.png",
+	type = "website",
+	noindex = false,
+	canonicalURL,
+} = Astro.props;
+
+const site = Astro.site ?? new URL(Astro.url.origin);
+const canonical = canonicalURL ?? new URL(Astro.url.pathname, site).toString();
+const ogImage = new URL(image, site).toString();
+const robots = noindex ? "noindex, nofollow" : "index, follow";
+
+const webSiteSchema = {
+	"@context": "https://schema.org",
+	"@type": "WebSite",
+	name: "Coral",
+	url: new URL("/", site).toString(),
+	description,
+	publisher: {
+		"@type": "Organization",
+		name: "Get Coral",
+		url: new URL("/", site).toString(),
+		logo: ogImage,
+	},
+};
+
+const webPageSchema = {
+	"@context": "https://schema.org",
+	"@type": "WebPage",
+	name: title,
+	description,
+	url: canonical,
+	isPartOf: {
+		"@type": "WebSite",
+		name: "Coral",
+		url: new URL("/", site).toString(),
+	},
+};
 ---
 
 <head>
-  <meta charset="utf-8" />
-  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="generator" content={Astro.generator} />
-  <meta name="description" content={description} />
-  <link rel="sitemap" href="/sitemap-index.xml" />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <meta charset='utf-8' />
+  <link rel='icon' type='image/svg+xml' href='/favicon.svg' />
+  <meta name='viewport' content='width=device-width, initial-scale=1' />
+  <meta name='generator' content={Astro.generator} />
+  <meta name='robots' content={robots} />
+  <meta name='description' content={description} />
+  <meta property='og:type' content={type} />
+  <meta property='og:site_name' content='Coral' />
+  <meta property='og:title' content={title} />
+  <meta property='og:description' content={description} />
+  <meta property='og:url' content={canonical} />
+  <meta property='og:image' content={ogImage} />
+  <meta name='twitter:card' content='summary_large_image' />
+  <meta name='twitter:title' content={title} />
+  <meta name='twitter:description' content={description} />
+  <meta name='twitter:image' content={ogImage} />
+  <link rel='canonical' href={canonical} />
+  <link rel='sitemap' href='/sitemap-index.xml' />
+  <link rel='preconnect' href='https://fonts.googleapis.com' />
+  <link rel='preconnect' href='https://fonts.gstatic.com' crossorigin />
   <title>{title}</title>
+  <script
+    is:inline
+    type='application/ld+json'
+    set:html={JSON.stringify(webSiteSchema)}
+  />
+  <script
+    is:inline
+    type='application/ld+json'
+    set:html={JSON.stringify(webPageSchema)}
+  />
   <slot />
 </head>
