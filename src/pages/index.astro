@@ -17,6 +17,7 @@ const agentModules = modules.map(
 );
 
 const GH_SVG = `<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0 1 12 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/></svg>`;
+const DISCORD_SVG = `<svg width="14" height="14" viewBox="0 -28.5 256 256" xmlns="http://www.w3.org/2000/svg"><path fill="currentColor" d="M216.856339,16.5966031 C200.285002,8.84328665 182.566144,3.2084988 164.041564,0 C161.766523,4.11318106 159.108624,9.64549908 157.276099,14.0464379 C137.583995,11.0849896 118.072967,11.0849896 98.7430163,14.0464379 C96.9108417,9.64549908 94.1925838,4.11318106 91.8971895,0 C73.3526068,3.2084988 55.6133949,8.86399117 39.0420583,16.6376612 C5.61752293,67.146514 -3.4433191,116.400813 1.08711069,164.955721 C23.2560196,181.510915 44.7403634,191.567697 65.8621325,198.148576 C71.0772151,190.971126 75.7283628,183.341335 79.7352139,175.300261 C72.104019,172.400575 64.7949724,168.822202 57.8887866,164.667963 C59.7209612,163.310589 61.5131304,161.891452 63.2445898,160.431257 C105.36741,180.133187 151.134928,180.133187 192.754523,160.431257 C194.506336,161.891452 196.298154,163.310589 198.110326,164.667963 C191.183787,168.842556 183.854737,172.420929 176.223542,175.320965 C180.230393,183.341335 184.861538,190.991831 190.096624,198.16893 C211.238746,191.588051 232.743023,181.531619 254.911949,164.955721 C260.227747,108.668201 245.831087,59.8662432 216.856339,16.5966031 Z M85.4738752,135.09489 C72.8290281,135.09489 62.4592217,123.290155 62.4592217,108.914901 C62.4592217,94.5396472 72.607595,82.7145587 85.4738752,82.7145587 C98.3405064,82.7145587 108.709962,94.5189427 108.488529,108.914901 C108.508531,123.290155 98.3405064,135.09489 85.4738752,135.09489 Z M170.525237,135.09489 C157.88039,135.09489 147.510584,123.290155 147.510584,108.914901 C147.510584,94.5396472 157.658606,82.7145587 170.525237,82.7145587 C183.391518,82.7145587 193.761324,94.5189427 193.539891,108.914901 C193.539891,123.290155 183.391518,135.09489 170.525237,135.09489 Z"/></svg>`;
 ---
 
 <Layout
@@ -40,6 +41,14 @@ const GH_SVG = `<svg width="14" height="14" viewBox="0 0 24 24" fill="currentCol
       >
         <Fragment set:html={GH_SVG} />
         <span class='nav-gh-text'>GitHub</span>
+      </a>
+      <a
+        href='https://discord.gg/M3wzFpGbzp'
+        target='_blank'
+        class='nav-pill nav-pill-icon'
+      >
+        <Fragment set:html={DISCORD_SVG} />
+        <span class='nav-gh-text'>Discord</span>
       </a>
     </div>
   </nav>
@@ -72,8 +81,9 @@ const GH_SVG = `<svg width="14" height="14" viewBox="0 0 24 24" fill="currentCol
           href='https://docs.getcoral.dev/getting-started/create-coral/'
           class='btn-ghost'>Scaffold with the CLI</a
         >
-        <a href='https://docs.getcoral.dev/libraries/coral-ui/' class='btn-ghost'
-          >Explore Coral UI</a
+        <a
+          href='https://docs.getcoral.dev/libraries/coral-ui/'
+          class='btn-ghost'>Explore Coral UI</a
         >
         <a
           href='https://github.com/Get-Coral'
@@ -135,21 +145,21 @@ const GH_SVG = `<svg width="14" height="14" viewBox="0 0 24 24" fill="currentCol
     </div>
 
     <div class='modules-grid'>
-	      {
-	        modules.map((mod, i) => (
-	          <div
-	            class={`module-card ${mod.accent}-accent reveal`}
-	            style={`animation-delay: ${i * 0.07}s`}
-	          >
-	            <a
-	              href={`/apps/${mod.slug}`}
-	              class='module-card-overlay'
-	              aria-label={`Open ${mod.name} page`}
-	            ></a>
-	            <div class='card-header'>
-	              <span class='card-emoji'>{mod.emoji}</span>
-	            </div>
-	            <h3 class='card-title'>{mod.name}</h3>
+      {
+        modules.map((mod, i) => (
+          <div
+            class={`module-card ${mod.accent}-accent reveal`}
+            style={`animation-delay: ${i * 0.07}s`}
+          >
+            <a
+              href={`/apps/${mod.slug}`}
+              class='module-card-overlay'
+              aria-label={`Open ${mod.name} page`}
+            />
+            <div class='card-header'>
+              <span class='card-emoji'>{mod.emoji}</span>
+            </div>
+            <h3 class='card-title'>{mod.name}</h3>
             <p class='card-tagline'>{mod.tagline}</p>
             <p class='card-desc'>{mod.description}</p>
             <div class='card-actions'>
@@ -171,11 +181,13 @@ const GH_SVG = `<svg width="14" height="14" viewBox="0 0 24 24" fill="currentCol
   <section class='section-philosophy'>
     <div class='section-inner'>
       <div class='reveal section-header'>
-        <p class='section-eyebrow' style='color: var(--teal);'>Shared Packages</p>
+        <p class='section-eyebrow' style='color: var(--teal);'>
+          Shared Packages
+        </p>
         <h2 class='section-title'>Build once, reuse everywhere.</h2>
         <p class='section-sub'>
-          Coral also ships reusable NPM packages so modules can share UI,
-          typed APIs, and tooling standards.
+          Coral also ships reusable NPM packages so modules can share UI, typed
+          APIs, and tooling standards.
         </p>
       </div>
 
@@ -184,10 +196,13 @@ const GH_SVG = `<svg width="14" height="14" viewBox="0 0 24 24" fill="currentCol
           <div class='principle-icon'>🧩</div>
           <h3 class='principle-title'>@get-coral/ui</h3>
           <p class='principle-body'>
-            Shared React component library and design tokens for consistent Coral
-            interfaces.
+            Shared React component library and design tokens for consistent
+            Coral interfaces.
           </p>
-          <a href='https://docs.getcoral.dev/libraries/coral-ui/' class='card-link'>
+          <a
+            href='https://docs.getcoral.dev/libraries/coral-ui/'
+            class='card-link'
+          >
             Read docs
           </a>
         </div>
@@ -198,7 +213,10 @@ const GH_SVG = `<svg width="14" height="14" viewBox="0 0 24 24" fill="currentCol
           <p class='principle-body'>
             Typed Jellyfin API client used across Coral modules and custom apps.
           </p>
-          <a href='https://docs.getcoral.dev/libraries/jellyfin/' class='card-link'>
+          <a
+            href='https://docs.getcoral.dev/libraries/jellyfin/'
+            class='card-link'
+          >
             Read docs
           </a>
         </div>
@@ -209,7 +227,10 @@ const GH_SVG = `<svg width="14" height="14" viewBox="0 0 24 24" fill="currentCol
           <p class='principle-body'>
             Shared TypeScript and Biome presets keep all Coral repos aligned.
           </p>
-          <a href='https://docs.getcoral.dev/libraries/npm-packages/' class='card-link'>
+          <a
+            href='https://docs.getcoral.dev/libraries/npm-packages/'
+            class='card-link'
+          >
             View package catalog
           </a>
         </div>
@@ -269,6 +290,29 @@ const GH_SVG = `<svg width="14" height="14" viewBox="0 0 24 24" fill="currentCol
     </div>
   </section>
 
+  <!-- COMMUNITY -->
+  <section class='section-sponsor' id='community'>
+    <div class='reveal sponsor-inner'>
+      <div class='sponsor-icon'>🪸</div>
+      <h2 class='sponsor-title'>Join the reef.</h2>
+      <p class='sponsor-body'>
+        Got a question? Found a bug? Want to share your setup or request a
+        feature? The Coral Discord is where it all happens — support, ideas, and
+        the people building on the reef.
+      </p>
+      <div class='sponsor-ctas'>
+        <a
+          href='https://discord.gg/M3wzFpGbzp'
+          target='_blank'
+          class='btn-primary'>🪸 Join Discord</a
+        >
+        <a href='https://docs.getcoral.dev' target='_blank' class='btn-ghost'
+          >Read the docs</a
+        >
+      </div>
+    </div>
+  </section>
+
   <!-- ORIGIN STORY -->
   <section class='section-origin'>
     <div class='reveal origin-inner'>
@@ -305,37 +349,44 @@ const GH_SVG = `<svg width="14" height="14" viewBox="0 0 24 24" fill="currentCol
         <a href='https://github.com/Get-Coral' target='_blank' class='btn-ghost'
           >Star a repo</a
         >
+        <a
+          href='https://discord.gg/M3wzFpGbzp'
+          target='_blank'
+          class='btn-ghost'>Join Discord</a
+        >
       </div>
     </div>
   </section>
 
   <!-- WebMCP: expose Coral module data to AI agents -->
   <script define:vars={{ agentModules }}>
-    if (typeof navigator !== "undefined" && "modelContext" in navigator) {
+    if (typeof navigator !== 'undefined' && 'modelContext' in navigator) {
       navigator.modelContext.provideContext([
         {
-          name: "list_coral_modules",
-          description: "List all open-source Jellyfin ecosystem modules from the Coral project, including name, description, docs, and repo links.",
-          inputSchema: { type: "object", properties: {} },
+          name: 'list_coral_modules',
+          description:
+            'List all open-source Jellyfin ecosystem modules from the Coral project, including name, description, docs, and repo links.',
+          inputSchema: { type: 'object', properties: {} },
           execute: async () => ({ modules: agentModules }),
         },
         {
-          name: "get_coral_module",
-          description: "Get details for a specific Coral module by its slug (e.g. aurora, kapow, tide, fathom, marquee, encore, librarian).",
+          name: 'get_coral_module',
+          description:
+            'Get details for a specific Coral module by its slug (e.g. aurora, kapow, tide, fathom, marquee, encore, librarian).',
           inputSchema: {
-            type: "object",
+            type: 'object',
             properties: {
               slug: {
-                type: "string",
-                description: "The module slug",
+                type: 'string',
+                description: 'The module slug',
                 enum: agentModules.map((m) => m.slug),
               },
             },
-            required: ["slug"],
+            required: ['slug'],
           },
           execute: async ({ slug }) => {
             const mod = agentModules.find((m) => m.slug === slug);
-            return mod ?? { error: "Module not found" };
+            return mod ?? { error: 'Module not found' };
           },
         },
       ]);
@@ -349,6 +400,11 @@ const GH_SVG = `<svg width="14" height="14" viewBox="0 0 24 24" fill="currentCol
       <span class='footer-copy'>Coral — MIT Licensed</span>
     </div>
     <div class='footer-links'>
+      <a
+        href='https://discord.gg/M3wzFpGbzp'
+        target='_blank'
+        class='footer-link'>Discord</a
+      >
       <a href='https://github.com/Get-Coral' target='_blank' class='footer-link'
         >GitHub</a
       >
