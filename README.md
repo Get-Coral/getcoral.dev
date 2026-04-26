@@ -82,6 +82,16 @@ This site includes a couple of path aliases:
 - `@components/*` -> `src/components/*`
 - `@layouts/*` -> `src/layouts/*`
 
+## Telemetry forwarder
+
+`api/telemetry.ts` is a Vercel Edge Function that accepts anonymous events from the `create-coral` CLI and forwards them to Grafana Cloud as OTLP HTTP logs. Three env vars must be set in the Vercel project for forwarding to actually happen — without them the function still returns 204 to the CLI but drops the event silently.
+
+| Env var | What |
+| :--- | :--- |
+| `GRAFANA_OTLP_ENDPOINT` | Your Grafana Cloud OTLP gateway base URL, e.g. `https://otlp-gateway-prod-eu-west-2.grafana.net/otlp` |
+| `GRAFANA_INSTANCE_ID` | Numeric instance id from Grafana Cloud (Stack → OpenTelemetry) |
+| `GRAFANA_OTEL_TOKEN` | Cloud Access Policy token with `logs:write` |
+
 ## Part of Coral
 
 Coral is a reef of independent modules that extend Jellyfin with focused, self-hosted experiences. This repo is the public front door for that ecosystem and should stay aligned with the product and module branding used across the other Coral repositories.
