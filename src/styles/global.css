@@ -348,6 +348,8 @@ body::before {
   z-index: 2;
 }
 .card-emoji { font-size: 1.75rem; line-height: 1; }
+.card-logo { width: 2.4rem; height: 1.75rem; object-fit: contain; filter: drop-shadow(0 3px 10px rgba(168, 85, 247, 0.4)); }
+.badge-logo { width: 1.6rem; height: 1.15rem; object-fit: contain; vertical-align: -0.2em; }
 .card-title,
 .card-tagline,
 .card-desc {

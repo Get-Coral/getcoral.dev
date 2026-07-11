@@ -98,7 +98,13 @@ const breadcrumbSchema = {
 			<div class="app-hero-copy reveal visible">
 				<div class="app-badge-row">
 					<p class="hero-badge">
-						<span>{module.emoji}</span>
+						{
+						module.logo ? (
+							<img class='badge-logo' src={module.logo} alt='' aria-hidden='true' />
+						) : (
+							<span>{module.emoji}</span>
+						)
+					}
 						{module.name}
 					</p>
 					<span class={`badge badge-${module.status}`}>
@@ -187,7 +193,13 @@ const breadcrumbSchema = {
 
 	<footer class="site-footer">
 		<div class="footer-left">
-			<span>{module.emoji}</span>
+			{
+						module.logo ? (
+							<img class='badge-logo' src={module.logo} alt='' aria-hidden='true' />
+						) : (
+							<span>{module.emoji}</span>
+						)
+					}
 			<span class="footer-copy">{module.name} is part of Coral</span>
 		</div>
 		<div class="footer-links">

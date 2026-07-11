@@ -5,6 +5,8 @@ export interface CoralModule {
 	slug: string;
 	name: string;
 	emoji: string;
+	/** Optional brand mark shown instead of the emoji. */
+	logo?: string;
 	tagline: string;
 	description: string;
 	longDescription: string;
@@ -24,6 +26,7 @@ export const modules: CoralModule[] = [
 		slug: "aurora",
 		name: "Aurora",
 		emoji: "🎬",
+		logo: "/logos/aurora-mark.svg",
 		tagline: "High-end cinematic Jellyfin frontend",
 		description:
 			"The Netflix-quality client Jellyfin deserves. Full-bleed backdrops, smooth transitions, rich playback, and a proper big-screen feel.",
@@ -45,6 +48,7 @@ export const modules: CoralModule[] = [
 			"Embedded playback with progress sync back to Jellyfin",
 			"Rich movie and series detail views with cast and related titles",
 			"Genre browsing, pagination, and local-first onboarding with SQLite",
+			"Multi-user profiles with optional required sign-in — playback and watch progress attributed to each Jellyfin account",
 		],
 		stack: [
 			"TanStack Start",
