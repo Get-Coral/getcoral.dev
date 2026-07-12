@@ -3,10 +3,23 @@ import Layout from "@layouts/Default.astro";
 import { modules } from "../data/modules";
 
 const agentModules = modules.map(
-	({ slug, name, emoji, tagline, description, docs, repo, status, stack }) => ({
+	({
 		slug,
 		name,
 		emoji,
+		logo,
+		tagline,
+		description,
+		docs,
+		repo,
+		status,
+		stack,
+	}) => ({
+		slug,
+		name,
+		emoji,
+
+		logo,
 		tagline,
 		description,
 		docs,
@@ -157,7 +170,13 @@ const DISCORD_SVG = `<svg width="14" height="14" viewBox="0 -28.5 256 256" xmlns
               aria-label={`Open ${mod.name} page`}
             />
             <div class='card-header'>
-              <span class='card-emoji'>{mod.emoji}</span>
+              {
+                mod.logo ? (
+                  <img class='card-logo' src={mod.logo} alt='' aria-hidden='true' />
+                ) : (
+                  <span class='card-emoji'>{mod.emoji}</span>
+                )
+              }
             </div>
             <h3 class='card-title'>{mod.name}</h3>
             <p class='card-tagline'>{mod.tagline}</p>
