@@ -8,7 +8,8 @@ The official website for [Coral](https://getcoral.dev), an open-source ecosystem
 ## What this repo is
 
 - Marketing site for the Coral ecosystem
-- Home for the ecosystem story, module index, and philosophy
+- Home for the ecosystem story, the module index, comparisons and deployment guides
+- The canonical entry point for search engines and AI assistants (`/llms.txt`, `/llms-full.txt`, structured data)
 - Built with Astro, Solid islands, Tailwind CSS v4, and Biome
 
 ## Getting started
@@ -22,7 +23,7 @@ The dev server runs at [http://localhost:4321](http://localhost:4321).
 
 ## Stack
 
-- Astro 6
+- Astro 7
 - SolidJS via `@astrojs/solid-js`
 - Tailwind CSS v4 through the Vite plugin
 - Sitemap generation via `@astrojs/sitemap`
@@ -47,33 +48,64 @@ The dev server runs at [http://localhost:4321](http://localhost:4321).
 ```text
 /
 ├── public/
-│   └── favicon.svg
+│   ├── logos/                       # module brand marks
+│   └── social-card.svg              # source for the default /og.png
 ├── src/
 │   ├── components/
-│   │   ├── BaseFooter.astro
-│   │   ├── BaseHead.astro
-│   │   ├── BaseHeader.astro
-│   │   └── Counter.tsx
+│   │   ├── AgentContext.astro       # WebMCP tools, on every page
+│   │   ├── BaseHead.astro           # meta tags + the JSON-LD @graph
+│   │   ├── Breadcrumbs.astro
+│   │   ├── Faq.astro
+│   │   ├── Icons.astro
+│   │   ├── SiteFooter.astro
+│   │   └── SiteNav.astro
+│   ├── content/
+│   │   ├── modules/                 # one .md per module
+│   │   ├── comparisons/             # Coral vs the alternatives
+│   │   └── guides/
 │   ├── layouts/
-│   │   ├── Default.astro
-│   │   └── PageSupportingDarkmode.astro
+│   │   └── Default.astro
+│   ├── lib/
+│   │   ├── ogCard.ts                # per-module OG card SVG
+│   │   ├── schema.ts                # JSON-LD node builders
+│   │   ├── site.ts                  # brand constants, single source of truth
+│   │   └── stats.ts                 # build-time npm + Docker Hub counts
 │   ├── pages/
-│   │   ├── index.astro
+│   │   ├── .well-known/
+│   │   ├── apps/[slug].astro        # + apps/[slug]/og.png.ts
+│   │   ├── compare/[slug].astro
+│   │   ├── guides/[slug].astro
+│   │   ├── llms.txt.ts
+│   │   ├── llms-full.txt.ts
 │   │   └── robots.txt.ts
+│   ├── content.config.ts            # collection schemas
 │   └── styles/
 │       └── global.css
 ├── astro.config.ts
-├── biome.json
-├── package.json
-└── tsconfig.json
+├── vercel.json
+└── package.json
 ```
 
-## Notes
+## Content
 
-- `src/pages/index.astro` contains the Coral homepage content and module list.
-- `src/layouts/Default.astro` sets the site-wide metadata defaults.
-- `src/styles/global.css` contains the full visual system for the landing page.
-- `astro.config.ts` includes the site URL, Solid integration, sitemap integration, and Tailwind's Vite plugin.
+Module, comparison and guide copy lives in `src/content/` as Markdown with typed
+frontmatter (`src/content.config.ts`). The schema caps `seoTitle` at 60 characters
+and `seoDescription` at 155, so an over-long tag fails the build rather than
+getting truncated in a search result.
+
+Deployment facts in module frontmatter — `dockerImage`, `port`, `envVars`,
+`version` — should only be set when they have been verified against the module's
+docs or repo. They are published as `SoftwareApplication` structured data.
+
+## URL shape
+
+`trailingSlash: "never"` and `build.format: "file"` mean each page has exactly one
+URL. The canonical tag, `og:url`, the sitemap entry and the breadcrumb `item` are
+all derived from the same place in `BaseHead.astro` — if you add a page, do not
+hand-write any of them.
+
+The apex `getcoral.dev` is canonical. `www` must redirect to it, not the other way
+around; that is configured in Vercel's domain settings rather than in this repo.
 
 ## TypeScript paths
 

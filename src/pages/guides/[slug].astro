@@ -1,0 +1,77 @@
+---
+import { type CollectionEntry, getCollection, render } from "astro:content";
+import AgentContext from "@components/AgentContext.astro";
+import Breadcrumbs from "@components/Breadcrumbs.astro";
+import Faq from "@components/Faq.astro";
+import SiteFooter from "@components/SiteFooter.astro";
+import SiteNav from "@components/SiteNav.astro";
+import Layout from "@layouts/Default.astro";
+import { breadcrumbNode, faqNode } from "../../lib/schema";
+import { ORGANIZATION_ID, SITE_URL } from "../../lib/site";
+
+export async function getStaticPaths() {
+	const guides = await getCollection("guides");
+	return guides.map((entry) => ({
+		params: { slug: entry.id },
+		props: { entry },
+	}));
+}
+
+type Props = { entry: CollectionEntry<"guides"> };
+
+const { entry } = Astro.props;
+const g = entry.data;
+const { Content } = await render(entry);
+const url = `${SITE_URL}/guides/${entry.id}`;
+
+const schemaNodes = [
+	{
+		"@type": "TechArticle",
+		"@id": `${url}#article`,
+		headline: g.title,
+		description: g.seoDescription,
+		url,
+		author: { "@id": ORGANIZATION_ID },
+		publisher: { "@id": ORGANIZATION_ID },
+		datePublished: g.datePublished,
+		dateModified: g.dateModified,
+		proficiencyLevel: "Beginner",
+	},
+	breadcrumbNode(url, [
+		{ name: "Home", url: `${SITE_URL}/` },
+		{ name: "Guides", url: `${SITE_URL}/guides/${entry.id}` },
+		{ name: g.title, url },
+	]),
+	...(g.faq.length ? [faqNode(url, g.faq)] : []),
+];
+---
+
+<Layout
+	title={g.seoTitle}
+	description={g.seoDescription}
+	type="article"
+	schemaNodes={schemaNodes}
+	breadcrumbId={`${url}#breadcrumb`}
+	dateModified={g.dateModified}
+>
+	<SiteNav />
+	<main id="main">
+		<div class="page-head">
+			<Breadcrumbs
+				trail={[
+					{ name: "Home", url: "/" },
+					{ name: "Modules", url: "/apps" },
+					{ name: g.title, url: `/guides/${entry.id}` },
+				]}
+			/>
+			<h1 class="page-title">{g.title}</h1>
+			<p class="answer-block" style="margin-top: 1.5rem; max-width: 66ch;">{g.answer}</p>
+		</div>
+		<div class="page-body">
+			<div class="prose"><Content /></div>
+		</div>
+		<Faq items={g.faq} heading="Frequently asked questions" />
+	</main>
+	<SiteFooter />
+	<AgentContext />
+</Layout>

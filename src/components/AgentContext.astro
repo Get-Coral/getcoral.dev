@@ -1,0 +1,108 @@
+---
+import { getCollection } from "astro:content";
+import { SITE_URL } from "../lib/site";
+
+// Lives in a component rather than on the homepage so browser agents find the
+// same tools on every page, not just "/".
+const entries = (await getCollection("modules")).sort(
+	(a, b) => a.data.order - b.data.order,
+);
+
+const agentModules = entries.map((entry) => ({
+	slug: entry.id,
+	name: entry.data.name,
+	tagline: entry.data.tagline,
+	description: entry.data.description,
+	answer: entry.data.answer,
+	status: entry.data.status,
+	statusLabel: entry.data.statusLabel,
+	category: entry.data.category,
+	bestFor: entry.data.bestFor,
+	highlights: entry.data.highlights,
+	requirements: entry.data.requirements,
+	stack: entry.data.stack,
+	dockerImage: entry.data.dockerImage,
+	port: entry.data.port,
+	version: entry.data.version,
+	url: `${SITE_URL}/apps/${entry.id}`,
+	docs: entry.data.docs,
+	repo: entry.data.repo,
+	containerUrl: entry.data.containerUrl,
+}));
+---
+
+<script is:inline define:vars={{ agentModules }}>
+  if (typeof navigator !== 'undefined' && 'modelContext' in navigator) {
+    navigator.modelContext.provideContext([
+      {
+        name: 'list_coral_modules',
+        description:
+          'List all open-source Jellyfin ecosystem modules from the Coral project, including name, description, Docker image, docs, and repo links.',
+        inputSchema: { type: 'object', properties: {} },
+        execute: async () => ({ modules: agentModules }),
+      },
+      {
+        name: 'get_coral_module',
+        description:
+          'Get full details for a specific Coral module by its slug (e.g. aurora, kapow, tide, fathom, marquee, encore, librarian).',
+        inputSchema: {
+          type: 'object',
+          properties: {
+            slug: {
+              type: 'string',
+              description: 'The module slug',
+              enum: agentModules.map((m) => m.slug),
+            },
+          },
+          required: ['slug'],
+        },
+        execute: async ({ slug }) => {
+          const mod = agentModules.find((m) => m.slug === slug);
+          return mod ?? { error: 'Module not found' };
+        },
+      },
+      {
+        name: 'find_coral_module_for_use_case',
+        description:
+          'Find which Coral modules suit a described use case, such as "better Jellyfin UI on a TV", "karaoke at a bar", "manage torrent downloads", "read manga", or "clean up library metadata".',
+        inputSchema: {
+          type: 'object',
+          properties: {
+            useCase: {
+              type: 'string',
+              description: 'A plain-language description of what the user wants to do',
+            },
+          },
+          required: ['useCase'],
+        },
+        execute: async ({ useCase }) => {
+          const terms = String(useCase || '')
+            .toLowerCase()
+            .split(/[^a-z0-9]+/)
+            .filter((t) => t.length > 2);
+          const scored = agentModules
+            .map((m) => {
+              const haystack = [
+                m.name,
+                m.tagline,
+                m.description,
+                m.answer,
+                m.category,
+                ...m.bestFor,
+                ...m.highlights,
+              ]
+                .join(' ')
+                .toLowerCase();
+              const score = terms.filter((t) => haystack.includes(t)).length;
+              return { module: m, score };
+            })
+            .filter((r) => r.score > 0)
+            .sort((a, b) => b.score - a.score);
+          return scored.length
+            ? { matches: scored.slice(0, 3).map((r) => r.module) }
+            : { matches: [], modules: agentModules };
+        },
+      },
+    ]);
+  }
+</script>

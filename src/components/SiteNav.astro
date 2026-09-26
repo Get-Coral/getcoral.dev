@@ -1,0 +1,26 @@
+---
+import { DISCORD_URL, GITHUB_ORG_URL, SITE_NAME } from "../lib/site";
+import Icons from "./Icons.astro";
+
+// One nav for every page. There were three hand-rolled variants before, each
+// omitting different links, which left the internal link graph full of holes.
+const path = Astro.url.pathname.replace(/\/+$/, "") || "/";
+---
+<nav class='site-nav'>
+  <a href='/' class='nav-logo'>
+    <img class='nav-logo-mark' src='/logos/coral-mark.svg' alt='' aria-hidden='true' width='24' height='24' />
+    <span class='nav-logo-text'>{SITE_NAME}</span>
+  </a>
+  <div class='nav-links'>
+    <a href='/apps' class='nav-pill' aria-current={path === "/apps" ? "page" : undefined}>Modules</a>
+    <a href='/compare' class='nav-pill' aria-current={path === "/compare" ? "page" : undefined}>Compare</a>
+    <a href='/guides/jellyfin-docker-compose-stack' class='nav-pill'>Guides</a>
+    <a href='/stats' class='nav-pill' aria-current={path === "/stats" ? "page" : undefined}>Stats</a>
+    <a href={GITHUB_ORG_URL} target='_blank' rel='noopener' class='nav-pill nav-pill-icon'>
+      <Icons name='github' /><span class='nav-gh-text'>GitHub</span>
+    </a>
+    <a href={DISCORD_URL} target='_blank' rel='noopener' class='nav-pill nav-pill-icon'>
+      <Icons name='discord' /><span class='nav-gh-text'>Discord</span>
+    </a>
+  </div>
+</nav>

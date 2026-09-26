@@ -1,0 +1,18 @@
+---
+interface Props {
+	trail: { name: string; url: string }[];
+}
+const { trail } = Astro.props;
+---
+<nav class='breadcrumbs' aria-label='Breadcrumb'>
+  {trail.map((crumb, i) => (
+    <>
+      {i > 0 && <span class='sep' aria-hidden='true'>/</span>}
+      {i === trail.length - 1 ? (
+        <span aria-current='page'>{crumb.name}</span>
+      ) : (
+        <a href={crumb.url}>{crumb.name}</a>
+      )}
+    </>
+  ))}
+</nav>

@@ -1,4 +1,3 @@
-@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,300;1,9..144,400&family=DM+Sans:wght@300;400;500&display=swap');
 @import "tailwindcss";
 
 /* ── Tokens ──────────────────────────────────────────────────────────────── */
@@ -708,4 +707,210 @@ body::before {
   .app-stat-grid {
     grid-template-columns: 1fr;
   }
+}
+
+/* ── Accessibility ───────────────────────────────────────────── */
+.skip-link {
+  position: absolute;
+  left: -9999px;
+  top: 0;
+  z-index: 100;
+  padding: 0.6rem 1rem;
+  background: var(--coral);
+  color: #0b0f14;
+  font-weight: 600;
+  border-radius: 0 0 8px 0;
+}
+.skip-link:focus { left: 0; }
+
+/* ── Long-form prose (module pages, comparisons, guides) ─────── */
+.prose {
+  max-width: 68ch;
+  color: var(--muted);
+  font-size: 1.02rem;
+  line-height: 1.75;
+}
+.prose > * + * { margin-top: 1.1rem; }
+.prose h2 {
+  font-family: 'Fraunces', serif;
+  font-size: 1.65rem;
+  color: var(--ink);
+  margin-top: 2.6rem;
+  line-height: 1.25;
+  scroll-margin-top: 5rem;
+}
+.prose h3 {
+  font-size: 1.15rem;
+  color: var(--ink);
+  margin-top: 1.8rem;
+  font-weight: 600;
+}
+.prose a { color: var(--teal); text-decoration: underline; text-underline-offset: 3px; }
+.prose a:hover { color: var(--ink); }
+.prose strong { color: var(--ink); font-weight: 600; }
+.prose ul, .prose ol { padding-left: 1.2rem; }
+.prose li { margin-top: 0.45rem; }
+.prose ul { list-style: disc; }
+.prose ol { list-style: decimal; }
+.prose code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.86em;
+  background: rgba(255,255,255,0.07);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 5px;
+  padding: 0.12em 0.4em;
+  color: var(--ink);
+}
+.prose pre {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 12px;
+  padding: 1.1rem 1.2rem;
+  overflow-x: auto;
+  font-size: 0.85rem;
+  line-height: 1.6;
+}
+.prose pre code { background: none; border: none; padding: 0; font-size: inherit; }
+.prose blockquote {
+  border-left: 2px solid var(--coral);
+  padding-left: 1rem;
+  font-style: italic;
+}
+.prose table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.92rem;
+  display: block;
+  overflow-x: auto;
+}
+.prose th, .prose td {
+  text-align: left;
+  padding: 0.6rem 0.8rem;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+  vertical-align: top;
+}
+.prose th { color: var(--ink); font-weight: 600; white-space: nowrap; }
+
+/* ── Answer block: the lift-as-a-whole summary near the top ──── */
+.answer-block {
+  border: 1px solid rgba(255,255,255,0.12);
+  border-left: 3px solid var(--teal);
+  border-radius: 12px;
+  background: rgba(255,255,255,0.03);
+  padding: 1.1rem 1.3rem;
+  color: var(--ink);
+  font-size: 1.05rem;
+  line-height: 1.65;
+}
+
+/* ── FAQ ─────────────────────────────────────────────────────── */
+.faq-list { display: flex; flex-direction: column; gap: 0.7rem; }
+.faq-item {
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 12px;
+  background: rgba(255,255,255,0.03);
+  padding: 1rem 1.2rem;
+}
+.faq-item h3 { font-size: 1rem; color: var(--ink); font-weight: 600; margin: 0; }
+.faq-item p { margin-top: 0.5rem; color: var(--muted); line-height: 1.65; font-size: 0.95rem; }
+
+/* ── Related modules ─────────────────────────────────────────── */
+.related-grid {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+}
+.related-card {
+  display: block;
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 14px;
+  background: rgba(255,255,255,0.03);
+  padding: 1.1rem 1.2rem;
+  transition: border-color 0.2s ease, transform 0.2s ease;
+}
+.related-card:hover { border-color: rgba(255,255,255,0.22); transform: translateY(-2px); }
+.related-card h3 { color: var(--ink); font-size: 1.05rem; font-weight: 600; }
+.related-card p { color: var(--muted); font-size: 0.9rem; margin-top: 0.35rem; line-height: 1.55; }
+
+/* ── Breadcrumbs ─────────────────────────────────────────────── */
+.breadcrumbs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  align-items: center;
+  font-size: 0.82rem;
+  color: var(--muted);
+  margin-bottom: 1.4rem;
+}
+.breadcrumbs a { color: var(--muted); }
+.breadcrumbs a:hover { color: var(--ink); }
+.breadcrumbs [aria-current='page'] { color: var(--ink); }
+.breadcrumbs .sep { opacity: 0.45; }
+
+/* ── Index / hub pages ───────────────────────────────────────── */
+.page-head { padding: 5.5rem 1.5rem 2rem; max-width: 1120px; margin: 0 auto; }
+.page-title {
+  font-family: 'Fraunces', serif;
+  font-size: clamp(2.1rem, 5vw, 3.1rem);
+  line-height: 1.1;
+  color: var(--ink);
+}
+.page-lede { color: var(--muted); font-size: 1.08rem; line-height: 1.7; max-width: 62ch; margin-top: 1rem; }
+.page-body { max-width: 1120px; margin: 0 auto; padding: 0 1.5rem 5rem; }
+.group-title {
+  font-family: 'Fraunces', serif;
+  font-size: 1.4rem;
+  color: var(--ink);
+  margin: 2.8rem 0 1.1rem;
+}
+.hub-grid {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+}
+.hub-card {
+  display: block;
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 16px;
+  background: rgba(255,255,255,0.03);
+  padding: 1.3rem;
+  transition: border-color 0.2s ease, transform 0.2s ease;
+}
+.hub-card:hover { border-color: rgba(255,255,255,0.22); transform: translateY(-2px); }
+.hub-card h3 { color: var(--ink); font-size: 1.15rem; font-weight: 600; }
+.hub-card .hub-tagline { color: var(--teal); font-size: 0.85rem; margin-top: 0.2rem; }
+.hub-card p { color: var(--muted); font-size: 0.92rem; line-height: 1.6; margin-top: 0.6rem; }
+
+/* ── Env var + requirements tables on module pages ───────────── */
+.spec-table { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
+.spec-table th, .spec-table td {
+  text-align: left;
+  padding: 0.55rem 0.7rem;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+  vertical-align: top;
+}
+.spec-table th { color: var(--ink); font-weight: 600; }
+.spec-table td { color: var(--muted); }
+.spec-table code { font-size: 0.85em; }
+.req-flag { color: var(--coral); font-size: 0.78rem; font-weight: 600; }
+
+/* The card title is now the internal link, so the module name is the anchor
+   text instead of an aria-label on an empty overlay <a>. */
+.module-card-link { color: inherit; }
+.module-card-link::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  border-radius: inherit;
+}
+.module-card:hover .module-card-link { color: var(--ink); }
+.card-actions { position: relative; z-index: 2; }
+
+/* .app-hero .app-shell is a two-column grid, so the breadcrumb would otherwise
+   take column one and push the hero copy into column two. */
+.app-hero .app-shell > .breadcrumbs {
+  grid-column: 1 / -1;
+  align-self: start;
+  margin-bottom: 0;
 }
