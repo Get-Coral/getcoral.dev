@@ -1,4 +1,6 @@
 {
+	"cleanUrls": true,
+	"trailingSlash": false,
 	"headers": [
 		{
 			"source": "/(.*)",
@@ -29,20 +31,9 @@
 		}
 	],
 	"redirects": [
-		{ "source": "/modules", "destination": "/apps", "permanent": true },
 		{
-			"source": "/apps/:slug/",
-			"destination": "/apps/:slug",
-			"permanent": true
-		},
-		{
-			"source": "/compare/:slug/",
-			"destination": "/compare/:slug",
-			"permanent": true
-		},
-		{
-			"source": "/guides/:slug/",
-			"destination": "/guides/:slug",
+			"source": "/modules",
+			"destination": "/apps",
 			"permanent": true
 		}
 	]
