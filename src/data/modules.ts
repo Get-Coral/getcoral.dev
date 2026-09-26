@@ -101,7 +101,7 @@ export const modules: CoralModule[] = [
 		description:
 			"Add torrents fast, enforce active queue limits, reprioritize files by piece selection, and inspect peers, trackers, and a piece map when you need the deep view.",
 		longDescription:
-			"Tide is Coral's torrent download manager. It is designed for self-hosters who want Transmission-like practicality with a cleaner home board, stronger queue controls, SQLite-backed state, and better swarm visibility.",
+			"Tide is Coral's torrent download manager. It is designed for self-hosters who want Transmission-like practicality with a cleaner home board, stronger queue controls, SQLite-backed state, better swarm visibility, and an optional Jellyfin sign-in that keeps management in the hands of administrators.",
 		status: "active",
 		statusLabel: "Shipping",
 		repo: "https://github.com/Get-Coral/tide",
@@ -116,8 +116,9 @@ export const modules: CoralModule[] = [
 		highlights: [
 			"Quick-add flow with clipboard paste and inline board controls",
 			"Max active downloads and seeders with real queue enforcement",
-			"Per-file piece selection priorities instead of metadata-only toggles",
-			"Compact piece maps, tracker health, peer views, SQLite persistence, and optional basic auth",
+			"Default ratio and seed-time goals applied to every new torrent",
+			"Optional Jellyfin sign-in, with management limited to administrators",
+			"Per-file piece priorities, compact piece maps, tracker health, and peer views",
 		],
 		stack: ["TanStack Start", "WebTorrent", "SQLite", "Tailwind v4", "Biome"],
 	},
