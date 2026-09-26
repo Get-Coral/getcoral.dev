@@ -1,0 +1,151 @@
+---
+import { type CollectionEntry, getCollection, render } from "astro:content";
+import AgentContext from "@components/AgentContext.astro";
+import Breadcrumbs from "@components/Breadcrumbs.astro";
+import Faq from "@components/Faq.astro";
+import SiteFooter from "@components/SiteFooter.astro";
+import SiteNav from "@components/SiteNav.astro";
+import Layout from "@layouts/Default.astro";
+import { breadcrumbNode, faqNode } from "../../lib/schema";
+import { ORGANIZATION_ID, SITE_URL } from "../../lib/site";
+
+export async function getStaticPaths() {
+	const comparisons = await getCollection("comparisons");
+	return comparisons.map((entry) => ({
+		params: { slug: entry.id },
+		props: { entry },
+	}));
+}
+
+type Props = { entry: CollectionEntry<"comparisons"> };
+
+const { entry } = Astro.props;
+const c = entry.data;
+const { Content } = await render(entry);
+
+const url = `${SITE_URL}/compare/${entry.id}`;
+const modules = await getCollection("modules");
+const coralModule = modules.find((m) => m.data.name === c.module);
+
+const breadcrumb = breadcrumbNode(url, [
+	{ name: "Home", url: `${SITE_URL}/` },
+	{ name: "Comparisons", url: `${SITE_URL}/compare` },
+	{ name: c.title, url },
+]);
+
+const schemaNodes = [
+	{
+		"@type": "TechArticle",
+		"@id": `${url}#article`,
+		headline: c.title,
+		description: c.seoDescription,
+		url,
+		author: { "@id": ORGANIZATION_ID },
+		publisher: { "@id": ORGANIZATION_ID },
+		dateModified: c.dateModified,
+		about: [
+			{ "@type": "SoftwareApplication", name: c.module },
+			{
+				"@type": "SoftwareApplication",
+				name: c.alternative,
+				url: c.alternativeUrl,
+			},
+		],
+	},
+	breadcrumb,
+	...(c.faq.length ? [faqNode(url, c.faq)] : []),
+];
+---
+
+<Layout
+	title={c.seoTitle}
+	description={c.seoDescription}
+	type="article"
+	schemaNodes={schemaNodes}
+	breadcrumbId={`${url}#breadcrumb`}
+	dateModified={c.dateModified}
+>
+	<SiteNav />
+
+	<main id="main">
+		<div class="page-head">
+			<Breadcrumbs
+				trail={[
+					{ name: "Home", url: "/" },
+					{ name: "Comparisons", url: "/compare" },
+					{ name: c.title, url: `/compare/${entry.id}` },
+				]}
+			/>
+			<h1 class="page-title">{c.title}</h1>
+			<p class="answer-block" style="margin-top: 1.5rem; max-width: 66ch;">{c.answer}</p>
+		</div>
+
+		<div class="page-body">
+			<h2 class="group-title" id="at-a-glance">At a glance</h2>
+			<table class="spec-table">
+				<thead>
+					<tr>
+						<th>&nbsp;</th>
+						<th>{c.module}</th>
+						<th>{c.alternative}</th>
+					</tr>
+				</thead>
+				<tbody>
+					{c.table.map((row) => (
+						<tr>
+							<th scope="row">{row.feature}</th>
+							<td>{row.coral}</td>
+							<td>{row.alternative}</td>
+						</tr>
+					))}
+				</tbody>
+			</table>
+
+			<div class="related-grid" style="margin-top: 2.4rem;">
+				<div class="faq-item">
+					<h3>Choose {c.module} if…</h3>
+					<ul style="margin-top: 0.7rem; padding-left: 1.1rem; list-style: disc; color: var(--muted); line-height: 1.7;">
+						{c.chooseCoral.map((item) => <li>{item}</li>)}
+					</ul>
+				</div>
+				<div class="faq-item">
+					<h3>Choose {c.alternative} if…</h3>
+					<ul style="margin-top: 0.7rem; padding-left: 1.1rem; list-style: disc; color: var(--muted); line-height: 1.7;">
+						{c.chooseAlternative.map((item) => <li>{item}</li>)}
+					</ul>
+				</div>
+			</div>
+
+			<div class="prose" style="margin-top: 3rem;">
+				<Content />
+			</div>
+		</div>
+
+		<Faq items={c.faq} heading="Frequently asked questions" />
+
+		{coralModule && (
+			<section class="app-section app-section-border">
+				<div class="app-shell">
+					<h2 class="section-title">Try {c.module}</h2>
+					<div class="related-grid" style="margin-top: 1.4rem;">
+						<a href={`/apps/${coralModule.id}`} class="related-card">
+							<h3>{coralModule.data.name}</h3>
+							<p>{coralModule.data.tagline}</p>
+						</a>
+						<a href="/apps" class="related-card">
+							<h3>All Coral modules</h3>
+							<p>Seven Docker-native modules that extend Jellyfin.</p>
+						</a>
+						<a href="/guides/jellyfin-docker-compose-stack" class="related-card">
+							<h3>Docker Compose stack</h3>
+							<p>Jellyfin and the Coral modules in one file.</p>
+						</a>
+					</div>
+				</div>
+			</section>
+		)}
+	</main>
+
+	<SiteFooter />
+	<AgentContext />
+</Layout>

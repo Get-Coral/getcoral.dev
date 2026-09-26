@@ -1,53 +1,75 @@
 ---
+import {
+	graph,
+	organizationNode,
+	webPageNode,
+	webSiteNode,
+} from "../lib/schema";
+import { DESCRIPTION_MAX, SITE_NAME, SITE_URL, TITLE_MAX } from "../lib/site";
+
 interface Props {
 	title: string;
-	description?: string;
+	description: string;
 	image?: string;
+	imageAlt?: string;
 	type?: "website" | "article";
 	noindex?: boolean;
-	canonicalURL?: string;
+	/** Extra JSON-LD nodes merged into the page's single @graph. */
+	schemaNodes?: Record<string, unknown>[];
+	/** Set when the page's WebPage node should reference a BreadcrumbList. */
+	breadcrumbId?: string;
+	dateModified?: string;
 }
 
 const {
 	title,
-	description = "Coral - Jellyfin Ecosystem Modules",
+	description,
 	image = "/og.png",
+	imageAlt = "Coral — open-source Jellyfin ecosystem modules",
 	type = "website",
 	noindex = false,
-	canonicalURL,
+	schemaNodes = [],
+	breadcrumbId,
+	dateModified,
 } = Astro.props;
 
-const site = Astro.site ?? new URL(Astro.url.origin);
-const canonical = canonicalURL ?? new URL(Astro.url.pathname, site).toString();
+const site = Astro.site ?? new URL(SITE_URL);
+
+// Deriving this in one place keeps canonical, og:url, the sitemap and the
+// breadcrumb from drifting apart the way they did before. build.format "file"
+// puts a .html suffix on Astro.url.pathname at build time but not in dev, so
+// strip it either way.
+const path = Astro.url.pathname
+	.replace(/index\.html$/, "")
+	.replace(/\.html$/, "")
+	.replace(/\/+$/, "");
+const canonical = new URL(path === "" ? "/" : path, site).toString();
 const ogImage = new URL(image, site).toString();
 const robots = noindex ? "noindex, nofollow" : "index, follow";
 
-const webSiteSchema = {
-	"@context": "https://schema.org",
-	"@type": "WebSite",
-	name: "Coral",
-	url: new URL("/", site).toString(),
-	description,
-	publisher: {
-		"@type": "Organization",
-		name: "Get Coral",
-		url: new URL("/", site).toString(),
-		logo: ogImage,
-	},
-};
+if (import.meta.env.DEV) {
+	if (title.length > TITLE_MAX)
+		console.warn(`[seo] title ${title.length}/${TITLE_MAX} chars: ${title}`);
+	if (description.length > DESCRIPTION_MAX)
+		console.warn(
+			`[seo] description ${description.length}/${DESCRIPTION_MAX} chars on ${canonical}`,
+		);
+}
 
-const webPageSchema = {
-	"@context": "https://schema.org",
-	"@type": "WebPage",
-	name: title,
-	description,
-	url: canonical,
-	isPartOf: {
-		"@type": "WebSite",
-		name: "Coral",
-		url: new URL("/", site).toString(),
-	},
-};
+const jsonLd = graph([
+	organizationNode(),
+	webSiteNode(),
+	webPageNode({
+		url: canonical,
+		name: title,
+		description,
+		image: ogImage,
+		imageAlt,
+		breadcrumbId,
+		dateModified,
+	}),
+	...schemaNodes,
+]);
 ---
 
 <head>
@@ -61,29 +83,35 @@ const webPageSchema = {
   <meta name='robots' content={robots} />
   <meta name='description' content={description} />
   <meta property='og:type' content={type} />
-  <meta property='og:site_name' content='Coral' />
+  <meta property='og:site_name' content={SITE_NAME} />
+  <meta property='og:locale' content='en_US' />
   <meta property='og:title' content={title} />
   <meta property='og:description' content={description} />
   <meta property='og:url' content={canonical} />
   <meta property='og:image' content={ogImage} />
+  <meta property='og:image:alt' content={imageAlt} />
+  <meta property='og:image:type' content='image/png' />
+  <meta property='og:image:width' content='1200' />
+  <meta property='og:image:height' content='630' />
   <meta name='twitter:card' content='summary_large_image' />
   <meta name='twitter:title' content={title} />
   <meta name='twitter:description' content={description} />
   <meta name='twitter:image' content={ogImage} />
+  <meta name='twitter:image:alt' content={imageAlt} />
   <link rel='canonical' href={canonical} />
   <link rel='sitemap' href='/sitemap-index.xml' />
+  <!-- Loaded here rather than via CSS @import: an @import is only
+       discovered after the stylesheet parses, which chains the font
+       request behind it and made the preconnect hints useless. -->
   <link rel='preconnect' href='https://fonts.googleapis.com' />
   <link rel='preconnect' href='https://fonts.gstatic.com' crossorigin />
+  <link rel='stylesheet' href='https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,300;1,9..144,400&family=DM+Sans:wght@300;400;500&display=swap' />
+  <link rel='alternate' type='text/plain' href='/llms.txt' title='llms.txt' />
   <title>{title}</title>
   <script
     is:inline
     type='application/ld+json'
-    set:html={JSON.stringify(webSiteSchema)}
-  />
-  <script
-    is:inline
-    type='application/ld+json'
-    set:html={JSON.stringify(webPageSchema)}
+    set:html={JSON.stringify(jsonLd)}
   />
   <slot />
 </head>

@@ -1,23 +1,30 @@
 ---
 import BaseHead from "@components/BaseHead.astro";
+import { SITE_DESCRIPTION, SITE_NAME, SITE_TAGLINE } from "../lib/site";
 import "../styles/global.css";
 
 interface Props {
 	title?: string;
 	description?: string;
 	image?: string;
+	imageAlt?: string;
 	type?: "website" | "article";
 	noindex?: boolean;
-	canonicalURL?: string;
+	schemaNodes?: Record<string, unknown>[];
+	breadcrumbId?: string;
+	dateModified?: string;
 }
 
 const {
-	title = "Coral | Jellyfin Ecosystem",
-	description = "A reef of independent Docker modules that extend Jellyfin with modern UX. Each one alive on its own, thriving together.",
+	title = `${SITE_NAME} | ${SITE_TAGLINE}`,
+	description = SITE_DESCRIPTION,
 	image,
+	imageAlt,
 	type,
 	noindex,
-	canonicalURL,
+	schemaNodes,
+	breadcrumbId,
+	dateModified,
 } = Astro.props;
 ---
 
@@ -26,13 +33,17 @@ const {
     title={title}
     description={description}
     image={image}
+    imageAlt={imageAlt}
     type={type}
     noindex={noindex}
-    canonicalURL={canonicalURL}
+    schemaNodes={schemaNodes}
+    breadcrumbId={breadcrumbId}
+    dateModified={dateModified}
   >
     <slot name="head" />
   </BaseHead>
   <body>
+    <a href="#main" class="skip-link">Skip to content</a>
     <slot />
     <script is:inline>
       // Scroll reveal

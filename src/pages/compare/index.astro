@@ -1,0 +1,73 @@
+---
+import { getCollection } from "astro:content";
+import Breadcrumbs from "@components/Breadcrumbs.astro";
+import SiteFooter from "@components/SiteFooter.astro";
+import SiteNav from "@components/SiteNav.astro";
+import Layout from "@layouts/Default.astro";
+import { breadcrumbNode, itemListNode } from "../../lib/schema";
+import { SITE_URL } from "../../lib/site";
+
+const comparisons = (await getCollection("comparisons")).sort((a, b) =>
+	a.data.module.localeCompare(b.data.module),
+);
+
+const url = `${SITE_URL}/compare`;
+const title = "Coral vs the alternatives | Coral";
+const description =
+	"Honest side-by-side comparisons between Coral's Jellyfin modules and the established self-hosted alternatives, including where the alternative wins.";
+
+const schemaNodes = [
+	{
+		"@type": "CollectionPage",
+		"@id": `${url}#collection`,
+		url,
+		name: title,
+		description,
+		mainEntity: { "@id": `${url}#itemlist` },
+	},
+	itemListNode(
+		url,
+		comparisons.map((c) => ({
+			name: c.data.title,
+			url: `${SITE_URL}/compare/${c.id}`,
+			description: c.data.seoDescription,
+		})),
+	),
+	breadcrumbNode(url, [
+		{ name: "Home", url: `${SITE_URL}/` },
+		{ name: "Comparisons", url },
+	]),
+];
+---
+
+<Layout
+	title={title}
+	description={description}
+	schemaNodes={schemaNodes}
+	breadcrumbId={`${url}#breadcrumb`}
+>
+	<SiteNav />
+	<main id="main">
+		<div class="page-head">
+			<Breadcrumbs trail={[{ name: "Home", url: "/" }, { name: "Comparisons", url: "/compare" }]} />
+			<h1 class="page-title">Coral vs the alternatives</h1>
+			<p class="page-lede">
+				Most Coral modules are the newcomer in a category that already has a good answer. These
+				pages say plainly where the established tool is still the better choice — if a comparison
+				only tells you the new thing wins, it is not a comparison.
+			</p>
+		</div>
+		<div class="page-body">
+			<div class="hub-grid">
+				{comparisons.map((c) => (
+					<a href={`/compare/${c.id}`} class="hub-card">
+						<h3>{c.data.title}</h3>
+						<p class="hub-tagline">{c.data.module} vs {c.data.alternative}</p>
+						<p>{c.data.seoDescription}</p>
+					</a>
+				))}
+			</div>
+		</div>
+	</main>
+	<SiteFooter />
+</Layout>

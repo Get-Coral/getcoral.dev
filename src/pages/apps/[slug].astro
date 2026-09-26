@@ -1,211 +1,210 @@
 ---
+import { type CollectionEntry, getCollection, render } from "astro:content";
+import Breadcrumbs from "@components/Breadcrumbs.astro";
+import Faq from "@components/Faq.astro";
+import SiteFooter from "@components/SiteFooter.astro";
+import SiteNav from "@components/SiteNav.astro";
 import Layout from "@layouts/Default.astro";
-import { modules } from "../../data/modules";
+import {
+	breadcrumbNode,
+	faqNode,
+	softwareApplicationNode,
+} from "../../lib/schema";
+import { SITE_URL } from "../../lib/site";
 
-export function getStaticPaths() {
-	return modules.map((module) => ({
-		params: { slug: module.slug },
-		props: { module },
+export async function getStaticPaths() {
+	const modules = await getCollection("modules");
+	return modules.map((entry) => ({
+		params: { slug: entry.id },
+		props: { entry, all: modules },
 	}));
 }
 
-const { module } = Astro.props;
-
-if (!module) {
-	return Astro.redirect("/");
-}
-
-const canonicalURL = `https://getcoral.dev/apps/${module.slug}`;
-const keywords = [
-	module.name,
-	module.tagline,
-	"Jellyfin",
-	"self-hosted",
-	"open source",
-	"Docker",
-	...module.stack,
-	...module.bestFor,
-	"Coral",
-].join(", ");
-
-const softwareAppSchema = {
-	"@context": "https://schema.org",
-	"@type": "SoftwareApplication",
-	name: module.name,
-	description: module.longDescription,
-	url: canonicalURL,
-	applicationCategory: "MultimediaApplication",
-	operatingSystem: "Docker",
-	offers: {
-		"@type": "Offer",
-		price: "0",
-		priceCurrency: "USD",
-	},
-	isPartOf: {
-		"@type": "WebSite",
-		name: "Coral",
-		url: "https://getcoral.dev",
-	},
+type Props = {
+	entry: CollectionEntry<"modules">;
+	all: CollectionEntry<"modules">[];
 };
 
-const breadcrumbSchema = {
-	"@context": "https://schema.org",
-	"@type": "BreadcrumbList",
-	itemListElement: [
-		{
-			"@type": "ListItem",
-			position: 1,
-			name: "Home",
-			item: "https://getcoral.dev",
-		},
-		{
-			"@type": "ListItem",
-			position: 2,
-			name: "Modules",
-			item: "https://getcoral.dev/#modules",
-		},
-		{ "@type": "ListItem", position: 3, name: module.name, item: canonicalURL },
-	],
-};
+const { entry, all } = Astro.props;
+const module = entry.data;
+const { Content } = await render(entry);
+
+const url = `${SITE_URL}/apps/${entry.id}`;
+const related = module.related
+	.map((slug) => all.find((m) => m.id === slug))
+	.filter((m): m is CollectionEntry<"modules"> => Boolean(m));
+
+const breadcrumb = breadcrumbNode(url, [
+	{ name: "Home", url: `${SITE_URL}/` },
+	{ name: "Modules", url: `${SITE_URL}/apps` },
+	{ name: module.name, url },
+]);
+
+const schemaNodes = [
+	softwareApplicationNode({ slug: entry.id, ...module }),
+	breadcrumb,
+	...(module.faq.length ? [faqNode(url, module.faq)] : []),
+];
 ---
 
 <Layout
-	title={`${module.name} — ${module.tagline} | Coral`}
-	description={module.description}
-	type="article"
-	canonicalURL={canonicalURL}
+	title={module.seoTitle}
+	description={module.seoDescription}
+	image={`/apps/${entry.id}/og.png`}
+	imageAlt={`${module.name} — ${module.tagline}`}
+	schemaNodes={schemaNodes}
+	breadcrumbId={`${url}#breadcrumb`}
+	dateModified={module.dateModified}
 >
-	<meta slot="head" name="keywords" content={keywords} />
-	<script is:inline slot="head" type="application/ld+json" set:html={JSON.stringify(softwareAppSchema)} />
-	<script is:inline slot="head" type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
-	<nav class="site-nav">
-		<a href="/" class="nav-logo">
-			<img class="nav-logo-mark" src="/logos/coral-mark.svg" alt="" aria-hidden="true" />
-			<span class="nav-logo-text">Coral</span>
-		</a>
-		<div class="nav-links">
-			<a href="/" class="nav-pill">Home</a>
-			<a href={module.docs} class="nav-pill">Docs</a>
-			<a href={module.repo} target="_blank" class="nav-pill">Repo</a>
-		</div>
-	</nav>
+	<SiteNav />
 
-	<section class={`app-hero ${module.accent}-accent`}>
-		<div class="glow-coral" style="top: -180px; left: -140px;"></div>
-		<div class="glow-teal" style="bottom: -140px; right: -120px;"></div>
+	<main id="main">
+		<section class={`app-hero ${module.accent}-accent`}>
+			<div class="glow-coral" style="top: -180px; left: -140px;"></div>
+			<div class="glow-teal" style="bottom: -140px; right: -120px;"></div>
 
-		<div class="app-shell">
-			<div class="app-hero-copy reveal visible">
-				<div class="app-badge-row">
-					<p class="hero-badge">
-						{
-						module.logo ? (
-							<img class='badge-logo' src={module.logo} alt='' aria-hidden='true' />
-						) : (
-							<span>{module.emoji}</span>
-						)
-					}
+			<div class="app-shell">
+				<Breadcrumbs
+					trail={[
+						{ name: "Home", url: "/" },
+						{ name: "Modules", url: "/apps" },
+						{ name: module.name, url: `/apps/${entry.id}` },
+					]}
+				/>
+				<div class="app-hero-copy reveal visible">
+					<div class="app-badge-row">
+						<p class="hero-badge">
+							{module.logo ? (
+								<img class='badge-logo' src={module.logo} alt='' aria-hidden='true' />
+							) : (
+								<span>{module.emoji}</span>
+							)}
+							{module.name}
+						</p>
+						<span class={`badge badge-${module.status}`}>
+							<span class="badge-dot" />
+							{module.statusLabel}
+						</span>
+						{module.version && (
+							<span class="badge">v{module.version}</span>
+						)}
+					</div>
+
+					<h1 class="app-title">
 						{module.name}
+						<span class="app-title-muted">{module.tagline}</span>
+					</h1>
+
+					<p class="answer-block" style="margin-top: 1.4rem; max-width: 62ch;">
+						{module.answer}
 					</p>
-					<span class={`badge badge-${module.status}`}>
-						<span class="badge-dot" />
-						{module.statusLabel}
-					</span>
-				</div>
 
-				<h1 class="app-title">
-					{module.name}
-					<span class="app-title-muted">{module.tagline}</span>
-				</h1>
-
-				<p class="app-sub">{module.longDescription}</p>
-
-				<div class="hero-ctas">
-					<a href={module.docs} class="btn-primary">Read documentation</a>
-					<a href={module.repo} target="_blank" class="btn-ghost">View repository</a>
-					{module.containerUrl ? (
-						<a href={module.containerUrl} target="_blank" class="btn-ghost">Docker Hub</a>
-					) : null}
+					<div class="hero-ctas">
+						<a href="#install-with-docker-compose" class="btn-primary">Install with Docker</a>
+						<a href={module.docs} class="btn-ghost">Read documentation</a>
+						<a href={module.repo} target="_blank" rel="noopener" class="btn-ghost">View repository</a>
+						{module.containerUrl && (
+							<a href={module.containerUrl} target="_blank" rel="noopener" class="btn-ghost">Docker Hub</a>
+						)}
+					</div>
 				</div>
 			</div>
-		</div>
-	</section>
+		</section>
 
-	<section class="app-section">
-		<div class="app-shell app-grid">
-			<div class="app-panel reveal">
-				<p class="section-eyebrow" style={`color: var(--${module.accent});`}>Highlights</p>
-				<h2 class="section-title">What {module.name} is built to do.</h2>
-				<div class="app-list">
-					{module.highlights.map((item) => (
-						<div class="app-list-item">
-							<div class="app-list-dot"></div>
-							<p>{item}</p>
-						</div>
-					))}
-				</div>
-			</div>
-
-			<div class="app-panel reveal">
-				<p class="section-eyebrow" style={`color: var(--${module.accent});`}>Best for</p>
-				<h2 class="section-title">Who this module serves.</h2>
-				<div class="app-chip-grid">
-					{module.bestFor.map((item) => (
-						<span class="app-chip">{item}</span>
-					))}
+		<section class="app-section">
+			<div class="app-shell app-grid">
+				<div class="app-panel reveal">
+					<p class="section-eyebrow" style={`color: var(--${module.accent});`}>Features</p>
+					<h2 class="section-title">What {module.name} does</h2>
+					<ul class="app-list" style="list-style: none; padding: 0;">
+						{module.highlights.map((item) => (
+							<li class="app-list-item">
+								<div class="app-list-dot"></div>
+								<p>{item}</p>
+							</li>
+						))}
+					</ul>
 				</div>
 
-			</div>
-		</div>
-	</section>
+				<div class="app-panel reveal">
+					<p class="section-eyebrow" style={`color: var(--${module.accent});`}>Audience</p>
+					<h2 class="section-title">Who {module.name} is for</h2>
+					<ul class="app-chip-grid" style="list-style: none; padding: 0;">
+						{module.bestFor.map((item) => (
+							<li class="app-chip">{item}</li>
+						))}
+					</ul>
 
-	<section class="app-section app-section-border">
-		<div class="app-shell">
-			<div class="section-header reveal">
-				<p class="section-eyebrow" style={`color: var(--${module.accent});`}>Explore the module</p>
-				<h2 class="section-title">Take the next step.</h2>
-				<p class="section-sub">
-					Jump into the docs for setup and product detail, or head straight to the repository if you want to build, run, or contribute.
-				</p>
+					{module.requirements.length > 0 && (
+						<>
+							<h3 style="margin-top: 1.8rem; color: var(--ink); font-weight: 600;">Requirements</h3>
+							<ul class="app-list" style="list-style: none; padding: 0; margin-top: 0.8rem;">
+								{module.requirements.map((item) => (
+									<li class="app-list-item">
+										<div class="app-list-dot"></div>
+										<p>{item}</p>
+									</li>
+								))}
+							</ul>
+						</>
+					)}
+				</div>
 			</div>
+		</section>
 
-			<div class="app-link-grid">
-				<a href={module.docs} class="app-link-card reveal">
-					<p class="app-link-eyebrow">Documentation</p>
-					<h3>Read the module guide</h3>
-					<p>Setup notes, features, environment variables, and deployment details.</p>
-				</a>
-				<a href={module.repo} target="_blank" class="app-link-card reveal">
-					<p class="app-link-eyebrow">Repository</p>
-					<h3>Browse the source</h3>
-					<p>Open the repo, inspect the codebase, and track current progress on GitHub.</p>
-				</a>
-				{module.containerUrl ? (
-					<a href={module.containerUrl} target="_blank" class="app-link-card reveal">
-						<p class="app-link-eyebrow">Container</p>
-						<h3>Pull the image</h3>
-						<p>Use the published Docker Hub images for a faster self-hosted setup.</p>
-					</a>
-				) : null}
+		<section class="app-section app-section-border">
+			<div class="app-shell">
+				<div class="prose">
+					<Content />
+				</div>
 			</div>
-		</div>
-	</section>
+		</section>
 
-	<footer class="site-footer">
-		<div class="footer-left">
-			{
-						module.logo ? (
-							<img class='badge-logo' src={module.logo} alt='' aria-hidden='true' />
-						) : (
-							<span>{module.emoji}</span>
-						)
-					}
-			<span class="footer-copy">{module.name} is part of Coral</span>
-		</div>
-		<div class="footer-links">
-			<a href="/" class="footer-link">Back to home</a>
-			<a href={module.docs} class="footer-link">Docs</a>
-			<a href={module.repo} target="_blank" class="footer-link">GitHub</a>
-		</div>
-	</footer>
+		{module.envVars.length > 0 && (
+			<section class="app-section app-section-border">
+				<div class="app-shell">
+					<h2 class="section-title" id="configuration">Configuring {module.name}</h2>
+					<p class="section-sub" style="margin-top: 0.8rem;">
+						The full reference lives in the <a href={module.docs} class="card-link">{module.name} documentation</a>.
+					</p>
+					<table class="spec-table" style="margin-top: 1.4rem;">
+						<thead>
+							<tr><th>Variable</th><th>Purpose</th></tr>
+						</thead>
+						<tbody>
+							{module.envVars.map((env) => (
+								<tr>
+									<td><code>{env.name}</code>{env.required && <> <span class="req-flag">required</span></>}</td>
+									<td>{env.description}</td>
+								</tr>
+							))}
+						</tbody>
+					</table>
+				</div>
+			</section>
+		)}
+
+		<Faq items={module.faq} heading={`${module.name} — frequently asked questions`} />
+
+		{related.length > 0 && (
+			<section class="app-section app-section-border">
+				<div class="app-shell">
+					<h2 class="section-title">Related Coral modules</h2>
+					<div class="related-grid" style="margin-top: 1.4rem;">
+						{related.map((other) => (
+							<a href={`/apps/${other.id}`} class="related-card">
+								<h3>{other.data.name}</h3>
+								<p>{other.data.tagline}</p>
+							</a>
+						))}
+					</div>
+					<p style="margin-top: 1.4rem;">
+						<a href="/apps" class="card-link">Browse all seven Coral modules for Jellyfin</a>
+					</p>
+				</div>
+			</section>
+		)}
+	</main>
+
+	<SiteFooter />
 </Layout>

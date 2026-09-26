@@ -1,11 +1,11 @@
 {
 	"headers": [
 		{
-			"source": "/",
+			"source": "/(.*)",
 			"headers": [
 				{
 					"key": "Link",
-					"value": "</.well-known/api-catalog>; rel=\"api-catalog\", <https://docs.getcoral.dev>; rel=\"service-doc\", </.well-known/agent-skills/index.json>; rel=\"https://agentskills.io/rel/skills-index\""
+					"value": "</.well-known/api-catalog>; rel=\"api-catalog\", <https://docs.getcoral.dev>; rel=\"service-doc\", </.well-known/agent-skills/index.json>; rel=\"https://agentskills.io/rel/skills-index\", </llms.txt>; rel=\"alternate\"; type=\"text/plain\""
 				}
 			]
 		},
@@ -17,6 +17,33 @@
 					"value": "application/linkset+json"
 				}
 			]
+		},
+		{
+			"source": "/apps/:slug/og.png",
+			"headers": [
+				{
+					"key": "Cache-Control",
+					"value": "public, max-age=3600, s-maxage=86400"
+				}
+			]
+		}
+	],
+	"redirects": [
+		{ "source": "/modules", "destination": "/apps", "permanent": true },
+		{
+			"source": "/apps/:slug/",
+			"destination": "/apps/:slug",
+			"permanent": true
+		},
+		{
+			"source": "/compare/:slug/",
+			"destination": "/compare/:slug",
+			"permanent": true
+		},
+		{
+			"source": "/guides/:slug/",
+			"destination": "/guides/:slug",
+			"permanent": true
 		}
 	]
 }

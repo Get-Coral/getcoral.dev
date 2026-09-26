@@ -1,0 +1,127 @@
+---
+import { getCollection } from "astro:content";
+import Breadcrumbs from "@components/Breadcrumbs.astro";
+import SiteFooter from "@components/SiteFooter.astro";
+import SiteNav from "@components/SiteNav.astro";
+import Layout from "@layouts/Default.astro";
+import { breadcrumbNode, itemListNode } from "../../lib/schema";
+import { SITE_URL } from "../../lib/site";
+
+const modules = (await getCollection("modules")).sort(
+	(a, b) => a.data.order - b.data.order,
+);
+
+const groups = [
+	{
+		key: "watch",
+		title: "Watching",
+		blurb: "Browse and play video from your Jellyfin libraries.",
+	},
+	{
+		key: "listen",
+		title: "Music and parties",
+		blurb:
+			"Shared-queue modules for bars, house parties, and anywhere a room picks the music together.",
+	},
+	{
+		key: "read",
+		title: "Reading",
+		blurb: "Books, manga, comics, and PDFs kept in Jellyfin.",
+	},
+	{
+		key: "manage",
+		title: "Library management",
+		blurb: "Acquire, organise, and clean up what Jellyfin indexes.",
+	},
+	{
+		key: "display",
+		title: "Ambient displays",
+		blurb: "Passive screens that show what is playing without being driven.",
+	},
+] as const;
+
+const url = `${SITE_URL}/apps`;
+const title = "Jellyfin modules — the Coral reef | Coral";
+const description =
+	"Seven open-source, Docker-native modules that extend Jellyfin: cinematic playback, karaoke, torrents, reading, ambient displays, and library cleanup.";
+
+const breadcrumb = breadcrumbNode(url, [
+	{ name: "Home", url: `${SITE_URL}/` },
+	{ name: "Modules", url },
+]);
+
+const schemaNodes = [
+	{
+		"@type": "CollectionPage",
+		"@id": `${url}#collection`,
+		url,
+		name: title,
+		description,
+		mainEntity: { "@id": `${url}#itemlist` },
+	},
+	itemListNode(
+		url,
+		modules.map((m) => ({
+			name: m.data.name,
+			url: `${SITE_URL}/apps/${m.id}`,
+			description: m.data.tagline,
+		})),
+	),
+	breadcrumb,
+];
+---
+
+<Layout
+	title={title}
+	description={description}
+	schemaNodes={schemaNodes}
+	breadcrumbId={`${url}#breadcrumb`}
+>
+	<SiteNav />
+
+	<main id="main">
+		<div class="page-head">
+			<Breadcrumbs trail={[{ name: "Home", url: "/" }, { name: "Modules", url: "/apps" }]} />
+			<h1 class="page-title">Jellyfin modules, one job each</h1>
+			<p class="page-lede">
+				Coral is {modules.length} independent modules that extend Jellyfin. Every one ships as a
+				Docker image, reads your Jellyfin server as the source of truth, and runs on its own —
+				there is no shared database and no module you are obliged to install. Pick the one that
+				solves your problem and ignore the rest.
+			</p>
+		</div>
+
+		<div class="page-body">
+			{groups.map((group) => {
+				const inGroup = modules.filter((m) => m.data.category === group.key);
+				if (inGroup.length === 0) return null;
+				return (
+					<section>
+						<h2 class="group-title">{group.title}</h2>
+						<p class="section-sub" style="margin: 0 0 1.1rem;">{group.blurb}</p>
+						<div class="hub-grid">
+							{inGroup.map((m) => (
+								<a href={`/apps/${m.id}`} class="hub-card">
+									<h3>{m.data.name}</h3>
+									<p class="hub-tagline">{m.data.tagline}</p>
+									<p>{m.data.description}</p>
+								</a>
+							))}
+						</div>
+					</section>
+				);
+			})}
+
+			<section style="margin-top: 3.5rem;">
+				<h2 class="group-title">Run the whole reef at once</h2>
+				<p class="section-sub" style="margin: 0 0 1.1rem;">
+					Every module is a container, so they compose. The
+					<a href="/guides/jellyfin-docker-compose-stack" class="card-link">Jellyfin Docker Compose stack guide</a>
+					puts Jellyfin and the Coral modules in a single file you can copy onto a NAS.
+				</p>
+			</section>
+		</div>
+	</main>
+
+	<SiteFooter />
+</Layout>
