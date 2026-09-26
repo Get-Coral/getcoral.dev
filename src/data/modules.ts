@@ -96,6 +96,7 @@ export const modules: CoralModule[] = [
 		slug: "tide",
 		name: "Tide",
 		emoji: "🌊",
+		logo: "/logos/tide-mark.svg",
 		tagline: "Torrent downloads with a calmer control surface",
 		description:
 			"Add torrents fast, enforce active queue limits, reprioritize files by piece selection, and inspect peers, trackers, and a piece map when you need the deep view.",
