@@ -281,7 +281,7 @@ const DISCORD_SVG = `<svg width="14" height="14" viewBox="0 -28.5 256 256" xmlns
             {
               icon: '🪸',
               title: 'Jellyfin as source of truth',
-              body: 'Modules never share a database. If two need to talk, they do it through the Jellyfin API. Clean boundaries, no tight coupling.',
+              body: 'Modules never share a database. What Jellyfin knows, you read from Jellyfin; for the few things it has no API for, modules expose small versioned contracts you opt into. Every module still runs alone.',
             },
             {
               icon: '🔓',
