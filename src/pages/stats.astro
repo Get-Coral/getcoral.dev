@@ -24,6 +24,27 @@ const totalDownloads = sumCounts(packages.map((p) => p.weeklyDownloads));
 const totalPulls = sumCounts(images.map((i) => i.pulls));
 const buildDate = new Date().toISOString().slice(0, 10);
 
+// A ranked bar chart reads by length, so the rows are sorted by the thing the
+// bars encode. Scaling against the largest value rather than the total keeps
+// the longest bar near full-width instead of stranding everything at a few
+// percent. The BAR_CEILING reserves room for the value that sits at each bar's
+// tip; every bar is scaled by the same factor, so the ratios still hold.
+const BAR_CEILING = 82;
+const rankedImages = [...images].sort(
+	(a, b) => (b.pulls ?? 0) - (a.pulls ?? 0),
+);
+const peakPulls = Math.max(1, ...rankedImages.map((i) => i.pulls ?? 0));
+const barWidth = (value: number | null) =>
+	`${((value ?? 0) / peakPulls) * BAR_CEILING}%`;
+const rankedPackages = [...packages].sort(
+	(a, b) => (b.weeklyDownloads ?? 0) - (a.weeklyDownloads ?? 0),
+);
+
+const share = (value: number | null) =>
+	value === null || totalPulls === 0
+		? null
+		: `${((value / totalPulls) * 100).toFixed(1)}% of all pulls`;
+
 const url = `${SITE_URL}/stats`;
 const description = `Coral ecosystem usage: ${formatCount(totalPulls)} Docker pulls across ${images.length} module images and ${formatCount(totalDownloads)} weekly npm downloads across ${packages.length} packages.`;
 
@@ -48,94 +69,168 @@ const schemaNodes = [
 		<section class='stats-hero'>
 			<Breadcrumbs trail={[{ name: "Home", url: "/" }, { name: "Stats", url: "/stats" }]} />
 			<h1>Coral ecosystem stats</h1>
-			<p class='stats-sub'>
-				Public usage numbers for the Coral modules and packages, pulled from the Docker Hub and
-				npm registry APIs when this page was built on {buildDate}. Every Coral module is MIT
-				licensed and ships as a Docker image, so pull counts are the closest thing to an install
-				count that exists.
-			</p>
-			<div class='stats-chips'>
-				<span class='chip'>{formatCount(totalPulls)} Docker pulls</span>
-				<span class='chip'>{formatCount(totalDownloads)} weekly npm downloads</span>
-				<span class='chip'>{packages.length} npm packages</span>
-				<span class='chip'>{images.length} Docker images</span>
-			</div>
-		</section>
 
-		<section class='stats-grid'>
-			<article class='stats-card reveal visible'>
-				<h2>Docker pulls</h2>
-				<p class='card-sub'>
-					Total pulls per module image from Docker Hub, newest activity first.
+			<div class='hero-figure'>
+				<p class='hero-value'>{formatCount(totalPulls)}</p>
+				<p class='hero-label'>
+					Docker pulls across {images.length} module images
 				</p>
-				<table class='spec-table' style='margin-top: 1rem;'>
-					<thead>
-						<tr><th>Module</th><th>Pulls</th><th>Last updated</th></tr>
-					</thead>
-					<tbody>
-						{images.map((image) => (
-							<tr>
-								<th scope='row'>
-									<a
-										href={`https://hub.docker.com/r/${DOCKER_NAMESPACE}/${image.name}`}
-										target='_blank'
-										rel='noopener'
-										class='card-link'
-									>{DOCKER_NAMESPACE}/{image.name}</a>
-								</th>
-								<td>{formatCount(image.pulls)}</td>
-								<td>{image.lastUpdated ?? "—"}</td>
-							</tr>
-						))}
-						<tr>
-							<th scope='row'>Total</th>
-							<td>{formatCount(totalPulls)}</td>
-							<td>&nbsp;</td>
-						</tr>
-					</tbody>
-				</table>
-			</article>
+			</div>
 
-			<article class='stats-card reveal visible'>
-				<h2>npm downloads</h2>
-				<p class='card-sub'>Downloads in the last seven days for each published package.</p>
-				<table class='spec-table' style='margin-top: 1rem;'>
-					<thead>
-						<tr><th>Package</th><th>Weekly downloads</th><th>Source</th></tr>
-					</thead>
-					<tbody>
-						{packages.map((pkg) => (
-							<tr>
-								<th scope='row'>
-									<a
-										href={`https://www.npmjs.com/package/${pkg.name}`}
-										target='_blank'
-										rel='noopener'
-										class='card-link'
-									>{pkg.name}</a>
-								</th>
-								<td>{formatCount(pkg.weeklyDownloads)}</td>
-								<td>
-									<a href={pkg.repo} target='_blank' rel='noopener' class='card-link'>repo</a>
-								</td>
-							</tr>
-						))}
-						<tr>
-							<th scope='row'>Total</th>
-							<td>{formatCount(totalDownloads)}</td>
-							<td>&nbsp;</td>
-						</tr>
-					</tbody>
-				</table>
-			</article>
-		</section>
+			<dl class='kpi-row'>
+				<div class='kpi'>
+					<dt>Weekly npm downloads</dt>
+					<dd>{formatCount(totalDownloads)}</dd>
+				</div>
+				<div class='kpi'>
+					<dt>Published packages</dt>
+					<dd>{packages.length}</dd>
+				</div>
+				<div class='kpi'>
+					<dt>Module images</dt>
+					<dd>{images.length}</dd>
+				</div>
+			</dl>
 
-		<section class='stats-hero' style='padding-top: 0;'>
 			<p class='stats-sub'>
-				Want to add to them? Start with the <a href='/apps' class='card-link'>module list</a> or the
-				<a href='/guides/jellyfin-docker-compose-stack' class='card-link'>Docker Compose stack guide</a>.
+				Read from the Docker Hub and npm registry APIs when this page was built on {buildDate}.
+				Every Coral module is MIT licensed and ships as a Docker image, so pull counts are the
+				closest thing to an install count that exists.
 			</p>
 		</section>
+
+		<section class='stats-panel'>
+			<div class='panel-head'>
+				<h2>Pulls by module</h2>
+				<p class='panel-sub'>Total Docker Hub pulls per image, largest first.</p>
+			</div>
+
+			<ol class='bar-list'>
+				{rankedImages.map((image) => (
+					<li class='bar-row'>
+						<a
+							class='bar-link'
+							href={`/apps/${image.name}`}
+							aria-label={[
+								`${image.name}: ${formatCount(image.pulls)} Docker pulls`,
+								share(image.pulls),
+								`image updated ${image.lastUpdated ?? "unknown"}`,
+							]
+								.filter(Boolean)
+								.join(", ")}
+						>
+							<span class='bar-name'>{image.name}</span>
+							<span class='bar-track'>
+								<span
+									class='bar-fill'
+									aria-hidden='true'
+									style={`width: ${barWidth(image.pulls)};`}
+								></span>
+								<span class='bar-value' aria-hidden='true'>{formatCount(image.pulls)}</span>
+							</span>
+							{/* Visual tooltip on hover; for a screen reader it is simply the
+							    rest of the link text, so the detail never needs a pointer. */}
+							<span class='bar-tip'>
+								<span><strong>{formatCount(image.pulls)}</strong> pulls</span>
+								{share(image.pulls) && <span>{share(image.pulls)}</span>}
+								<span>Image updated {image.lastUpdated ?? "—"}</span>
+							</span>
+						</a>
+					</li>
+				))}
+			</ol>
+		</section>
+
+		<section class='stats-panel panel-quiet'>
+			<div class='panel-head'>
+				<h2>npm downloads</h2>
+				<p class='panel-sub'>
+					Downloads in the last seven days. These are the developer packages behind the
+					modules — the libraries and config presets, not the modules themselves.
+				</p>
+			</div>
+
+			<ul class='pkg-list'>
+				{rankedPackages.map((pkg) => (
+					<li class='pkg-row'>
+						<a
+							class='pkg-name'
+							href={`https://www.npmjs.com/package/${pkg.name}`}
+							target='_blank'
+							rel='noopener'
+						>{pkg.name}</a>
+						<span class='pkg-value'>{formatCount(pkg.weeklyDownloads)}</span>
+					</li>
+				))}
+			</ul>
+		</section>
+
+		<details class='stats-table-view'>
+			<summary>View the raw numbers as a table</summary>
+
+			<h3>Docker pulls</h3>
+			<table class='spec-table'>
+				<thead>
+					<tr><th>Image</th><th>Pulls</th><th>Last updated</th></tr>
+				</thead>
+				<tbody>
+					{rankedImages.map((image) => (
+						<tr>
+							<th scope='row'>
+								<a
+									href={`https://hub.docker.com/r/${DOCKER_NAMESPACE}/${image.name}`}
+									target='_blank'
+									rel='noopener'
+									class='card-link'
+								>{DOCKER_NAMESPACE}/{image.name}</a>
+							</th>
+							<td>{formatCount(image.pulls)}</td>
+							<td>{image.lastUpdated ?? "—"}</td>
+						</tr>
+					))}
+					<tr>
+						<th scope='row'>Total</th>
+						<td>{formatCount(totalPulls)}</td>
+						<td>&nbsp;</td>
+					</tr>
+				</tbody>
+			</table>
+
+			<h3>npm downloads</h3>
+			<table class='spec-table'>
+				<thead>
+					<tr><th>Package</th><th>Weekly downloads</th><th>Source</th></tr>
+				</thead>
+				<tbody>
+					{rankedPackages.map((pkg) => (
+						<tr>
+							<th scope='row'>
+								<a
+									href={`https://www.npmjs.com/package/${pkg.name}`}
+									target='_blank'
+									rel='noopener'
+									class='card-link'
+								>{pkg.name}</a>
+							</th>
+							<td>{formatCount(pkg.weeklyDownloads)}</td>
+							<td>
+								<a href={pkg.repo} target='_blank' rel='noopener' class='card-link'>repo</a>
+							</td>
+						</tr>
+					))}
+					<tr>
+						<th scope='row'>Total</th>
+						<td>{formatCount(totalDownloads)}</td>
+						<td>&nbsp;</td>
+					</tr>
+				</tbody>
+			</table>
+		</details>
+
+		<p class='stats-outro'>
+			Want to add to them? Start with the <a href='/apps'>module list</a> or the{" "}
+			<a href='/guides/jellyfin-docker-compose-stack'>Docker Compose stack guide</a>.
+		</p>
 	</main>
 
 	<SiteFooter />
@@ -145,9 +240,12 @@ const schemaNodes = [
   .stats-page {
     max-width: 1080px;
     margin: 0 auto;
-    padding: 7rem 1.25rem 3rem;
+    padding: 7rem 1.25rem 4rem;
+    display: grid;
+    gap: 1rem;
   }
 
+  /* ── Hero ──────────────────────────────────────────────────────────── */
   .stats-hero {
     border: 1px solid var(--border);
     background: linear-gradient(
@@ -156,148 +254,286 @@ const schemaNodes = [
       rgba(45, 212, 191, 0.04)
     );
     border-radius: 18px;
-    padding: 1.5rem;
-    margin-bottom: 1rem;
-  }
-
-  .hero-kicker {
-    font-size: 0.75rem;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    color: var(--teal);
-    margin-bottom: 0.5rem;
+    padding: 1.75rem;
   }
 
   .stats-hero h1 {
     font-size: clamp(1.8rem, 5vw, 3rem);
-    margin-bottom: 0.6rem;
+    margin-bottom: 1.5rem;
   }
 
-  .stats-hero p {
-    color: var(--ink-muted);
-    max-width: 70ch;
+  /* The one number the page leads with. Sans, not the Fraunces the headings
+     use — at this size a serif reads as decoration rather than as data. */
+  .hero-figure {
+    display: grid;
+    gap: 0.2rem;
+    margin-bottom: 1.75rem;
   }
 
-  .hero-chips {
-    margin-top: 1rem;
-    display: flex;
-    gap: 0.55rem;
-    flex-wrap: wrap;
-  }
-
-  .chip {
-    display: inline-flex;
-    align-items: center;
-    padding: 0.35rem 0.75rem;
-    border-radius: 999px;
-    border: 1px solid var(--border);
-    background: rgba(255, 255, 255, 0.04);
-    font-size: 0.8rem;
+  .hero-value {
+    font-family: 'DM Sans', sans-serif;
+    font-size: clamp(3rem, 9vw, 4.75rem);
+    font-weight: 600;
+    line-height: 1;
+    letter-spacing: -0.02em;
     color: var(--ink);
   }
 
-  .stats-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 1rem;
+  .hero-label {
+    color: var(--ink-muted);
+    font-size: 1rem;
   }
 
-  .stats-card {
+  .kpi-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 0.75rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .kpi {
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.03);
+    padding: 0.85rem 1rem;
+  }
+
+  .kpi dt {
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--ink-faint);
+    margin-bottom: 0.3rem;
+  }
+
+  .kpi dd {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 1.5rem;
+    font-weight: 500;
+    line-height: 1.1;
+  }
+
+  .stats-sub {
+    color: var(--ink-muted);
+    max-width: 70ch;
+    font-size: 0.95rem;
+  }
+
+  /* ── Panels ────────────────────────────────────────────────────────── */
+  .stats-panel {
     border: 1px solid var(--border);
     background: var(--surface);
     border-radius: 18px;
-    padding: 1.25rem;
+    padding: 1.5rem;
   }
 
-  .stats-card h2 {
+  .panel-head {
+    margin-bottom: 1.5rem;
+  }
+
+  .stats-panel h2 {
     font-size: 1.35rem;
     margin-bottom: 0.3rem;
   }
 
-  .card-sub {
+  .panel-sub {
     color: var(--ink-muted);
     font-size: 0.9rem;
-    margin-bottom: 1rem;
+    max-width: 62ch;
   }
 
-  .metric-list {
+  /* ── Ranked bars ───────────────────────────────────────────────────── */
+  .bar-list {
     list-style: none;
     display: grid;
-    gap: 0.75rem;
+    gap: 0.35rem;
   }
 
-  .metric-item {
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    background: rgba(255, 255, 255, 0.03);
-    padding: 0.75rem;
+  .bar-link {
+    position: relative;
     display: grid;
-    gap: 0.5rem;
-  }
-
-  .metric-item-link {
-    color: inherit;
-    text-decoration: none;
-    transition:
-      border-color 0.2s ease,
-      background 0.2s ease,
-      transform 0.2s ease;
-  }
-
-  .metric-item-link:hover {
-    border-color: rgba(255, 255, 255, 0.18);
-    background: rgba(255, 255, 255, 0.05);
-    transform: translateY(-1px);
-  }
-
-  .metric-item-link:focus-visible {
-    outline: 2px solid var(--teal);
-    outline-offset: 2px;
-  }
-
-  .metric-meta {
-    display: flex;
-    justify-content: space-between;
-    align-items: baseline;
+    grid-template-columns: minmax(6rem, 8rem) 1fr;
+    align-items: center;
     gap: 1rem;
+    padding: 0.5rem 0.65rem;
+    border-radius: 10px;
+    text-decoration: none;
+    color: inherit;
+    transition: background 0.2s ease;
   }
 
-  .metric-name {
-    color: var(--ink);
-    text-decoration: none;
-    font-weight: 500;
+  /* The whole row is the hit target, not the painted bar. */
+  .bar-link:hover,
+  .bar-link:focus-visible {
+    background: rgba(255, 255, 255, 0.04);
+    outline: none;
+  }
+
+  .bar-link:focus-visible {
+    box-shadow: 0 0 0 2px var(--teal);
+  }
+
+  .bar-name {
+    font-size: 0.95rem;
     text-transform: capitalize;
+    color: var(--ink);
+    overflow-wrap: anywhere;
   }
 
-  .metric-link {
-    color: var(--teal);
-    text-decoration: none;
-    font-size: 0.78rem;
-    text-transform: uppercase;
-    letter-spacing: 0.06em;
+  .bar-track {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    min-width: 0;
   }
 
-  .metric-item img {
-    max-width: 100%;
-    height: 20px;
+  /* Square at the baseline, 4px rounded at the data end. */
+  .bar-fill {
+    flex: 0 0 auto;
+    height: 18px;
+    min-width: 2px;
+    border-radius: 0 4px 4px 0;
+    background: var(--teal);
+    transition: filter 0.2s ease;
   }
 
-  .stats-note {
-    margin-top: 1rem;
-    border: 1px dashed var(--border);
-    border-radius: 14px;
-    padding: 1rem;
+  .bar-link:hover .bar-fill,
+  .bar-link:focus-visible .bar-fill {
+    filter: brightness(1.15);
+  }
+
+  .bar-value {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.9rem;
     color: var(--ink-muted);
+    white-space: nowrap;
+  }
+
+  /* ── Hover / focus readout ─────────────────────────────────────────── */
+  .bar-tip {
+    position: absolute;
+    left: 7rem;
+    bottom: calc(100% - 0.35rem);
+    z-index: 5;
+    display: grid;
+    gap: 0.1rem;
+    padding: 0.55rem 0.75rem;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    background: var(--deep);
+    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.45);
+    font-size: 0.78rem;
+    color: var(--ink-muted);
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.15s ease;
+  }
+
+  .bar-tip strong {
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 600;
+    color: var(--ink);
+  }
+
+  .bar-link:hover .bar-tip,
+  .bar-link:focus-visible .bar-tip {
+    opacity: 1;
+  }
+
+  /* ── npm list ──────────────────────────────────────────────────────── */
+  .panel-quiet {
     background: rgba(255, 255, 255, 0.02);
   }
 
-  .stats-note h3 {
-    color: var(--ink);
-    margin-bottom: 0.45rem;
-    font-size: 1.05rem;
+  /* Capped so the count stays beside the name it belongs to. Across the full
+     panel width the two ends of a row drift too far apart to pair up. */
+  .pkg-list {
+    list-style: none;
+    display: grid;
+    gap: 0.15rem;
+    max-width: 32rem;
   }
 
-  .stats-note p + p {
-    margin-top: 0.4rem;
+  .pkg-row {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 0.55rem 0.65rem;
+    border-radius: 10px;
+  }
+
+  .pkg-row:hover {
+    background: rgba(255, 255, 255, 0.04);
+  }
+
+  .pkg-name {
+    color: var(--ink);
+    text-decoration: none;
+    font-size: 0.92rem;
+    overflow-wrap: anywhere;
+  }
+
+  .pkg-name:hover {
+    color: var(--teal);
+  }
+
+  .pkg-value {
+    font-family: 'DM Sans', sans-serif;
+    font-variant-numeric: tabular-nums;
+    font-size: 0.92rem;
+    color: var(--ink-muted);
+  }
+
+  /* ── Table view ────────────────────────────────────────────────────── */
+  .stats-table-view {
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 1rem 1.25rem;
+    background: rgba(255, 255, 255, 0.02);
+  }
+
+  .stats-table-view summary {
+    cursor: pointer;
+    color: var(--ink-muted);
+    font-size: 0.9rem;
+  }
+
+  .stats-table-view summary:hover {
+    color: var(--ink);
+  }
+
+  .stats-table-view h3 {
+    font-size: 1rem;
+    margin: 1.25rem 0 0.5rem;
+  }
+
+  .stats-outro {
+    color: var(--ink-muted);
+    font-size: 0.95rem;
+  }
+
+  /* Matches the house inline-link treatment (.prose a). The .card-link this
+     used to carry is a pill component, which reads as a chip mid-sentence. */
+  .stats-outro a {
+    color: var(--teal);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  .stats-outro a:hover {
+    color: var(--ink);
+  }
+
+  @media (max-width: 560px) {
+    .bar-link {
+      grid-template-columns: 1fr;
+      gap: 0.35rem;
+    }
+
+    .bar-tip {
+      left: 0.65rem;
+    }
   }
 </style>
