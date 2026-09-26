@@ -222,6 +222,7 @@ export const modules: CoralModule[] = [
 		slug: "librarian",
 		name: "Librarian",
 		emoji: "🗂️",
+		logo: "/logos/librarian-mark.svg",
 		tagline: "Media hygiene and enrichment for self-hosted libraries",
 		description:
 			"Scan, organize, enrich, and maintain your Jellyfin library with a management layer focused on metadata quality and long-term cleanliness.",
