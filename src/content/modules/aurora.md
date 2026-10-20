@@ -135,3 +135,7 @@ What you get in exchange is a browsing experience built for a sofa and a large s
 The honest counterpoint: the official client is feature-complete, has years of bug reports behind it, and supports Live TV, SyncPlay and the full plugin surface. Aurora is marked **In Progress** for a reason, and it covers the browse-and-play path rather than every corner of Jellyfin. Running both costs one extra container.
 
 A fuller breakdown lives in [Aurora vs the Jellyfin web client](/compare/aurora-vs-jellyfin-web).
+
+## Privacy
+
+Aurora has no accounts, analytics or tracking, and only talks to the Jellyfin server you connect it to. The [Aurora privacy policy](/apps/aurora/privacy) covers the Android and iOS apps and the self-hosted web app.

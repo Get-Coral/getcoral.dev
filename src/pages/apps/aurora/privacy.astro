@@ -1,0 +1,47 @@
+---
+import Breadcrumbs from "@components/Breadcrumbs.astro";
+import SiteFooter from "@components/SiteFooter.astro";
+import SiteNav from "@components/SiteNav.astro";
+import Layout from "@layouts/Default.astro";
+// The policy text is kept in sync with docs/privacy-policy.md in the Aurora repo.
+import { Content } from "../../../legal/aurora-privacy.md";
+import { breadcrumbNode } from "../../../lib/schema";
+import { SITE_URL } from "../../../lib/site";
+
+const url = `${SITE_URL}/apps/aurora/privacy`;
+const trail = [
+	{ name: "Home", url: "/" },
+	{ name: "Modules", url: "/apps" },
+	{ name: "Aurora", url: "/apps/aurora" },
+	{ name: "Privacy policy", url: "/apps/aurora/privacy" },
+];
+---
+
+<Layout
+	title="Aurora privacy policy | Coral"
+	description="How the Aurora apps for Android and iOS and the self-hosted Aurora web app handle your data: no accounts, no analytics, no tracking."
+	schemaNodes={[
+		breadcrumbNode(
+			url,
+			trail.map((crumb) => ({ ...crumb, url: `${SITE_URL}${crumb.url}` })),
+		),
+	]}
+	breadcrumbId={`${url}#breadcrumb`}
+	dateModified="2026-10-20"
+>
+	<SiteNav />
+
+	<main id="main">
+		<section class="app-section">
+			<div class="app-shell">
+				<Breadcrumbs trail={trail} />
+				<h1 class="app-title" style="margin-top: 1.4rem;">Aurora privacy policy</h1>
+				<div class="prose" style="margin-top: 1.4rem;">
+					<Content />
+				</div>
+			</div>
+		</section>
+	</main>
+
+	<SiteFooter />
+</Layout>
