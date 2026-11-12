@@ -46,7 +46,13 @@ const share = (value: number | null) =>
 		: `${((value / totalPulls) * 100).toFixed(1)}% of all pulls`;
 
 const url = `${SITE_URL}/stats`;
-const description = `Coral ecosystem usage: ${formatCount(totalPulls)} Docker pulls across ${images.length} module images and ${formatCount(totalDownloads)} weekly npm downloads across ${packages.length} packages.`;
+// Kept between ~130 and 155 chars whatever the counts are. The old wording
+// came out at 112, under the 110-120 floor audits flag as too short, and a
+// failed fetch would have published "0 Docker pulls".
+const description =
+	totalPulls > 0 && totalDownloads > 0
+		? `Coral Jellyfin ecosystem usage: ${formatCount(totalPulls)} Docker pulls across ${images.length} module images and ${formatCount(totalDownloads)} weekly npm downloads across ${packages.length} packages, updated every build.`
+		: `Docker pulls and weekly npm downloads for every Coral Jellyfin module image and package, fetched from Docker Hub and npm on every build.`;
 
 const schemaNodes = [
 	breadcrumbNode(url, [

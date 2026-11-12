@@ -106,11 +106,11 @@ Every other Coral module keeps its state in a local SQLite file, and KAPOW! is t
 
 When someone adds a song, thirty phones, a host tablet and a TV all need to reflect it within a second or so. That is what Supabase's realtime Postgres is for. A local SQLite file with polling would work badly at exactly the moment it matters — a full room, everyone queueing at once.
 
-The trade is honest and worth stating: KAPOW! depends on a hosted service where the rest of Coral does not, and it needs an internet connection at the venue. If that is a dealbreaker for your setup, [Karaoke Eternal](https://www.karaoke-eternal.app/) is fully local and a better fit.
+The trade is honest and worth stating: KAPOW! depends on a hosted service where the rest of Coral does not, and it needs an internet connection at the venue. If that is a dealbreaker for your setup, [Karaoke Eternal](https://www.karaoke-eternal.com/) is fully local and a better fit.
 
 ## KAPOW! vs other self-hosted karaoke systems
 
-The self-hosted karaoke space is small but real, and the existing options solve a meaningfully different problem. Karaoke Eternal and KaraokeParty are built around a **local library** — your own MP3+G or MP4 files, on your own disk, playing with no internet.
+The self-hosted karaoke space is small but real, and the existing options solve a meaningfully different problem. Karaoke Eternal and KaraokeArcade are built around a **local library** — your own MP3+G or MP4 files, on your own disk, playing with no internet.
 
 KAPOW! searches YouTube instead. For a bar that means you never have to curate a catalogue in advance and no guest ever hits "we don't have that song", which is the failure mode that actually ends a karaoke night. It also means you need connectivity and you are subject to a quota.
 

@@ -38,8 +38,8 @@ const schemaNodes = [
 		proficiencyLevel: "Beginner",
 	},
 	breadcrumbNode(url, [
+		// There is no /guides index, so the trail goes straight from Home.
 		{ name: "Home", url: `${SITE_URL}/` },
-		{ name: "Guides", url: `${SITE_URL}/guides/${entry.id}` },
 		{ name: g.title, url },
 	]),
 	...(g.faq.length ? [faqNode(url, g.faq)] : []),
