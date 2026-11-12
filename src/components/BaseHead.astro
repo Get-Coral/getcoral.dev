@@ -113,5 +113,15 @@ const jsonLd = graph([
     type='application/ld+json'
     set:html={JSON.stringify(jsonLd)}
   />
+  {/* Ahrefs Web Analytics. Production builds only, so local dev doesn't
+      count as traffic. */}
+  {import.meta.env.PROD && (
+    <script
+      is:inline
+      src='https://analytics.ahrefs.com/analytics.js'
+      data-key='vkEOtKkUhQTqSIP8JJfytA'
+      async
+    />
+  )}
   <slot />
 </head>
