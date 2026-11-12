@@ -25,11 +25,11 @@ const NPM_PACKAGES = [
 	},
 	{
 		name: "@get-coral/tsconfig",
-		repo: "https://github.com/Get-Coral/coral/tree/main/dev-standards/packages/tsconfig",
+		repo: "https://github.com/Get-Coral/dev-standards/tree/main/packages/tsconfig",
 	},
 	{
 		name: "@get-coral/biome-config",
-		repo: "https://github.com/Get-Coral/coral/tree/main/dev-standards/packages/biome-config",
+		repo: "https://github.com/Get-Coral/dev-standards/tree/main/packages/biome-config",
 	},
 	{ name: "create-coral", repo: "https://github.com/Get-Coral/create-coral" },
 ];

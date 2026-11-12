@@ -22,12 +22,12 @@ export const SAME_AS = [
 	"https://github.com/Get-Coral",
 	"https://hub.docker.com/u/getcoral",
 	"https://www.npmjs.com/org/get-coral",
-	"https://discord.gg/M3wzFpGbzp",
+	"https://discord.com/invite/M3wzFpGbzp",
 ];
 
 export const DOCS_URL = "https://docs.getcoral.dev";
 export const GITHUB_ORG_URL = "https://github.com/Get-Coral";
-export const DISCORD_URL = "https://discord.gg/M3wzFpGbzp";
+export const DISCORD_URL = "https://discord.com/invite/M3wzFpGbzp";
 export const SPONSORS_URL = "https://github.com/sponsors/ElianCodes";
 export const LICENSE_URL = "https://opensource.org/licenses/MIT";
 

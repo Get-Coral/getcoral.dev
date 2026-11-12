@@ -4,7 +4,7 @@ seoTitle: KAPOW! vs Karaoke Eternal — karaoke | Coral
 seoDescription: A self-hosted karaoke comparison — KAPOW! searches YouTube and runs a voting queue, Karaoke Eternal plays your own local library with no internet.
 module: KAPOW!
 alternative: Karaoke Eternal
-alternativeUrl: https://www.karaoke-eternal.app/
+alternativeUrl: https://www.karaoke-eternal.com/
 answer: Karaoke Eternal plays karaoke files you already own, fully offline, and is the mature choice for a home setup. KAPOW! searches YouTube instead, so there is no catalogue to curate and guests rarely hit a missing song — but it needs internet, a Supabase project and a YouTube API key. Venue versus living room.
 dateModified: "2026-09-26"
 chooseCoral:
@@ -101,9 +101,9 @@ But the consequence is real: a venue with flaky internet should run Karaoke Eter
 
 The self-hosted karaoke space is small, so the honest comparison is not just these two.
 
-**[Karaoke Eternal](https://www.karaoke-eternal.app/)** — local library, browser-based playback for MP3+G and MP4, WebGL visualisations. The mature default.
+**[Karaoke Eternal](https://www.karaoke-eternal.com/)** — local library, browser-based playback for MP3+G and MP4, WebGL visualisations. The mature default.
 
-**[KaraokeParty](https://github.com/matt-antone/KaraokeParty)** — local library, QR-code join, runs on a Pi or Mac mini. Closest in spirit to KAPOW! on the guest-experience side while staying fully local.
+**[KaraokeArcade](https://github.com/matt-antone/KaraokeArcade)** (formerly KaraokeParty) — local library, QR-code join, runs on a Pi or Mac mini. Closest in spirit to KAPOW! on the guest-experience side while staying fully local.
 
 **[Nightingale](https://github.com/Akkudrak/nightingale)** — different problem entirely. It scans a Jellyfin server, separates vocals from instrumentals with an AI model, transcribes word-level lyrics, and does pitch scoring. If you want *scoring*, neither KAPOW! nor Karaoke Eternal does that and Nightingale does.
 

@@ -122,7 +122,10 @@ export const softwareApplicationNode = (module: {
 		softwareRequirements: "Docker, a running Jellyfin server",
 		featureList: module.highlights,
 		keywords: [...module.stack, ...module.bestFor].join(", "),
-		codeRepository: module.repo,
+		// codeRepository only exists on SoftwareSourceCode, so it lives on the
+		// source the app is built from rather than on the app itself.
+		isBasedOn: { "@type": "SoftwareSourceCode", codeRepository: module.repo },
+		sameAs: [module.repo],
 		softwareHelp: { "@type": "CreativeWork", url: module.docs },
 		license: LICENSE_URL,
 		isAccessibleForFree: true,

@@ -43,13 +43,14 @@ const schemaNodes = [
 		author: { "@id": ORGANIZATION_ID },
 		publisher: { "@id": ORGANIZATION_ID },
 		dateModified: c.dateModified,
+		// A SoftwareApplication with only a name fails Google's Software App
+		// rich-result checks. Point at the module's full node instead, and keep
+		// the alternative as a plain Thing.
 		about: [
-			{ "@type": "SoftwareApplication", name: c.module },
-			{
-				"@type": "SoftwareApplication",
-				name: c.alternative,
-				url: c.alternativeUrl,
-			},
+			coralModule
+				? { "@id": `${SITE_URL}/apps/${coralModule.id}#software` }
+				: { "@type": "Thing", name: c.module },
+			{ "@type": "Thing", name: c.alternative, url: c.alternativeUrl },
 		],
 	},
 	breadcrumb,
