@@ -6,14 +6,14 @@ module: Aurora
 alternative: Jellyfin Web
 alternativeUrl: https://jellyfin.org/
 answer: The official Jellyfin web client is a complete administrative surface — dashboard, library management, users, plugins and playback in one app. Aurora is a consumption client only, built for a sofa and a big screen. Aurora replaces the browsing experience, not the server, and you can run both side by side on different ports.
-dateModified: "2026-09-26"
+dateModified: "2026-11-23"
 chooseCoral:
   - The server is fine and it is the interface you want to change
   - The main screen is a TV, and browsing should feel like a streaming service
   - You want per-profile browsing with required sign-in so watch history is attributed correctly
   - You are happy to keep the official client open in another tab for admin work
 chooseAlternative:
-  - You need Live TV, DVR or SyncPlay
+  - You need Jellyfin’s built-in Live TV and DVR or SyncPlay
   - You rely on plugins that add UI, such as Intro Skipper's controls
   - You want one interface that does both administration and playback
   - You want something feature-complete today rather than a client still marked In Progress
@@ -36,8 +36,8 @@ table:
   - feature: Multi-user
     coral: Optional profiles and required sign-in, set with AURORA_MULTI_USER and AURORA_REQUIRE_LOGIN
     alternative: Full native user management
-  - feature: Live TV and DVR
-    coral: Not available
+  - feature: Jellyfin Live TV and DVR
+    coral: Separate IPTV support via M3U and Xtream Codes
     alternative: Supported
   - feature: SyncPlay
     coral: Not available
@@ -46,7 +46,7 @@ table:
     coral: Not surfaced
     alternative: Plugins can extend the interface
   - feature: Maturity
-    coral: In Progress, v1.14.0
+    coral: In Progress, v1.16.0
     alternative: Years of production use across a very large install base
 faq:
   - question: Do I have to stop using the official Jellyfin client?
@@ -97,7 +97,7 @@ With required sign-in on, playback and watch progress are attributed to the righ
 
 ## What you give up
 
-**Live TV and DVR.** Not in Aurora. If you use Jellyfin for broadcast, you are in the official client for that.
+**Jellyfin Live TV and DVR.** Use the official client for Jellyfin’s tuner and recording features. Aurora 1.16.0 can play live channels from M3U or Xtream Codes sources you configure directly in Aurora.
 
 **SyncPlay.** Watching in sync with someone remote stays in the official client.
 

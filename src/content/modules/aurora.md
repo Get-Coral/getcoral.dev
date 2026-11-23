@@ -7,7 +7,7 @@ seoTitle: Aurora — a cinematic Jellyfin frontend | Coral
 seoDescription: Aurora is an open-source, Docker-native Jellyfin frontend with cinematic browsing, rich detail views, and playback that syncs back to Jellyfin.
 description: The Netflix-quality client Jellyfin deserves. Full-bleed backdrops, smooth transitions, rich playback, and a proper big-screen feel.
 longDescription: Aurora is Coral's premium Jellyfin frontend. It keeps Jellyfin as the source of truth while layering on a more cinematic home experience, richer detail views, embedded playback, favorites, genre browsing, and translation-ready UI foundations.
-answer: Aurora is a free, open-source alternative web client for Jellyfin. It runs as a single Docker container alongside your existing server, reads your libraries over the Jellyfin API, and gives you a full-bleed, big-screen interface with rails, rich detail pages and playback that reports progress back to Jellyfin.
+answer: Aurora is a free, open-source media client for Jellyfin and your own IPTV sources. The web app runs in Docker and offers big-screen browsing, rich detail pages and playback that reports progress back to Jellyfin.
 status: active
 statusLabel: In Progress
 repo: https://github.com/Get-Coral/aurora
@@ -16,17 +16,20 @@ containerUrl: https://hub.docker.com/r/getcoral/aurora
 accent: teal
 category: watch
 order: 1
-version: 1.14.0
-dateModified: "2026-09-26"
+version: 1.16.0
+dateModified: "2026-11-23"
 dockerImage: getcoral/aurora:latest
 port: 3000
 volumes:
   - ./aurora-data:/data
 bestFor:
   - Living room playback
+  - Live TV from your own IPTV provider
   - Modern Jellyfin browsing
   - Shared household installs
 highlights:
+  - IPTV channels, films and series alongside Jellyfin or in an IPTV-only setup
+  - Remote navigation on Android TV and Google TV
   - Featured, continue-watching, favorites, and recommendation rails
   - Embedded playback with progress sync back to Jellyfin
   - Rich movie and series detail views with cast and related titles
@@ -39,7 +42,8 @@ stack:
   - TanStack Query
   - Tailwind v4
 requirements:
-  - A running Jellyfin server and an API key from Dashboard → API Keys
+  - For Jellyfin libraries, a running Jellyfin server and an API key from Dashboard → API Keys
+  - For IPTV, an M3U playlist or Xtream Codes credentials from your provider
   - Docker, or Node.js 22.5+ if you run it from source
   - Around 300 MB of disk for the image and its SQLite database
 envVars:
@@ -77,6 +81,15 @@ faq:
   - question: Does Aurora work with Jellyfin 12?
     answer: Jellyfin 12 removed three authentication mechanisms that older versions of the shared @get-coral/jellyfin client relied on. Versions after 1.9.0 of that client handle both Jellyfin 10.x and 12.x. If you are on Jellyfin 12 and see 401 responses, pull a fresh Aurora image before anything else.
 ---
+
+## New in Aurora 1.16.0
+
+- **IPTV as a media source.** Add your own M3U or Xtream Codes source alongside Jellyfin, or use Aurora with IPTV alone. What you can watch depends on your provider.
+- **Android TV and Google TV.** Browse with a remote, scroll sideways through home rows and return to where you left off.
+- **Desktop and Meta Quest builds.** The desktop project targets macOS and Windows. The Quest build runs as a 2D panel and can open a film in an immersive theater with five environments.
+- **Playback.** The timeline shows thumbnail previews when available and the buffered range. Seeking by clicking or dragging also works in Safari.
+
+See the [v1.16.0 release notes](https://github.com/Get-Coral/aurora/releases/tag/v1.16.0) and the [tagged README](https://github.com/Get-Coral/aurora/tree/v1.16.0#iptv-sources) for IPTV setup and platform build instructions.
 
 ## Install with Docker Compose
 
@@ -132,7 +145,7 @@ The stock Jellyfin web interface is built to be a complete administrative surfac
 
 What you get in exchange is a browsing experience built for a sofa and a large screen: full-bleed backdrops, rails for continue-watching and recommendations, detail pages with cast and related titles, and transitions that hold up on a TV browser. If what bothers you about Jellyfin is the interface rather than the server, that is precisely the part Aurora replaces.
 
-The honest counterpoint: the official client is feature-complete, has years of bug reports behind it, and supports Live TV, SyncPlay and the full plugin surface. Aurora is marked **In Progress** for a reason, and it covers the browse-and-play path rather than every corner of Jellyfin. Running both costs one extra container.
+The honest counterpoint: the official client is feature-complete, has years of bug reports behind it, and supports Jellyfin’s built-in Live TV and DVR, SyncPlay and the full plugin surface. Aurora’s IPTV sources are configured separately. Aurora is marked **In Progress** for a reason, and it covers the browse-and-play path rather than every corner of Jellyfin. Running both costs one extra container.
 
 A fuller breakdown lives in [Aurora vs the Jellyfin web client](/compare/aurora-vs-jellyfin-web).
 
