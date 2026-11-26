@@ -1,13 +1,13 @@
 ---
-name: Aurora
+name: Aurora Cinema
 emoji: "🎬"
 logo: /logos/aurora-mark.svg
-tagline: High-end cinematic Jellyfin frontend
-seoTitle: Aurora — a cinematic Jellyfin frontend | Coral
-seoDescription: Aurora is an open-source, Docker-native Jellyfin frontend with cinematic browsing, rich detail views, and playback that syncs back to Jellyfin.
+tagline: A cinematic client for Jellyfin and your own IPTV
+seoTitle: Aurora Cinema — Jellyfin and IPTV client | Coral
+seoDescription: Aurora Cinema is an open-source client for Jellyfin and your own IPTV, with big-screen browsing and playback that syncs back to Jellyfin.
 description: The Netflix-quality client Jellyfin deserves. Full-bleed backdrops, smooth transitions, rich playback, and a proper big-screen feel.
-longDescription: Aurora is Coral's premium Jellyfin frontend. It keeps Jellyfin as the source of truth while layering on a more cinematic home experience, richer detail views, embedded playback, favorites, genre browsing, and translation-ready UI foundations.
-answer: Aurora is a free, open-source media client for Jellyfin and your own IPTV sources. The web app runs in Docker and offers big-screen browsing, rich detail pages and playback that reports progress back to Jellyfin.
+longDescription: Aurora Cinema brings your Jellyfin library and your own IPTV into one app. Browse films and series from both sources, pick up where you left off, and watch on a phone, tablet, TV or Quest.
+answer: Aurora Cinema is a free, open-source media client for Jellyfin and your own IPTV sources. The web app runs in Docker and offers big-screen browsing, rich detail pages and playback that reports progress back to Jellyfin.
 status: active
 statusLabel: In Progress
 repo: https://github.com/Get-Coral/aurora
@@ -16,8 +16,8 @@ containerUrl: https://hub.docker.com/r/getcoral/aurora
 accent: teal
 category: watch
 order: 1
-version: 1.16.0
-dateModified: "2026-11-23"
+version: 1.17.0
+dateModified: "2026-11-26"
 dockerImage: getcoral/aurora:latest
 port: 3000
 volumes:
@@ -29,7 +29,8 @@ bestFor:
   - Shared household installs
 highlights:
   - IPTV channels, films and series alongside Jellyfin or in an IPTV-only setup
-  - Remote navigation on Android TV and Google TV
+  - Lighter remote navigation and denser rows on Android TV and Google TV
+  - Native Android playback for IPTV films and series
   - Featured, continue-watching, favorites, and recommendation rails
   - Embedded playback with progress sync back to Jellyfin
   - Rich movie and series detail views with cast and related titles
@@ -82,14 +83,14 @@ faq:
     answer: Jellyfin 12 removed three authentication mechanisms that older versions of the shared @get-coral/jellyfin client relied on. Versions after 1.9.0 of that client handle both Jellyfin 10.x and 12.x. If you are on Jellyfin 12 and see 401 responses, pull a fresh Aurora image before anything else.
 ---
 
-## New in Aurora 1.16.0
+## New in Aurora Cinema 1.17.0
 
-- **IPTV as a media source.** Add your own M3U or Xtream Codes source alongside Jellyfin, or use Aurora with IPTV alone. What you can watch depends on your provider.
-- **Android TV and Google TV.** Browse with a remote, scroll sideways through home rows and return to where you left off.
-- **Desktop and Meta Quest builds.** The desktop project targets macOS and Windows. The Quest build runs as a 2D panel and can open a film in an immersive theater with five environments.
-- **Playback.** The timeline shows thumbnail previews when available and the buffered range. Seeking by clicking or dragging also works in Safari.
+- **A shared film and series library.** Films and episodes from your IPTV provider appear under Films and Series alongside your Jellyfin library.
+- **Native IPTV playback on Android.** Phones, tablets and TVs use the native player for file-based IPTV films and episodes. It shows title artwork while the stream loads and can decode Dolby audio in software when the device lacks a decoder.
+- **A lighter TV mode.** Denser rows show more of your library at once, and the remote can reach playback controls more easily.
+- **Better audio sync.** IPTV playback keeps audio in sync when a converted stream starts or resumes after seeking.
 
-See the [v1.16.0 release notes](https://github.com/Get-Coral/aurora/releases/tag/v1.16.0) and the [tagged README](https://github.com/Get-Coral/aurora/tree/v1.16.0#iptv-sources) for IPTV setup and platform build instructions.
+See the [1.17.0 release notes](https://github.com/Get-Coral/aurora/releases/tag/v1.17.0) and the [setup guide](https://docs.getcoral.dev/modules/aurora/).
 
 ## Install with Docker Compose
 
@@ -151,4 +152,4 @@ A fuller breakdown lives in [Aurora vs the Jellyfin web client](/compare/aurora-
 
 ## Privacy
 
-Aurora has no accounts, analytics or tracking, and only talks to the Jellyfin server you connect it to. The [Aurora privacy policy](/apps/aurora/privacy) covers the Android and iOS apps and the self-hosted web app.
+Aurora has no accounts, analytics or tracking, and connects to the Jellyfin server or IPTV provider you configure. The [Aurora privacy policy](/apps/aurora/privacy) covers the Android and iOS apps and the self-hosted web app.
