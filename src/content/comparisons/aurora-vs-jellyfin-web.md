@@ -1,12 +1,12 @@
 ---
-title: Aurora vs the Jellyfin web client
-seoTitle: Aurora vs Jellyfin Web — which client? | Coral
-seoDescription: How Aurora's cinematic Jellyfin frontend compares to the official web client and Jellyfin Vue, including what the stock client still does better.
-module: Aurora
+title: Aurora Cinema vs the Jellyfin web client
+seoTitle: Aurora Cinema vs Jellyfin Web — which client? | Coral
+seoDescription: How Aurora Cinema compares to the official web client and Jellyfin Vue, including what the stock client still does better.
+module: Aurora Cinema
 alternative: Jellyfin Web
 alternativeUrl: https://jellyfin.org/
 answer: The official Jellyfin web client is a complete administrative surface — dashboard, library management, users, plugins and playback in one app. Aurora is a consumption client only, built for a sofa and a big screen. Aurora replaces the browsing experience, not the server, and you can run both side by side on different ports.
-dateModified: "2026-11-23"
+dateModified: "2026-11-26"
 chooseCoral:
   - The server is fine and it is the interface you want to change
   - The main screen is a TV, and browsing should feel like a streaming service
@@ -46,7 +46,7 @@ table:
     coral: Not surfaced
     alternative: Plugins can extend the interface
   - feature: Maturity
-    coral: In Progress, v1.16.0
+    coral: In Progress, v1.17.0
     alternative: Years of production use across a very large install base
 faq:
   - question: Do I have to stop using the official Jellyfin client?
@@ -97,7 +97,7 @@ With required sign-in on, playback and watch progress are attributed to the righ
 
 ## What you give up
 
-**Jellyfin Live TV and DVR.** Use the official client for Jellyfin’s tuner and recording features. Aurora 1.16.0 can play live channels from M3U or Xtream Codes sources you configure directly in Aurora.
+**Jellyfin Live TV and DVR.** Use the official client for Jellyfin’s tuner and recording features. Aurora Cinema plays live channels from M3U or Xtream Codes sources you add in Aurora. Your provider’s films and series appear in the same browsing screens as your Jellyfin library.
 
 **SyncPlay.** Watching in sync with someone remote stays in the official client.
 
